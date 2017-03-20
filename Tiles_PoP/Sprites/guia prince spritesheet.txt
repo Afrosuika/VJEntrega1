@@ -1,0 +1,15 @@
+Els números correspondrán a les imatges, començant a comptar per la part superior esquerra.
+
+1  Quiet
+2-4 Començar a córrer
+5-7 Corrent(farem loop d'aquests tres per córrer contínuament)
+8-11 Aturar-se
+12-15 Desenvainar (la farem servir a l'inrevés per a envainar)
+15 també és estar quiet amb l'espasa desenvainada
+16-20 atacar
+17,16,21(en aquest ordre) bloquejar
+22-28 donar un pas curt
+29-38 saltar i aterrar
+39-47 estar agafat i pujar
+també farem servir 44-47 per a quan es cau des d'una altura que provoca mal però no mata(en comptes de l'animació d'ajupir-se, que no tindrem en aquest spritesheet)
+48-62 saltar des d'una posició estática(potser es pot aprofitar per fer també el salt corrent?)
