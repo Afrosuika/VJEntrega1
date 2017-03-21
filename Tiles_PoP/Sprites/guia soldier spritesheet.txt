@@ -1,0 +1,7 @@
+1 postura neutra
+2-6 atac
+7 pas endavant
+8 rebre mal(es retrocedeix un pas)
+9-12 mort en combat
+11-12 també s'utilitzará si cau i mor
+13 mort a punxes(si cau sobre punxes es posa aquest en comptes de 12)

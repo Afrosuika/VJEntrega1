@@ -13,3 +13,7 @@ Els números correspondrán a les imatges, començant a comptar per la part superio
 39-47 estar agafat i pujar
 també farem servir 44-47 per a quan es cau des d'una altura que provoca mal però no mata(en comptes de l'animació d'ajupir-se, que no tindrem en aquest spritesheet)
 48-62 saltar des d'una posició estática(potser es pot aprofitar per fer també el salt corrent?)
+63 fer un pas endavant/enrere en la posició d'esgrima
+64 mort per caiguda
+65 mort per punxes
+66-75 entrar per la porta gran
