@@ -5,6 +5,7 @@ Oriol Capó del Nido
 Funcionalitats:
 Ernest:
 -Spritesheet Príncep
+-Spritesheet Soldat
 
 
 

@@ -13,32 +13,44 @@
 
 enum PlayerAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
+	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT,RIGHT_WINDUP,RIGHT_WINDDOWN
 };
 
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
-	spritesheet.loadFromFile("images/bub.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(4);
+	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
+	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(6);
 	
 		sprite->setAnimationSpeed(STAND_LEFT, 8);
-		sprite->addKeyframe(STAND_LEFT, glm::vec2(0.f, 0.f));
+		sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.2, 0.f));
+
+		sprite->setAnimationSpeed(RIGHT_WINDUP, 8);
+		sprite->addKeyframe(RIGHT_WINDUP, glm::vec2(0.2, 0.f));
+		sprite->addKeyframe(RIGHT_WINDUP, glm::vec2(0.4, 0.f));
+		sprite->addKeyframe(RIGHT_WINDUP, glm::vec2(0.6, 0.f));
+
+		sprite->setAnimationSpeed(RIGHT_WINDDOWN, 8);
+		sprite->addKeyframe(RIGHT_WINDDOWN, glm::vec2(0.4, 0.05f));
+		sprite->addKeyframe(RIGHT_WINDDOWN, glm::vec2(0.6, 0.05f));
+		sprite->addKeyframe(RIGHT_WINDDOWN, glm::vec2(0.8, 0.05f));
+		sprite->addKeyframe(RIGHT_WINDDOWN, glm::vec2(0.0, 0.1f));
 		
 		sprite->setAnimationSpeed(STAND_RIGHT, 8);
-		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.25f, 0.f));
+		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
 		
 		sprite->setAnimationSpeed(MOVE_LEFT, 8);
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 0.f));
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 0.25f));
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 0.5f));
+		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-1.0, 0.f));
+		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.2, 0.05f));
+		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.4, 0.05f));
 		
 		sprite->setAnimationSpeed(MOVE_RIGHT, 8);
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25, 0.f));
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25, 0.25f));
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25, 0.5f));
+		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.8, 0.f));
+		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.0, 0.05f));
+		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.2, 0.05f));
 		
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
@@ -49,7 +61,42 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+	if (sprite->animationfinished == true){
+
+
+		if (sprite->animation() == STAND_RIGHT){
+			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+				sprite->changeAnimation(RIGHT_WINDUP);
+			}
+		}
+		else if (sprite->animation() == RIGHT_WINDUP){
+			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+				sprite->changeAnimation(MOVE_RIGHT);
+			}
+			else{
+				sprite->changeAnimation(RIGHT_WINDUP);
+			}
+		}
+		else if (sprite->animation() == STAND_LEFT){
+			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+				sprite->changeAnimation(STAND_RIGHT);
+			}
+		}
+		else if (sprite->animation() == MOVE_RIGHT){
+			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+				sprite->changeAnimation(MOVE_RIGHT);
+			}
+			else{
+				sprite->changeAnimation(RIGHT_WINDDOWN);
+			}
+		}
+		else if (sprite->animation() == RIGHT_WINDDOWN){
+			sprite->changeAnimation(STAND_RIGHT);
+		}
+
+	}
+
+	/*if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
@@ -77,7 +124,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 		else if(sprite->animation() == MOVE_RIGHT)
 			sprite->changeAnimation(STAND_RIGHT);
-	}
+	}*/
 	
 	if(bJumping)
 	{
