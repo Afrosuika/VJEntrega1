@@ -15,7 +15,8 @@ enum PlayerAnims
 {
 	STAND_RIGHT, STAND_LEFT, MOVE_RIGHT, MOVE_LEFT, RIGHT_WINDUP, LEFT_WINDUP, RIGHT_WINDDOWN, LEFT_WINDDOWN,
 	RIGHT_UNSHEATHE, LEFT_UNSHEATHE, RIGHT_FENCING, LEFT_FENCING, RIGHT_FENCING_STEPFWRD, LEFT_FENCING_STEPFWRD,
-	RIGHT_FENCING_STEPBACK, LEFT_FENCING_STEPBACK, RIGHT_SHEATHE, LEFT_SHEATHE, RIGHT_ATTACK, LEFT_ATTACK
+	RIGHT_FENCING_STEPBACK, LEFT_FENCING_STEPBACK, RIGHT_SHEATHE, LEFT_SHEATHE, RIGHT_ATTACK, LEFT_ATTACK,
+	RIGHT_SMALLSTEP, LEFT_SMALLSTEP
 };
 
 
@@ -27,7 +28,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(20);	
+	sprite->setNumberAnimations(22);	
 		
 
 		sprite->setAnimationSpeed(STAND_RIGHT, 8);
@@ -123,6 +124,24 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-1.0, 0.15f));
 		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.6, 0.15f));
 		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.2, 0.15f));
+
+		sprite->setAnimationSpeed(RIGHT_SMALLSTEP, 8);
+		sprite->addKeyframe(RIGHT_SMALLSTEP, glm::vec2(0.2, 0.2f));
+		sprite->addKeyframe(RIGHT_SMALLSTEP, glm::vec2(0.4, 0.2f));
+		sprite->addKeyframe(RIGHT_SMALLSTEP, glm::vec2(0.6, 0.2f));
+		sprite->addKeyframe(RIGHT_SMALLSTEP, glm::vec2(0.8, 0.2f));
+		sprite->addKeyframe(RIGHT_SMALLSTEP, glm::vec2(0.0, 0.25f));
+		sprite->addKeyframe(RIGHT_SMALLSTEP, glm::vec2(0.2, 0.25f));
+		sprite->addKeyframe(RIGHT_SMALLSTEP, glm::vec2(0.4, 0.25f));
+
+		sprite->setAnimationSpeed(LEFT_SMALLSTEP, 8);
+		sprite->addKeyframe(LEFT_SMALLSTEP, glm::vec2(-0.4, 0.2f));
+		sprite->addKeyframe(LEFT_SMALLSTEP, glm::vec2(-0.6, 0.2f));
+		sprite->addKeyframe(LEFT_SMALLSTEP, glm::vec2(-0.8, 0.2f));
+		sprite->addKeyframe(LEFT_SMALLSTEP, glm::vec2(-1.0, 0.2f));
+		sprite->addKeyframe(LEFT_SMALLSTEP, glm::vec2(-0.2, 0.25f));
+		sprite->addKeyframe(LEFT_SMALLSTEP, glm::vec2(-0.4, 0.25f));
+		sprite->addKeyframe(LEFT_SMALLSTEP, glm::vec2(-0.6, 0.25f));
 		
 		
 		
@@ -140,7 +159,7 @@ void Player::update(int deltaTime)
 		if (!busy){//current animation finished, see which triggers next
 
 			if (sprite->animation() == STAND_RIGHT){
-				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('z')){
 					sprite->changeAnimation(RIGHT_WINDUP);
 					busy = true;
 					stamp = clock();
@@ -155,6 +174,11 @@ void Player::update(int deltaTime)
 					busy = true;
 					stamp = clock();
 				}
+				else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getKey('z')){
+					sprite->changeAnimation(RIGHT_SMALLSTEP);
+					busy = true;
+					stamp = clock();
+				}
 			}
 
 			else if (sprite->animation() == STAND_LEFT){
@@ -163,13 +187,18 @@ void Player::update(int deltaTime)
 					busy = true;
 					stamp = clock();
 				}
-				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && !Game::instance().getKey('z')){
 					sprite->changeAnimation(LEFT_WINDUP);
 					busy = true;
 					stamp = clock();
 				}
 				else if (Game::instance().getKey('x')){
 					sprite->changeAnimation(LEFT_UNSHEATHE);
+					busy = true;
+					stamp = clock();
+				}
+				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getKey('z')){
+					sprite->changeAnimation(LEFT_SMALLSTEP);
 					busy = true;
 					stamp = clock();
 				}
@@ -345,6 +374,18 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 
+			else if (sprite->animation() == RIGHT_SMALLSTEP){
+				sprite->changeAnimation(STAND_RIGHT);
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == LEFT_SMALLSTEP){
+				sprite->changeAnimation(STAND_LEFT);
+				busy = true;
+				stamp = clock();
+			}
+
 
 
 		}//next animation has ben chosen
@@ -479,6 +520,24 @@ void Player::update(int deltaTime)
 			}
 
 			else if (sprite->animation() == LEFT_ATTACK){
+				if (time > 7.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == RIGHT_SMALLSTEP){
+				if (time > 3.0 / 8.0){
+					posPlayer.x +=1.0*(4.0/8.0);
+				}
+				if (time > 7.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == LEFT_SMALLSTEP){
+				if (time > 3.0 / 8.0){
+					posPlayer.x -=1.0*(4.0/8.0);
+				}
 				if (time > 7.0 / 8.0){
 					busy = false;
 				}
