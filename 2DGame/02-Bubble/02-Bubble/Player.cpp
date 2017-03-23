@@ -13,7 +13,7 @@
 
 enum PlayerAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT,RIGHT_WINDUP,RIGHT_WINDDOWN
+	STAND_RIGHT, STAND_LEFT, MOVE_RIGHT, MOVE_LEFT, RIGHT_WINDUP, LEFT_WINDUP, RIGHT_WINDDOWN, LEFT_WINDDOWN
 };
 
 
@@ -25,34 +25,48 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(6);
-	
+	sprite->setNumberAnimations(8);	
+		
+
+		sprite->setAnimationSpeed(STAND_RIGHT, 8);
+		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
+
 		sprite->setAnimationSpeed(STAND_LEFT, 8);
 		sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.2, 0.f));
+
+		sprite->setAnimationSpeed(MOVE_RIGHT, 8);
+		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.8, 0.f));
+		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.0, 0.05f));
+		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.2, 0.05f));
+
+		sprite->setAnimationSpeed(MOVE_LEFT, 8);
+		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-1.0, 0.f));
+		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.2, 0.05f));
+		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.4, 0.05f));
 
 		sprite->setAnimationSpeed(RIGHT_WINDUP, 8);
 		sprite->addKeyframe(RIGHT_WINDUP, glm::vec2(0.2, 0.f));
 		sprite->addKeyframe(RIGHT_WINDUP, glm::vec2(0.4, 0.f));
 		sprite->addKeyframe(RIGHT_WINDUP, glm::vec2(0.6, 0.f));
 
+		sprite->setAnimationSpeed(LEFT_WINDUP, 8);
+		sprite->addKeyframe(LEFT_WINDUP, glm::vec2(-0.4, 0.f));
+		sprite->addKeyframe(LEFT_WINDUP, glm::vec2(-0.6, 0.f));
+		sprite->addKeyframe(LEFT_WINDUP, glm::vec2(-0.8, 0.f));
+
 		sprite->setAnimationSpeed(RIGHT_WINDDOWN, 8);
 		sprite->addKeyframe(RIGHT_WINDDOWN, glm::vec2(0.4, 0.05f));
 		sprite->addKeyframe(RIGHT_WINDDOWN, glm::vec2(0.6, 0.05f));
 		sprite->addKeyframe(RIGHT_WINDDOWN, glm::vec2(0.8, 0.05f));
 		sprite->addKeyframe(RIGHT_WINDDOWN, glm::vec2(0.0, 0.1f));
+
+		sprite->setAnimationSpeed(LEFT_WINDDOWN, 8);
+		sprite->addKeyframe(LEFT_WINDDOWN, glm::vec2(-0.6, 0.05f));
+		sprite->addKeyframe(LEFT_WINDDOWN, glm::vec2(-0.8, 0.05f));
+		sprite->addKeyframe(LEFT_WINDDOWN, glm::vec2(-1.0, 0.05f));
+		sprite->addKeyframe(LEFT_WINDDOWN, glm::vec2(-0.2, 0.1f));
 		
-		sprite->setAnimationSpeed(STAND_RIGHT, 8);
-		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
 		
-		sprite->setAnimationSpeed(MOVE_LEFT, 8);
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-1.0, 0.f));
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.2, 0.05f));
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.4, 0.05f));
-		
-		sprite->setAnimationSpeed(MOVE_RIGHT, 8);
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.8, 0.f));
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.0, 0.05f));
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.2, 0.05f));
 		
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
@@ -63,7 +77,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 		sprite->update(deltaTime);
-		if (!busy){//animation finished, see which triggers next
+		if (!busy){//current animation finished, see which triggers next
 
 			if (sprite->animation() == STAND_RIGHT){
 				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
@@ -71,7 +85,26 @@ void Player::update(int deltaTime)
 					busy = true;
 					stamp = clock();
 				}
+				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
 			}
+
+			else if (sprite->animation() == STAND_LEFT){
+				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+					sprite->changeAnimation(STAND_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+					sprite->changeAnimation(LEFT_WINDUP);
+					busy = true;
+					stamp = clock();
+				}
+			}
+
 			else if (sprite->animation() == RIGHT_WINDUP){
 				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
 					sprite->changeAnimation(MOVE_RIGHT);
@@ -84,12 +117,20 @@ void Player::update(int deltaTime)
 					stamp = clock();
 				}
 			}
-			else if (sprite->animation() == STAND_LEFT){
-				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
-					sprite->changeAnimation(STAND_RIGHT);
-					busy = false;
+
+			else if (sprite->animation() == LEFT_WINDUP){
+				if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+					sprite->changeAnimation(MOVE_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else{
+					sprite->changeAnimation(LEFT_WINDDOWN);
+					busy = true;
+					stamp = clock();
 				}
 			}
+			
 			else if (sprite->animation() == MOVE_RIGHT){
 				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
 					sprite->changeAnimation(MOVE_RIGHT);
@@ -102,28 +143,81 @@ void Player::update(int deltaTime)
 					stamp = clock();
 				}
 			}
+
+			else if (sprite->animation() == MOVE_LEFT){
+				if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+					sprite->changeAnimation(MOVE_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else{
+					sprite->changeAnimation(LEFT_WINDDOWN);
+					busy = true;
+					stamp = clock();
+				}
+			}
+
 			else if (sprite->animation() == RIGHT_WINDDOWN){
 				sprite->changeAnimation(STAND_RIGHT);
-				busy = false;
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == LEFT_WINDDOWN){
+				sprite->changeAnimation(STAND_LEFT);
+				busy = true;
+				stamp = clock();
 			}
 
 		}
 		else{//perform actions based on current animation
-			if (sprite->animation() == RIGHT_WINDUP){
-				float time = float(clock() - stamp) / CLOCKS_PER_SEC;
+			float time = float(clock() - stamp) / CLOCKS_PER_SEC;
+			cout << "entra a busy\n"<<time<<"\nanimacio="<<sprite->animation()<<"\n";
+			if (sprite->animation() == STAND_RIGHT){
+				if (time > 1.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == STAND_LEFT){
+				if (time > 1.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == RIGHT_WINDUP){
 				if (time > 3.0 / 8.0){
 					busy = false;
 				}
 			}
+
+			else if (sprite->animation() == LEFT_WINDUP){
+				if (time > 3.0 / 8.0){
+					busy = false;
+				}
+			}
+
 			else if (sprite->animation() == MOVE_RIGHT){
-				float time = float(clock() - stamp) / CLOCKS_PER_SEC;
 				posPlayer.x += 1;
 				if (time > 3.0 / 8.0){
 					busy = false;
 				}
 			}
+
+			else if (sprite->animation() == MOVE_LEFT){
+				posPlayer.x -= 1;
+				if (time > 3.0 / 8.0){
+					busy = false;
+				}
+			}
+
 			else if (sprite->animation() == RIGHT_WINDDOWN){
-				float time = float(clock() - stamp) / CLOCKS_PER_SEC;
+				if (time > 4.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == LEFT_WINDDOWN){
 				if (time > 4.0 / 8.0){
 					busy = false;
 				}
