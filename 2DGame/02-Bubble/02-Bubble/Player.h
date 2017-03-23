@@ -4,6 +4,8 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include <ctime> 
+#include <time.h>
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -23,11 +25,15 @@ public:
 	
 private:
 	bool bJumping;
-	glm::ivec2 tileMapDispl, posPlayer;
+	bool busy;
+	bool alive;
+	glm::ivec2 tileMapDispl;
+	glm::fvec2 posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	clock_t stamp;
 
 };
 
