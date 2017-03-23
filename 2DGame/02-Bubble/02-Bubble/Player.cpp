@@ -13,8 +13,9 @@
 
 enum PlayerAnims
 {
-	STAND_RIGHT, STAND_LEFT, MOVE_RIGHT, MOVE_LEFT, RIGHT_WINDUP, LEFT_WINDUP, RIGHT_WINDDOWN, LEFT_WINDDOWN, 
-	RIGHT_UNSHEATHE, LEFT_UNSHEATHE, RIGHT_FENCING, LEFT_FENCING
+	STAND_RIGHT, STAND_LEFT, MOVE_RIGHT, MOVE_LEFT, RIGHT_WINDUP, LEFT_WINDUP, RIGHT_WINDDOWN, LEFT_WINDDOWN,
+	RIGHT_UNSHEATHE, LEFT_UNSHEATHE, RIGHT_FENCING, LEFT_FENCING, RIGHT_FENCING_STEPFWRD, LEFT_FENCING_STEPFWRD,
+	RIGHT_FENCING_STEPBACK, LEFT_FENCING_STEPBACK, RIGHT_SHEATHE, LEFT_SHEATHE, RIGHT_ATTACK, LEFT_ATTACK
 };
 
 
@@ -26,7 +27,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(12);	
+	sprite->setNumberAnimations(20);	
 		
 
 		sprite->setAnimationSpeed(STAND_RIGHT, 8);
@@ -82,6 +83,48 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 		sprite->setAnimationSpeed(LEFT_FENCING, 8);
 		sprite->addKeyframe(LEFT_FENCING, glm::vec2(-1.0f, 0.1f));
+
+		sprite->setAnimationSpeed(RIGHT_FENCING_STEPFWRD, 8);
+		sprite->addKeyframe(RIGHT_FENCING_STEPFWRD, glm::vec2(0.4f, 0.6f));
+
+		sprite->setAnimationSpeed(LEFT_FENCING_STEPFWRD, 8);
+		sprite->addKeyframe(LEFT_FENCING_STEPFWRD, glm::vec2(-0.6f, 0.6f));
+
+		sprite->setAnimationSpeed(RIGHT_FENCING_STEPBACK, 8);
+		sprite->addKeyframe(RIGHT_FENCING_STEPBACK, glm::vec2(0.4f, 0.6f));
+
+		sprite->setAnimationSpeed(LEFT_FENCING_STEPBACK, 8);
+		sprite->addKeyframe(LEFT_FENCING_STEPBACK, glm::vec2(-0.6f, 0.6f));
+
+		sprite->setAnimationSpeed(RIGHT_SHEATHE, 8);
+		sprite->addKeyframe(RIGHT_SHEATHE, glm::vec2(0.6, 0.1f));
+		sprite->addKeyframe(RIGHT_SHEATHE, glm::vec2(0.4, 0.1f));
+		sprite->addKeyframe(RIGHT_SHEATHE, glm::vec2(0.2, 0.1f));
+
+		sprite->setAnimationSpeed(LEFT_SHEATHE, 8);
+		sprite->addKeyframe(LEFT_SHEATHE, glm::vec2(-0.8, 0.1f));
+		sprite->addKeyframe(LEFT_SHEATHE, glm::vec2(-0.6, 0.1f));
+		sprite->addKeyframe(LEFT_SHEATHE, glm::vec2(-0.4, 0.1f));
+
+		sprite->setAnimationSpeed(RIGHT_ATTACK, 8);
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.0, 0.15f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.2, 0.15f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.4, 0.15f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.6, 0.15f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.8, 0.15f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.4, 0.15f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.0, 0.15f));
+
+		sprite->setAnimationSpeed(LEFT_ATTACK, 8);
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.2, 0.15f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.4, 0.15f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.6, 0.15f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.8, 0.15f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-1.0, 0.15f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.6, 0.15f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.2, 0.15f));
+		
+		
 		
 		
 		
@@ -209,19 +252,106 @@ void Player::update(int deltaTime)
 			}
 
 			else if (sprite->animation() == RIGHT_FENCING){
-				
+				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+					sprite->changeAnimation(RIGHT_FENCING_STEPFWRD);
+					busy = true;
+					stamp = clock();
+				}
+				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+					sprite->changeAnimation(RIGHT_FENCING_STEPBACK);
+					busy = true;
+					stamp = clock();
+				}
+				else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)){
+					sprite->changeAnimation(RIGHT_SHEATHE);
+					busy = true;
+					stamp = clock();
+				}
+				else if (Game::instance().getKey('x')){
+					sprite->changeAnimation(RIGHT_ATTACK);
+					busy = true;
+					stamp = clock();
+				}
 			}
 
 			else if (sprite->animation() == LEFT_FENCING){
+				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+					sprite->changeAnimation(LEFT_FENCING_STEPBACK);
+					busy = true;
+					stamp = clock();
+				}
+				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+					sprite->changeAnimation(LEFT_FENCING_STEPFWRD);
+					busy = true;
+					stamp = clock();
+				}
+				else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)){
+					sprite->changeAnimation(LEFT_SHEATHE);
+					busy = true;
+					stamp = clock();
+				}
+				else if (Game::instance().getKey('x')){
+					sprite->changeAnimation(LEFT_ATTACK);
+					busy = true;
+					stamp = clock();
+				}
+			}
 
+			else if (sprite->animation() == RIGHT_FENCING_STEPFWRD){
+				sprite->changeAnimation(RIGHT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == RIGHT_FENCING_STEPBACK){
+				sprite->changeAnimation(RIGHT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == LEFT_FENCING_STEPFWRD){
+				sprite->changeAnimation(LEFT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == LEFT_FENCING_STEPBACK){
+				sprite->changeAnimation(LEFT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == RIGHT_SHEATHE){
+				sprite->changeAnimation(STAND_RIGHT);
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == LEFT_SHEATHE){
+				sprite->changeAnimation(STAND_LEFT);
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == RIGHT_ATTACK){
+				sprite->changeAnimation(RIGHT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
+
+			else if (sprite->animation() == LEFT_ATTACK){
+				sprite->changeAnimation(LEFT_FENCING);
+				busy = true;
+				stamp = clock();
 			}
 
 
 
+		}//next animation has ben chosen
 
 
-		}
-		else{//perform actions based on current animation
+		//perform actions based on current animation
+		else{
 			float time = float(clock() - stamp) / CLOCKS_PER_SEC;
 			cout << "entra a busy\n"<<time<<"\nanimacio="<<sprite->animation()<<"\n";
 			if (sprite->animation() == STAND_RIGHT){
@@ -298,6 +428,58 @@ void Player::update(int deltaTime)
 
 			else if (sprite->animation() == LEFT_FENCING){
 				if (time > 1.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == RIGHT_FENCING_STEPFWRD){
+				posPlayer.x += 5.0 / 8.0;
+				if (time > 1.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == RIGHT_FENCING_STEPBACK){
+				posPlayer.x -= 5.0 / 8.0;
+				if (time > 1.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == LEFT_FENCING_STEPFWRD){
+				posPlayer.x -= 5.0 / 8.0;
+				if (time > 1.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == LEFT_FENCING_STEPBACK){
+				posPlayer.x += 5.0 / 8.0;
+				if (time > 1.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == RIGHT_SHEATHE){
+				if (time > 3.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == LEFT_SHEATHE){
+				if (time > 3.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == RIGHT_ATTACK){
+				if (time > 7.0 / 8.0){
+					busy = false;
+				}
+			}
+
+			else if (sprite->animation() == LEFT_ATTACK){
+				if (time > 7.0 / 8.0){
 					busy = false;
 				}
 			}
