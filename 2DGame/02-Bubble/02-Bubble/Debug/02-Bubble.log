@@ -1,16 +1,21 @@
-﻿Build started 24/03/2017 17:38:33.
-     1>Project "C:\Users\Oriol\Documents\GitHub\VJEntrega1\2DGame\02-Bubble\02-Bubble\02-Bubble.vcxproj" on node 2 (Build target(s)).
+﻿Compilación iniciada a las 24/03/2017 19:06:09.
+     1>Proyecto "C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\02-Bubble\02-Bubble.vcxproj" en el nodo 2 (Build destinos).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\libs\Simple OpenGL Image Library\src" /I..\..\..\libs\freeglut\include /I"..\..\..\libs\glew-1.13.0\include" /I..\..\..\libs\glm /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp Player.cpp Scene.cpp main.cpp
-         Scene.cpp
-         Generating Code...
-         Compiling...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\libs\Simple OpenGL Image Library\src" /I..\..\..\libs\freeglut\include /I"..\..\..\libs\glew-1.13.0\include" /I..\..\..\libs\glm /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp Player.cpp Scene.cpp Shader.cpp ShaderProgram.cpp Sprite.cpp Texture.cpp TileMap.cpp main.cpp
          main.cpp
+         TileMap.cpp
+     1>c:\users\dmnt\documents\vjentrega1\2dgame\02-bubble\02-bubble\tilemap.cpp(204): warning C4244: '=' : conversión de 'const int' a 'float'; posible pérdida de datos
+         Texture.cpp
+         Sprite.cpp
+     1>c:\users\dmnt\documents\vjentrega1\2dgame\02-bubble\02-bubble\sprite.cpp(46): warning C4018: '>=' : no coinciden signed/unsigned
+         ShaderProgram.cpp
+         Shader.cpp
+         Scene.cpp
          Player.cpp
          Game.cpp
-         Generating Code...
+         Generando código...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Oriol\Documents\GitHub\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug" /LIBPATH:..\..\..\libs\freeglut\lib /LIBPATH:"..\..\..\libs\glew-1.13.0\lib\Release\Win32" SOIL.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Oriol\Documents\GitHub\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Oriol\Documents\GitHub\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.lib" /MACHINE:X86 Debug\Game.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug" /LIBPATH:..\..\..\libs\freeglut\lib /LIBPATH:"..\..\..\libs\glew-1.13.0\lib\Release\Win32" SOIL.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.lib" /MACHINE:X86 Debug\Game.obj
          Debug\main.obj
          Debug\Player.obj
          Debug\Scene.obj
@@ -19,9 +24,14 @@
          Debug\Sprite.obj
          Debug\Texture.obj
          Debug\TileMap.obj
-         02-Bubble.vcxproj -> C:\Users\Oriol\Documents\GitHub\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.exe
-     1>Done Building Project "C:\Users\Oriol\Documents\GitHub\VJEntrega1\2DGame\02-Bubble\02-Bubble\02-Bubble.vcxproj" (Build target(s)).
+         LINK : no se encontró C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+     1>SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+     1>SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+     1>SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(SOIL.obj)' o en 'C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+     1>SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(stb_image_aug.obj)' o en 'C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+         02-Bubble.vcxproj -> C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.exe
+     1>Compilación del proyecto terminada "C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\02-Bubble\02-Bubble.vcxproj" (Build destinos).
 
-Build succeeded.
+Compilación correcta.
 
-Time Elapsed 00:00:03.58
+Tiempo transcurrido 00:00:05.79
