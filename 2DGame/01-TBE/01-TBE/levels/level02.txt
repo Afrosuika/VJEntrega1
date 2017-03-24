@@ -1,0 +1,7 @@
+TILEMAP
+30 9 			-- Size of tile map in tiles
+64 64			-- Tile size
+32 64 			-- Block size
+images/tiled1.png 	-- Tilesheet
+6 3 			-- Number of tiles in tilesheet
+JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
