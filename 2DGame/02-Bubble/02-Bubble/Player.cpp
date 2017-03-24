@@ -678,8 +678,8 @@ void Player::update(int deltaTime)
 			}
 
 			else if (sprite->animation() == RIGHT_JUMPUP){
-				if (time >= 5.0 / 8.0  && time < 7.0/8.0){
-					posPlayer.y -= 1.0*(5.0 / 8.0);
+				if (time >= 5.0 / 8.0  && time < 6.9/8.0){
+					posPlayer.y -= 1.0*(11.5 / 8.0);
 				}
 				if (time >= 8.0 / 8.0){
 					busy = false;
@@ -687,8 +687,8 @@ void Player::update(int deltaTime)
 			}
 
 			else if (sprite->animation() == LEFT_JUMPUP){
-				if (time >= 5.0 / 8.0  && time < 7.0 / 8.0){
-					posPlayer.y -= 1.0*(5.0 / 8.0);
+				if (time >= 5.0 / 8.0  && time < 6.9 / 8.0){
+					posPlayer.y -= 1.0*(11.5 / 8.0);
 				}
 				if (time >= 8.0 / 8.0){
 					busy = false;
@@ -697,7 +697,7 @@ void Player::update(int deltaTime)
 
 			else if (sprite->animation() == RIGHT_LAND){
 				if (time<2.0 / 8.0){
-					posPlayer.y += 1.0*(5.0 / 8.0);
+					posPlayer.y += 1.0*(11.5 / 8.0);
 				}
 				if (time >= 3.0 / 8.0){
 					busy = false;
@@ -706,7 +706,7 @@ void Player::update(int deltaTime)
 
 			else if (sprite->animation() == LEFT_LAND){
 				if (time<2.0 / 8.0){
-					posPlayer.y += 1.0*(5.0 / 8.0);
+					posPlayer.y += 1.0*(11.5 / 8.0);
 				}
 				if (time >= 3.0 / 8.0){
 					busy = false;
