@@ -30,11 +30,11 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	//map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()-10));
 	player->setTileMap(map);
 
 	Spikes *spiketrap = new Spikes();
@@ -66,7 +66,8 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
-	//map2->render();
+	map2->render();
+	spikes[0]->render();
 	player->render();
 }
 
