@@ -27,6 +27,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	bJumping = false;
 	busy = false;
 	alive = true;
+	spikedanger = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
@@ -277,6 +278,17 @@ void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	if (!busy){//current animation finished, see which triggers next
+
+		spikedanger = false;//primer comprobem si està a sobre d'unes punxes
+		for (Spikes* theSpike : spikeTraps){
+			glm::ivec2 spikepos = theSpike->getPosRender();
+			if (posPlayer.x + 64.0 > (spikepos.x + 16) - 10 && posPlayer.x + 64.0 < (spikepos.x + 16) + 10){
+				if (((posPlayer.y + 8) - spikepos.y) > -10 && ((posPlayer.y - 8) - spikepos.y) < 10){
+					spikedanger = true;
+				}
+				
+			}			
+		}
 
 		if (sprite->animation() == STAND_RIGHT){
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('z') && !Game::instance().getSpecialKey(GLUT_KEY_UP)){
@@ -651,7 +663,7 @@ void Player::update(int deltaTime)
 	//perform actions based on current animation
 	else{
 		float time = float(clock() - stamp) / CLOCKS_PER_SEC;
-		cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\n";
+		cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\nspikes= "<<spikedanger<<"\n";
 
 		if (sprite->animation() == STAND_RIGHT){
 			if (time >= 1.0 / 8.0){
@@ -1017,6 +1029,11 @@ void Player::setTileMap(TileMap *tileMap)
 
 glm::fvec2 Player::getPosPlayer() {
 	return posPlayer;
+}
+
+void Player::setSpikes(vector<Spikes *> &vec)
+{
+	spikeTraps = vec;
 }
 
 void Player::setPosition(const glm::vec2 &pos)

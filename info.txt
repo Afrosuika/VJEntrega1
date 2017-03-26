@@ -10,4 +10,6 @@ Ernest:
 
 
 Instruccions:
+Ernest:
 -Animacions Príncep
+-Animacions trampa de punxes

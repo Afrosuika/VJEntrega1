@@ -2,10 +2,12 @@
 #define _PLAYER_INCLUDE
 
 
+#include <vector>
 #include "Sprite.h"
 #include "TileMap.h"
 #include <ctime> 
 #include <time.h>
+#include "Spikes.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -22,12 +24,14 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	void setSpikes(vector<Spikes*> &vec);
 	glm::fvec2 getPosPlayer();
 	
 private:
 	bool bJumping;
 	bool busy;
 	bool alive;
+	bool spikedanger;
 	glm::ivec2 tileMapDispl;
 	glm::fvec2 posPlayer;
 	int jumpAngle;
@@ -36,6 +40,7 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	clock_t stamp;
+	vector<Spikes*> spikeTraps;
 
 };
 
