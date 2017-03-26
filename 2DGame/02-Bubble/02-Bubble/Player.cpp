@@ -651,7 +651,7 @@ void Player::update(int deltaTime)
 	//perform actions based on current animation
 	else{
 		float time = float(clock() - stamp) / CLOCKS_PER_SEC;
-		//cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\n";
+		cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\n";
 
 		if (sprite->animation() == STAND_RIGHT){
 			if (time >= 1.0 / 8.0){
