@@ -349,6 +349,7 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)){
+				startY = posPlayer.y;
 				sprite->changeAnimation(LEFT_JUMPFWRD);
 				busy = true;
 				stamp = clock();
@@ -650,7 +651,7 @@ void Player::update(int deltaTime)
 	//perform actions based on current animation
 	else{
 		float time = float(clock() - stamp) / CLOCKS_PER_SEC;
-		cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\n";
+		//cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\n";
 
 		if (sprite->animation() == STAND_RIGHT){
 			if (time >= 1.0 / 8.0){
@@ -1012,6 +1013,10 @@ void Player::render()
 void Player::setTileMap(TileMap *tileMap)
 {
 	map = tileMap;
+}
+
+glm::fvec2 Player::getPosPlayer() {
+	return posPlayer;
 }
 
 void Player::setPosition(const glm::vec2 &pos)
