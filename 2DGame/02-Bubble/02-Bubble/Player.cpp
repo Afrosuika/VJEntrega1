@@ -262,7 +262,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(LEFT_DEATH, glm::vec2(-0.8f, 0.6f));
 
 	sprite->setAnimationSpeed(RIGHT_SPIKEDEATH, 8);
-	sprite->addKeyframe(RIGHT_SPIKEDEATH, glm::vec2(0.6f, 0.8f));
+	sprite->addKeyframe(RIGHT_SPIKEDEATH, glm::vec2(0.8f, 0.6f));
 
 	sprite->setAnimationSpeed(LEFT_SPIKEDEATH, 8);
 	sprite->addKeyframe(LEFT_SPIKEDEATH, glm::vec2(-1.0f, 0.6f));
@@ -376,7 +376,12 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_WINDUP){
-			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+			if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
 				sprite->changeAnimation(MOVE_RIGHT);
 				busy = true;
 				stamp = clock();
@@ -389,7 +394,12 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == LEFT_WINDUP){
-			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+			if (spikedanger){
+				sprite->changeAnimation(LEFT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
 				sprite->changeAnimation(MOVE_LEFT);
 				busy = true;
 				stamp = clock();
@@ -402,7 +412,12 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == MOVE_RIGHT){
-			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
+			if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
 				sprite->changeAnimation(MOVE_RIGHT);
 				busy = true;
 				stamp = clock();
@@ -415,7 +430,12 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == MOVE_LEFT){
-			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
+			if (spikedanger){
+				sprite->changeAnimation(LEFT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
 				sprite->changeAnimation(MOVE_LEFT);
 				busy = true;
 				stamp = clock();
@@ -428,15 +448,29 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_WINDDOWN){
-			sprite->changeAnimation(STAND_RIGHT);
-			busy = true;
-			stamp = clock();
+			if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else{
+				sprite->changeAnimation(STAND_RIGHT);
+				busy = true;
+				stamp = clock();
+			}
 		}
 
 		else if (sprite->animation() == LEFT_WINDDOWN){
-			sprite->changeAnimation(STAND_LEFT);
-			busy = true;
-			stamp = clock();
+			if (spikedanger){
+				sprite->changeAnimation(LEFT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(STAND_LEFT);
+				busy = true;
+				stamp = clock();
+			}
 		}
 
 		else if (sprite->animation() == RIGHT_UNSHEATHE){
@@ -498,27 +532,55 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_FENCING_STEPFWRD){
-			sprite->changeAnimation(RIGHT_FENCING);
-			busy = true;
-			stamp = clock();
+			if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(RIGHT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
 		}
 
 		else if (sprite->animation() == RIGHT_FENCING_STEPBACK){
-			sprite->changeAnimation(RIGHT_FENCING);
-			busy = true;
-			stamp = clock();
+			if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else{
+				sprite->changeAnimation(RIGHT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
 		}
 
 		else if (sprite->animation() == LEFT_FENCING_STEPFWRD){
-			sprite->changeAnimation(LEFT_FENCING);
-			busy = true;
-			stamp = clock();
+			if (spikedanger){
+				sprite->changeAnimation(LEFT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else{
+				sprite->changeAnimation(LEFT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
 		}
 
 		else if (sprite->animation() == LEFT_FENCING_STEPBACK){
-			sprite->changeAnimation(LEFT_FENCING);
-			busy = true;
-			stamp = clock();
+			if (spikedanger){
+				sprite->changeAnimation(LEFT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else{
+				sprite->changeAnimation(LEFT_FENCING);
+				busy = true;
+				stamp = clock();
+			}
 		}
 
 		else if (sprite->animation() == RIGHT_SHEATHE){
@@ -639,14 +701,29 @@ void Player::update(int deltaTime)
 			stamp = clock();
 		}
 		else if (sprite->animation() == RIGHT_FWRDLAND){
-			sprite->changeAnimation(STAND_RIGHT);
-			busy = true;
-			stamp = clock();
+			if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(STAND_RIGHT);
+				busy = true;
+				stamp = clock();
+			}
 		}
+
 		else if (sprite->animation() == LEFT_FWRDLAND){
-			sprite->changeAnimation(STAND_LEFT);
-			busy = true;
-			stamp = clock();
+			if (spikedanger){
+				sprite->changeAnimation(LEFT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(STAND_LEFT);
+				busy = true;
+				stamp = clock();
+			}
 		}
 		else if (sprite->animation() == ENTER_BIGDOOR){
 			sprite->changeAnimation(GONE);
@@ -948,6 +1025,18 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == GONE){
+			if (time >= 1.0 / 8.0){
+				busy = false;
+			}
+		}
+
+		else if (sprite->animation() == RIGHT_SPIKEDEATH){
+			if (time >= 1.0 / 8.0){
+				busy = false;
+			}
+		}
+
+		else if (sprite->animation() == LEFT_SPIKEDEATH){
 			if (time >= 1.0 / 8.0){
 				busy = false;
 			}
