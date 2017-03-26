@@ -17,7 +17,8 @@ enum PlayerAnims
 	RIGHT_UNSHEATHE, LEFT_UNSHEATHE, RIGHT_FENCING, LEFT_FENCING, RIGHT_FENCING_STEPFWRD, LEFT_FENCING_STEPFWRD,
 	RIGHT_FENCING_STEPBACK, LEFT_FENCING_STEPBACK, RIGHT_SHEATHE, LEFT_SHEATHE, RIGHT_ATTACK, LEFT_ATTACK,
 	RIGHT_SMALLSTEP, LEFT_SMALLSTEP, RIGHT_JUMPUP, LEFT_JUMPUP, RIGHT_LAND, LEFT_LAND, RIGHT_GRAB, LEFT_GRAB,
-	RIGHT_CLIMB, LEFT_CLIMB, RIGHT_JUMPFWRD, LEFT_JUMPFWRD, ENTER_BIGDOOR, GONE
+	RIGHT_CLIMB, LEFT_CLIMB, RIGHT_JUMPFWRD, LEFT_JUMPFWRD, ENTER_BIGDOOR, GONE, RIGHT_FWRDLAND, LEFT_FWRDLAND,
+	RIGHT_DEATH, LEFT_DEATH, RIGHT_SPIKEDEATH, LEFT_SPIKEDEATH
 };
 
 
@@ -29,7 +30,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(34);
+	sprite->setNumberAnimations(40);
 
 
 	sprite->setAnimationSpeed(STAND_RIGHT, 8);
@@ -212,10 +213,12 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(RIGHT_JUMPFWRD, glm::vec2(0.0, 0.55f));
 	sprite->addKeyframe(RIGHT_JUMPFWRD, glm::vec2(0.2, 0.55f));
 	sprite->addKeyframe(RIGHT_JUMPFWRD, glm::vec2(0.4, 0.55f));
-	sprite->addKeyframe(RIGHT_JUMPFWRD, glm::vec2(0.6, 0.55f));
-	sprite->addKeyframe(RIGHT_JUMPFWRD, glm::vec2(0.8, 0.55f));
-	sprite->addKeyframe(RIGHT_JUMPFWRD, glm::vec2(0.0, 0.6f));
-	sprite->addKeyframe(RIGHT_JUMPFWRD, glm::vec2(0.2, 0.6f));
+
+	sprite->setAnimationSpeed(RIGHT_FWRDLAND, 8);
+	sprite->addKeyframe(RIGHT_FWRDLAND, glm::vec2(0.6, 0.55f));
+	sprite->addKeyframe(RIGHT_FWRDLAND, glm::vec2(0.8, 0.55f));
+	sprite->addKeyframe(RIGHT_FWRDLAND, glm::vec2(0.0, 0.6f));
+	sprite->addKeyframe(RIGHT_FWRDLAND, glm::vec2(0.2, 0.6f));
 
 	sprite->setAnimationSpeed(LEFT_JUMPFWRD, 8);
 	sprite->addKeyframe(LEFT_JUMPFWRD, glm::vec2(-0.6, 0.45f));
@@ -229,10 +232,12 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(LEFT_JUMPFWRD, glm::vec2(-0.2, 0.55f));
 	sprite->addKeyframe(LEFT_JUMPFWRD, glm::vec2(-0.4, 0.55f));
 	sprite->addKeyframe(LEFT_JUMPFWRD, glm::vec2(-0.6, 0.55f));
-	sprite->addKeyframe(LEFT_JUMPFWRD, glm::vec2(-0.8, 0.55f));
-	sprite->addKeyframe(LEFT_JUMPFWRD, glm::vec2(-1.0, 0.55f));
-	sprite->addKeyframe(LEFT_JUMPFWRD, glm::vec2(-0.2, 0.6f));
-	sprite->addKeyframe(LEFT_JUMPFWRD, glm::vec2(-0.4, 0.6f));
+
+	sprite->setAnimationSpeed(LEFT_FWRDLAND, 8);
+	sprite->addKeyframe(LEFT_FWRDLAND, glm::vec2(-0.8, 0.55f));
+	sprite->addKeyframe(LEFT_FWRDLAND, glm::vec2(-1.0, 0.55f));
+	sprite->addKeyframe(LEFT_FWRDLAND, glm::vec2(-0.2, 0.6f));
+	sprite->addKeyframe(LEFT_FWRDLAND, glm::vec2(-0.4, 0.6f));
 
 	sprite->setAnimationSpeed(ENTER_BIGDOOR, 8);
 	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.0, 0.65f));
@@ -248,6 +253,18 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 	sprite->setAnimationSpeed(GONE, 8);
 	sprite->addKeyframe(GONE, glm::vec2(0.f, 0.8f));
+
+	sprite->setAnimationSpeed(RIGHT_DEATH, 8);
+	sprite->addKeyframe(RIGHT_DEATH, glm::vec2(0.6f, 0.6f));
+
+	sprite->setAnimationSpeed(LEFT_DEATH, 8);
+	sprite->addKeyframe(LEFT_DEATH, glm::vec2(-0.8f, 0.6f));
+
+	sprite->setAnimationSpeed(RIGHT_SPIKEDEATH, 8);
+	sprite->addKeyframe(RIGHT_SPIKEDEATH, glm::vec2(0.6f, 0.8f));
+
+	sprite->setAnimationSpeed(LEFT_SPIKEDEATH, 8);
+	sprite->addKeyframe(LEFT_SPIKEDEATH, glm::vec2(-1.0f, 0.6f));
 
 
 	sprite->changeAnimation(0);
@@ -284,11 +301,13 @@ void Player::update(int deltaTime)
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v')){
 				//per ara, apretar la v simularà estar davant la porta gran
+				startY = posPlayer.y;
 				sprite->changeAnimation(RIGHT_JUMPUP);
 				busy = true;
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)){
+				startY = posPlayer.y;
 				sprite->changeAnimation(RIGHT_JUMPFWRD);
 				busy = true;
 				stamp = clock();
@@ -323,6 +342,7 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_LEFT) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v')){
+				startY = posPlayer.y;
 				//per ara, apretar la v simularà estar davant la porta gran
 				sprite->changeAnimation(LEFT_JUMPUP);
 				busy = true;
@@ -334,6 +354,7 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && Game::instance().getKey('v')){
+				startY = posPlayer.y;
 				//per ara, apretar la v simularà estar davant la porta gran
 				sprite->changeAnimation(ENTER_BIGDOOR);
 				busy = true;
@@ -594,12 +615,22 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_JUMPFWRD){
-			sprite->changeAnimation(STAND_RIGHT);
+			sprite->changeAnimation(RIGHT_FWRDLAND);
 			busy = true;
 			stamp = clock();
 		}
 
 		else if (sprite->animation() == LEFT_JUMPFWRD){
+			sprite->changeAnimation(LEFT_FWRDLAND);
+			busy = true;
+			stamp = clock();
+		}
+		else if (sprite->animation() == RIGHT_FWRDLAND){
+			sprite->changeAnimation(STAND_RIGHT);
+			busy = true;
+			stamp = clock();
+		}
+		else if (sprite->animation() == LEFT_FWRDLAND){
 			sprite->changeAnimation(STAND_LEFT);
 			busy = true;
 			stamp = clock();
@@ -792,6 +823,7 @@ void Player::update(int deltaTime)
 				posPlayer.y += 1.0*(11.5 / 8.0);
 			}
 			if (time >= 2.9 / 8.0){
+				posPlayer.y = startY;
 				busy = false;
 			}
 		}
@@ -801,6 +833,7 @@ void Player::update(int deltaTime)
 				posPlayer.y += 1.0*(11.5 / 8.0);
 			}
 			if (time >= 2.9 / 8.0){
+				posPlayer.y = startY;
 				busy = false;
 			}
 		}
@@ -852,11 +885,9 @@ void Player::update(int deltaTime)
 			if (time >= 5.0 / 8.0  && time < 10.0 / 8.0){
 				posPlayer.x += 1.0*(14.0 / 8.0);
 			}
-			else if (time >= 10.0 / 8.0  && time < 14.0 / 8.0){
-				posPlayer.x += 1.0*(6.0 / 8.0);
-			}
 
-			if (time >= 14.9 / 8.0){
+			if (time >= 9.9 / 8.0){
+				posPlayer.y = startY;
 				busy = false;
 			}
 		}
@@ -872,11 +903,27 @@ void Player::update(int deltaTime)
 			if (time >= 5.0 / 8.0  && time < 10.0 / 8.0){
 				posPlayer.x -= 1.0*(14.0 / 8.0);
 			}
-			else if (time >= 10.0 / 8.0  && time < 14.0 / 8.0){
+
+			if (time >= 9.9 / 8.0){
+				posPlayer.y = startY;
+				busy = false;
+			}
+		}
+
+		else if (sprite->animation() == RIGHT_FWRDLAND){
+			if (time >= 0.0 / 8.0){
+				posPlayer.x += 1.0*(6.0 / 8.0);
+			}
+			if (time >= 3.9 / 8.0){
+				busy = false;
+			}
+		}
+
+		else if (sprite->animation() == LEFT_FWRDLAND){
+			if (time >= 0.0 / 8.0){
 				posPlayer.x -= 1.0*(6.0 / 8.0);
 			}
-
-			if (time >= 14.9 / 8.0){
+			if (time >= 3.9 / 8.0){
 				busy = false;
 			}
 		}

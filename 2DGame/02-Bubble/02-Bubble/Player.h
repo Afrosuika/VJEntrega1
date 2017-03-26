@@ -29,7 +29,8 @@ private:
 	bool alive;
 	glm::ivec2 tileMapDispl;
 	glm::fvec2 posPlayer;
-	int jumpAngle, startY;
+	int jumpAngle;
+	float startY;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
