@@ -22,6 +22,7 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	glm::fvec2 getPosPlayer();
 	
 private:
 	bool bJumping;

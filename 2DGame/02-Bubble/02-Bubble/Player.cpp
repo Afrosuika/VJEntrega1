@@ -349,6 +349,7 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)){
+				startY = posPlayer.y;
 				sprite->changeAnimation(LEFT_JUMPFWRD);
 				busy = true;
 				stamp = clock();
@@ -1012,6 +1013,10 @@ void Player::render()
 void Player::setTileMap(TileMap *tileMap)
 {
 	map = tileMap;
+}
+
+glm::fvec2 Player::getPosPlayer() {
+	return posPlayer;
 }
 
 void Player::setPosition(const glm::vec2 &pos)

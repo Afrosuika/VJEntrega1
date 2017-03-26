@@ -21,7 +21,7 @@ public:
 
 private:
 
-
+	bool busy;
 	glm::ivec2 tileMapDispl;
 	glm::fvec2 posPlayer;
 	glm::ivec2 posSpikes, spriteSize;

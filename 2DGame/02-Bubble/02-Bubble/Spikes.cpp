@@ -39,7 +39,6 @@ void Spikes::init(Player *pl, const glm::ivec2 &position, ShaderProgram &shaderP
 
 		sprite->changeAnimation(DOWN);	
 
-	posSpikes = position;
 	tileMapDispl = position;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posSpikes.x), float(tileMapDispl.y + posSpikes.y)));
 
@@ -51,7 +50,68 @@ void Spikes::init(Player *pl, const glm::ivec2 &position, ShaderProgram &shaderP
 
 void Spikes::update(int deltaTime)
 {
-	//manage spikes behavior here
+
+	if (!busy){//check if animation has to change
+		glm::fvec2 posplayer = player->getPosPlayer();
+
+		if (sprite->animation() == COMING_UP){
+			sprite->changeAnimation(UP);
+			busy = true;
+			stamp = clock();
+		}
+		else if (sprite->animation() == COMING_DOWN){
+			sprite->changeAnimation(DOWN);
+			busy = true;
+			stamp = clock();
+		}
+
+		if (posplayer.x+32.0 > posSpikes.x - 50 && posplayer.x+32.0 < posSpikes.x + 50){
+			if (sprite->animation() == DOWN){
+				sprite->changeAnimation(COMING_UP);
+				busy = true;
+				stamp = clock();
+			}
+
+		}
+		else{
+			if (sprite->animation() == UP){
+				sprite->changeAnimation(COMING_DOWN);
+				busy = true;
+				stamp = clock();
+			}
+		}
+		
+	}
+	else{//play current animation
+		float time = float(clock() - stamp) / CLOCKS_PER_SEC;
+		glm::fvec2 posplayer = player->getPosPlayer();
+		//cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\n";
+
+		if (sprite->animation() == UP){
+			if (time >= 1.0 / 8.0){
+				busy = false;
+			}
+		}
+
+		else if (sprite->animation() == DOWN){
+			if (time >= 1.0 / 8.0){
+				busy = false;
+			}
+		}
+
+		else if (sprite->animation() == COMING_UP){
+			if (time >= 1.9 / 8.0){
+				busy = false;
+			}
+		}
+
+		else if (sprite->animation() == COMING_DOWN){
+			if (time >= 1.9 / 8.0){
+				busy = false;
+			}
+		}
+
+	}
 }
 
 void Spikes::render()
