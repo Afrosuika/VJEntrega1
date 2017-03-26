@@ -282,7 +282,7 @@ void Player::update(int deltaTime)
 		spikedanger = false;//primer comprobem si està a sobre d'unes punxes
 		for (Spikes* theSpike : spikeTraps){
 			glm::ivec2 spikepos = theSpike->getPosRender();
-			if (posPlayer.x + 64.0 > (spikepos.x + 16) - 10 && posPlayer.x + 64.0 < (spikepos.x + 16) + 10){
+			if (posPlayer.x + 64.0 > (spikepos.x + 16) - 10 && posPlayer.x + 64.0 < (spikepos.x + 16) + 30){
 				if (((posPlayer.y + 8) - spikepos.y) > -10 && ((posPlayer.y - 8) - spikepos.y) < 10){
 					spikedanger = true;
 				}
