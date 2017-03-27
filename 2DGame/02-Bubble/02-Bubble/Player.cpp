@@ -339,9 +339,23 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getKey('z')){
-				sprite->changeAnimation(RIGHT_SMALLSTEP);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(RIGHT_FALL);
+					startY = posPlayer.y;
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(RIGHT_SMALLSTEP);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v')){
 				//per ara, apretar la v simularà estar davant la porta gran
@@ -402,9 +416,23 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getKey('z')){
-				sprite->changeAnimation(LEFT_SMALLSTEP);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(LEFT_FALL);
+					startY = posPlayer.y;
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(LEFT_SMALLSTEP);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_LEFT) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v')){
 				startY = posPlayer.y;
@@ -448,9 +476,17 @@ void Player::update(int deltaTime)
 				}
 			}
 			else{
-				sprite->changeAnimation(RIGHT_WINDDOWN);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(RIGHT_WINDDOWN);
+					busy = true;
+					stamp = clock();
+				}
 			}
 		}
 
@@ -480,9 +516,17 @@ void Player::update(int deltaTime)
 				}
 			}
 			else{
-				sprite->changeAnimation(LEFT_WINDDOWN);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(LEFT_WINDDOWN);
+					busy = true;
+					stamp = clock();
+				}
 			}
 		}
 
@@ -512,9 +556,25 @@ void Player::update(int deltaTime)
 				}
 			}
 			else{
-				sprite->changeAnimation(RIGHT_WINDDOWN);
-				busy = true;
-				stamp = clock();
+				//AIXO SEMBLA NO FUNCIONAR
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(RIGHT_FALL);
+					startY = posPlayer.y;
+					busy = true;
+					stamp = clock();
+				}
+				//FINS AQUI
+				else {
+					sprite->changeAnimation(RIGHT_WINDDOWN);
+					busy = true;
+					stamp = clock();
+				}
 			}
 		}
 
@@ -544,9 +604,25 @@ void Player::update(int deltaTime)
 				}
 			}
 			else{
-				sprite->changeAnimation(LEFT_WINDDOWN);
-				busy = true;
-				stamp = clock();
+				//AIXO SEMBLA NO FUNCIONAR
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(64, 64), &posPlayer.y)) {
+					sprite->changeAnimation(LEFT_FALL);
+					startY = posPlayer.y;
+					busy = true;
+					stamp = clock();
+				}
+				//FINS AQUI
+				else{
+					sprite->changeAnimation(LEFT_WINDDOWN);
+					busy = true;
+					stamp = clock();
+				}
 			}
 		}
 
@@ -556,6 +632,7 @@ void Player::update(int deltaTime)
 				busy = true;
 				stamp = clock();
 			}
+			//AIXO SEMBLA NO-FUNCIONAR
 			else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 				sprite->changeAnimation(RIGHT_FALL);
 				startY = posPlayer.y;
@@ -568,6 +645,7 @@ void Player::update(int deltaTime)
 				busy = true;
 				stamp = clock();
 			}
+			//FINS AQUI
 			else{
 				sprite->changeAnimation(STAND_RIGHT);
 				busy = true;
@@ -608,14 +686,40 @@ void Player::update(int deltaTime)
 
 		else if (sprite->animation() == RIGHT_FENCING){
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
-				sprite->changeAnimation(RIGHT_FENCING_STEPFWRD);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(RIGHT_FENCING);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(RIGHT_FENCING);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(RIGHT_FENCING_STEPFWRD);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
-				sprite->changeAnimation(RIGHT_FENCING_STEPBACK);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(RIGHT_FENCING);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(RIGHT_FENCING);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(RIGHT_FENCING_STEPBACK);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)){
 				sprite->changeAnimation(RIGHT_SHEATHE);
@@ -631,14 +735,40 @@ void Player::update(int deltaTime)
 
 		else if (sprite->animation() == LEFT_FENCING){
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
-				sprite->changeAnimation(LEFT_FENCING_STEPBACK);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(LEFT_FENCING);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(LEFT_FENCING);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(LEFT_FENCING_STEPBACK);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
-				sprite->changeAnimation(LEFT_FENCING_STEPFWRD);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(LEFT_FENCING);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(LEFT_FENCING);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(LEFT_FENCING_STEPFWRD);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)){
 				sprite->changeAnimation(LEFT_SHEATHE);
