@@ -162,8 +162,8 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 
 void TileMap::dibuixaMapa(const glm::ivec2 &pos) const{
 	int x0, y0;
-	x0 = (pos.x / blockSizeX) + 1;
-	y0 = (pos.y / blockSizeY) + 1;
+	x0 = ((pos.x + 64) / blockSizeX);
+	y0 = ((pos.y + 64) / blockSizeY);
 	for (int y = 0; y < mapSize.y; y++){
 		for (int x = 0; x < mapSize.x; x++) {
 			int tile = map[y*mapSize.x + x];
@@ -178,82 +178,94 @@ void TileMap::dibuixaMapa(const glm::ivec2 &pos) const{
 
 bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
-	int x, y0, y1;
-	x = ((pos.x+10) / blockSizeX)+1;
-	y0 = (pos.y / blockSizeY)+1;
-	y1 = (pos.y + size.y - 1) / blockSizeY;
+	int x, y;
+	x = (pos.x + 64) / blockSizeX;
+	y = (pos.y + 64) / blockSizeY;
 
-	for(int y=y0; y<=y1; y++)
-	{
-		int tile = map[y*mapSize.x + x];
-		//dibuixaMapa(pos);
-		if (tile == 8 || tile == 12 || tile == 14){
-			cout << "Xocant esquerra amb tile " << (map[y*mapSize.x + x]) << endl;
-			return true;
-		}
+	int posX = (pos.x + 64 - 20) / blockSizeX;
+	int tile = map[y*mapSize.x + posX];
+	if (tile == 8 || tile == 12 || tile == 14){
+		return true;
 	}
-	
 	return false;
 }
 
 
 bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
-	int x, y0, y1;
-	
-	x = (pos.x / blockSizeX)+1;
-	y0 = (pos.y / blockSizeY) + 1;
-	y1 = (pos.y + size.y - 1) / blockSizeY;
+	int x, y;
+	x = (pos.x + 64) / blockSizeX;
+	y = (pos.y + 64) / blockSizeY;
 
-	int tile = map[y0*mapSize.x + x + 1];
-	int tile2 = map[y0*mapSize.x + x + 2];
-	if (tile == 8 || tile == 12 || tile == 14 || tile2 == 8 || tile2 == 12 || tile2 == 14){
+	int posX = (pos.x + 64 + 30) / blockSizeX;
+	int tile = map[y*mapSize.x + posX];
+	if (tile == 8 || tile == 12 || tile == 14){
 		return true;
 	}
-	
 	return false;
 }
 
 bool TileMap::collisionMoveDownLeft(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY) const
 {
-	int x0, x1, y0, y1;
-
-	x0 = (pos.x / blockSizeX) + 3;
-	y0 = (pos.y / blockSizeY) + 1;
-	x1 = x0 - 1;
-	y1 = y0 + 1;
-	
-	int tile1 = map[y0*mapSize.x + x1];
-	int x2 = (pos.x - 45) / blockSizeX + 3;
-	int tile2 = map[y0*mapSize.x + x2];
-	if (tile1 == 9 || tile1 == 10 || tile2 == 9 || tile2 == 10) // 9 i 10
-	{
-		return true;
-	}
-	
+	int x0, x1, y0;
+	x0 = ((pos.x + 64) / blockSizeX);
+	y0 = ((pos.y + 64) / blockSizeY);
+	x1 = ((pos.x + 64 - 15) / blockSizeX);
+	int tile = map[y0*mapSize.x + x1];
+	if (tile == 9 || tile == 10) return true;
 	return false;
 }
 
 bool TileMap::collisionMoveDownRight(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY) const
 {
-	int x0, x1, y0, y1;
+	int x0, x1, y0;
+	x0 = ((pos.x + 64) / blockSizeX);
+	y0 = ((pos.y + 64) / blockSizeY);
+	x1 = ((pos.x + 64 + 15) / blockSizeX);
+	int tile = map[y0*mapSize.x + x1];
+	if (tile == 9 || tile == 10) return true;
+	return false;
+}
 
-	x0 = ((pos.x-13) / blockSizeX) + 2;
-	y0 = (pos.y / blockSizeY) + 1;
-	x1 = x0 + 1;
-	y1 = y0 + 1;
+bool TileMap::collisionClimbLeft(const glm::ivec2 &pos) const
+{
+	int x0, x1, y0, y12;
+	x0 = ((pos.x + 64) / blockSizeX);
+	y0 = ((pos.y + 64) / blockSizeY);
 
-	int tile1 = map[y0*mapSize.x + x1];
-	int x2 = (pos.x - 45) / blockSizeX + 3;
-	int tile2 = map[y0*mapSize.x + x2];
-	if (tile1 == 9 || tile1 == 10 || tile2 == 9 || tile2 == 10) // 9 i 10
-	{
-		return true;
-	}
+	x1 = ((pos.x + 64 - 15) / blockSizeX);
+	y12 = (pos.y / blockSizeY);
+
+	int tileUp = map[y12*mapSize.x + x0];
+	int tileUpLeft = map[y12*mapSize.x + x1];
+
+	bool up = (tileUp == 9 || tileUp == 10);
+	bool upleft1 = tileUpLeft != 4 && tileUpLeft != 6 && tileUpLeft != 7 && tileUpLeft != 8;
+	bool upleft2 = tileUpLeft != 9 && tileUpLeft != 10 && tileUpLeft != 11 && tileUpLeft != 12 && tileUpLeft != 14;
+	if (up && upleft1 && upleft2) return true;
 
 	return false;
 }
 
+bool TileMap::collisionClimbRight(const glm::ivec2 &pos) const
+{
+	int x0, x1, y0, y12;
+	x0 = ((pos.x + 64) / blockSizeX);
+	y0 = ((pos.y + 64) / blockSizeY);
+
+	x1 = ((pos.x + 64 + 15) / blockSizeX);
+	y12 = (pos.y / blockSizeY);
+
+	int tileUp = map[y12*mapSize.x + x0];
+	int tileUpLeft = map[y12*mapSize.x + x1];
+
+	bool up = (tileUp == 9 || tileUp == 10);
+	bool upleft1 = tileUpLeft != 4 && tileUpLeft != 6 && tileUpLeft != 7 && tileUpLeft != 8;
+	bool upleft2 = tileUpLeft != 9 && tileUpLeft != 10 && tileUpLeft != 11 && tileUpLeft != 12 && tileUpLeft != 14;
+	if (up && upleft1 && upleft2) return true;
+
+	return false;
+}
 
 
 

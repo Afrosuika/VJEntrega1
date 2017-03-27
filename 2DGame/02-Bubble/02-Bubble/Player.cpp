@@ -370,6 +370,12 @@ void Player::update(int deltaTime)
 				busy = true;
 				stamp = clock();
 			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)){
+				startY = posPlayer.y;
+				sprite->changeAnimation(LEFT_JUMPFWRD);
+				busy = true;
+				stamp = clock();
+			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && !Game::instance().getKey('z') && !Game::instance().getSpecialKey(GLUT_KEY_UP)){
 				
 				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
@@ -404,12 +410,6 @@ void Player::update(int deltaTime)
 				startY = posPlayer.y;
 				//per ara, apretar la v simularà estar davant la porta gran
 				sprite->changeAnimation(LEFT_JUMPUP);
-				busy = true;
-				stamp = clock();
-			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)){
-				startY = posPlayer.y;
-				sprite->changeAnimation(LEFT_JUMPFWRD);
 				busy = true;
 				stamp = clock();
 			}
@@ -741,7 +741,11 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_JUMPUP){
-			if (Game::instance().getKey('c')){//per ara apretar la c simularà que hi ha un lloc on agafar-se
+			if (map->collisionClimbRight(posPlayer)) {
+				cout << "OH YES" << endl;
+				sprite->changeAnimation(RIGHT_GRAB);
+			}
+			else if (Game::instance().getKey('c')){//per ara apretar la c simularà que hi ha un lloc on agafar-se
 				sprite->changeAnimation(RIGHT_GRAB);
 			}
 			else{
@@ -752,7 +756,11 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == LEFT_JUMPUP){
-			if (Game::instance().getKey('c')){//per ara apretar la c simularà que hi ha un lloc on agafar-se
+			if (map->collisionClimbLeft(posPlayer)) {
+				cout << "OH YES" << endl;
+				sprite->changeAnimation(LEFT_GRAB);
+			}
+			else if (Game::instance().getKey('c')){//per ara apretar la c simularà que hi ha un lloc on agafar-se
 				sprite->changeAnimation(LEFT_GRAB);
 			}
 			else{
