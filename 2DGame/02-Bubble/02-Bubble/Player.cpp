@@ -318,6 +318,7 @@ void Player::update(int deltaTime)
 				}
 				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 					sprite->changeAnimation(RIGHT_FALL);
+					startY = posPlayer.y;
 					busy = true;
 					stamp = clock();
 				}
@@ -379,6 +380,7 @@ void Player::update(int deltaTime)
 				}
 				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 					sprite->changeAnimation(LEFT_FALL);
+					startY = posPlayer.y;
 					busy = true;
 					stamp = clock();
 				}
@@ -435,6 +437,7 @@ void Player::update(int deltaTime)
 				}
 				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 					sprite->changeAnimation(RIGHT_FALL);
+					startY = posPlayer.y;
 					busy = true;
 					stamp = clock();
 				}
@@ -466,6 +469,7 @@ void Player::update(int deltaTime)
 				}
 				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 					sprite->changeAnimation(LEFT_FALL);
+					startY = posPlayer.y;
 					busy = true;
 					stamp = clock();
 				}
@@ -497,6 +501,7 @@ void Player::update(int deltaTime)
 				}
 				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 					sprite->changeAnimation(RIGHT_FALL);
+					startY = posPlayer.y;
 					busy = true;
 					stamp = clock();
 				}
@@ -528,6 +533,7 @@ void Player::update(int deltaTime)
 				}
 				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(64, 64), &posPlayer.y)) {
 					sprite->changeAnimation(LEFT_FALL);
+					startY = posPlayer.y;
 					busy = true;
 					stamp = clock();
 				}
@@ -552,6 +558,7 @@ void Player::update(int deltaTime)
 			}
 			else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 				sprite->changeAnimation(RIGHT_FALL);
+				startY = posPlayer.y;
 				busy = true;
 				stamp = clock();
 			}
@@ -576,7 +583,9 @@ void Player::update(int deltaTime)
 			}
 			else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 				sprite->changeAnimation(LEFT_FALL);
+				startY = posPlayer.y;
 				busy = true;
+				stamp = clock();
 			}
 			else {
 				sprite->changeAnimation(STAND_LEFT);
@@ -846,6 +855,7 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == RIGHT_FALL){
 			if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 				sprite->changeAnimation(RIGHT_FALL);
+				startY = posPlayer.y;
 				busy = true;
 				stamp = clock();
 			}
@@ -858,6 +868,7 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == LEFT_FALL){
 			if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 				sprite->changeAnimation(LEFT_FALL);
+				startY = posPlayer.y;
 				busy = true;
 				stamp = clock();
 			}
@@ -1192,6 +1203,7 @@ void Player::update(int deltaTime)
 				posPlayer.y += 22.9 / 8.0;
 			}
 			if (time >= 7.9 / 8.0){
+				posPlayer.y = startY+64;
 				busy = false;
 			}
 		}
@@ -1204,6 +1216,7 @@ void Player::update(int deltaTime)
 				posPlayer.y += 22.9 / 8.0;
 			}
 			if (time >= 7.9 / 8.0){
+				posPlayer.y = startY + 64;
 				busy = false;
 			}
 		}
