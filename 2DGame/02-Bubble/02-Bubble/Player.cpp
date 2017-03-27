@@ -18,12 +18,13 @@ enum PlayerAnims
 	RIGHT_FENCING_STEPBACK, LEFT_FENCING_STEPBACK, RIGHT_SHEATHE, LEFT_SHEATHE, RIGHT_ATTACK, LEFT_ATTACK,
 	RIGHT_SMALLSTEP, LEFT_SMALLSTEP, RIGHT_JUMPUP, LEFT_JUMPUP, RIGHT_LAND, LEFT_LAND, RIGHT_GRAB, LEFT_GRAB,
 	RIGHT_CLIMB, LEFT_CLIMB, RIGHT_JUMPFWRD, LEFT_JUMPFWRD, ENTER_BIGDOOR, GONE, RIGHT_FWRDLAND, LEFT_FWRDLAND,
-	RIGHT_DEATH, LEFT_DEATH, RIGHT_SPIKEDEATH, LEFT_SPIKEDEATH
+	RIGHT_DEATH, LEFT_DEATH, RIGHT_SPIKEDEATH, LEFT_SPIKEDEATH, RIGHT_FALL, LEFT_FALL
 };
 
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
+	fall = false;
 	bJumping = false;
 	busy = false;
 	alive = true;
@@ -31,7 +32,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(40);
+	sprite->setNumberAnimations(42);
 
 
 	sprite->setAnimationSpeed(STAND_RIGHT, 8);
@@ -267,6 +268,23 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setAnimationSpeed(LEFT_SPIKEDEATH, 8);
 	sprite->addKeyframe(LEFT_SPIKEDEATH, glm::vec2(-1.0f, 0.6f));
 
+	sprite->setAnimationSpeed(RIGHT_FALL, 8);
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.4f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.6f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.8f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.45f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.45f));
+
+	sprite->setAnimationSpeed(LEFT_FALL, 8);
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.6f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.8f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-1.0f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.45f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.45f));
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
@@ -279,22 +297,35 @@ void Player::update(int deltaTime)
 	sprite->update(deltaTime);
 	if (!busy){//current animation finished, see which triggers next
 
-		spikedanger = false;//primer comprobem si està a sobre d'unes punxes
-		for (Spikes* theSpike : spikeTraps){
-			glm::ivec2 spikepos = theSpike->getPosRender();
-			if (posPlayer.x + 64.0 > (spikepos.x + 16) - 10 && posPlayer.x + 64.0 < (spikepos.x + 16) + 30){
-				if (((posPlayer.y + 8) - spikepos.y) > -10 && ((posPlayer.y - 8) - spikepos.y) < 10){
-					spikedanger = true;
-				}
-				
-			}			
-		}
+		//spikedanger = false;//primer comprobem si està a sobre d'unes punxes
+		//for (Spikes* theSpike : spikeTraps){
+		//	glm::ivec2 spikepos = theSpike->getPosRender();
+		//	if (posPlayer.x + 64.0 > (spikepos.x + 16) - 10 && posPlayer.x + 64.0 < (spikepos.x + 16) + 30){
+		//		if (((posPlayer.y + 8) - spikepos.y) > -10 && ((posPlayer.y - 8) - spikepos.y) < 10){
+		//			spikedanger = true;
+		//		}
+		//		
+		//	}			
+		//}
 
 		if (sprite->animation() == STAND_RIGHT){
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('z') && !Game::instance().getSpecialKey(GLUT_KEY_UP)){
-				sprite->changeAnimation(RIGHT_WINDUP);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(RIGHT_FALL);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(RIGHT_WINDUP);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
 				sprite->changeAnimation(STAND_LEFT);
@@ -339,9 +370,23 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && !Game::instance().getKey('z') && !Game::instance().getSpecialKey(GLUT_KEY_UP)){
-				sprite->changeAnimation(LEFT_WINDUP);
-				busy = true;
-				stamp = clock();
+				
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(LEFT_FALL);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(LEFT_WINDUP);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getKey('x')){
 				sprite->changeAnimation(LEFT_UNSHEATHE);
@@ -382,9 +427,22 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
-				sprite->changeAnimation(MOVE_RIGHT);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(RIGHT_FALL);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(MOVE_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else{
 				sprite->changeAnimation(RIGHT_WINDDOWN);
@@ -400,9 +458,22 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
-				sprite->changeAnimation(MOVE_LEFT);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(LEFT_FALL);
+					busy = true;
+					stamp = clock();
+				}
+				else{
+					sprite->changeAnimation(MOVE_LEFT);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else{
 				sprite->changeAnimation(LEFT_WINDDOWN);
@@ -418,9 +489,22 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
-				sprite->changeAnimation(MOVE_RIGHT);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(RIGHT_FALL);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(MOVE_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else{
 				sprite->changeAnimation(RIGHT_WINDDOWN);
@@ -436,9 +520,22 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
-				sprite->changeAnimation(MOVE_LEFT);
-				busy = true;
-				stamp = clock();
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(64, 64), &posPlayer.y)) {
+					sprite->changeAnimation(LEFT_FALL);
+					busy = true;
+					stamp = clock();
+				}
+				else{
+					sprite->changeAnimation(MOVE_LEFT);
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else{
 				sprite->changeAnimation(LEFT_WINDDOWN);
@@ -450,6 +547,17 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == RIGHT_WINDDOWN){
 			if (spikedanger){
 				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
+			else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+				sprite->changeAnimation(RIGHT_FALL);
+				busy = true;
+				stamp = clock();
+			}
+			else if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+			{
+				sprite->changeAnimation(STAND_RIGHT);
 				busy = true;
 				stamp = clock();
 			}
@@ -465,6 +573,10 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(LEFT_SPIKEDEATH);
 				busy = true;
 				stamp = clock();
+			}
+			else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+				sprite->changeAnimation(LEFT_FALL);
+				busy = true;
 			}
 			else {
 				sprite->changeAnimation(STAND_LEFT);
@@ -727,11 +839,34 @@ void Player::update(int deltaTime)
 		}
 		else if (sprite->animation() == ENTER_BIGDOOR){
 			sprite->changeAnimation(GONE);
-			cout << "aqui es faria trigger de \"nextlevel\" o algo aixi \n";
+			//cout << "aqui es faria trigger de \"nextlevel\" o algo aixi \n";
 			busy = true;
 			stamp = clock();
 		}
-
+		else if (sprite->animation() == RIGHT_FALL){
+			if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+				sprite->changeAnimation(RIGHT_FALL);
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(STAND_RIGHT);
+				busy = true;
+				stamp = clock();
+			}
+		}
+		else if (sprite->animation() == LEFT_FALL){
+			if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+				sprite->changeAnimation(LEFT_FALL);
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(STAND_LEFT);
+				busy = true;
+				stamp = clock();
+			}
+		}
 
 
 	}//next animation has ben chosen
@@ -740,8 +875,14 @@ void Player::update(int deltaTime)
 	//perform actions based on current animation
 	else{
 		float time = float(clock() - stamp) / CLOCKS_PER_SEC;
-		cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\nspikes= "<<spikedanger<<"\n";
-
+		//cout << "entra a busy\n" << time << "\nanimacio=" << sprite->animation() << "\nspikes= "<<spikedanger<<"\n";
+		/*if (fall){
+			posPlayer.y += 62.;
+			posPlayer.x -= 10.;
+			cout << "LALA" << endl;
+			fall = false;
+		}*/
+		
 		if (sprite->animation() == STAND_RIGHT){
 			if (time >= 1.0 / 8.0){
 				busy = false;
@@ -749,6 +890,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == STAND_LEFT){
+			//cout << "STAND LEFT" << endl;
 			if (time >= 1.0 / 8.0){
 				busy = false;
 			}
@@ -1042,6 +1184,30 @@ void Player::update(int deltaTime)
 			}
 		}
 
+		else if (sprite->animation() == RIGHT_FALL){ //en total, y+=62, x-=10
+			if (time >= 1.0 / 8.0  && time < 4.0 / 8.0){
+				posPlayer.x += 7.0 / 8.0;
+			}
+			if (time >= 3.0 / 8.0  && time < 6.0 / 8.0){
+				posPlayer.y += 22.9 / 8.0;
+			}
+			if (time >= 7.9 / 8.0){
+				busy = false;
+			}
+		}
+
+		else if (sprite->animation() == LEFT_FALL){ //en total, y+=62, x-=10
+			if (time >= 1.0 / 8.0  && time < 4.0 / 8.0){
+				posPlayer.x -= 7.0 / 8.0;
+			}
+			if (time >= 3.0 / 8.0  && time < 6.0 / 8.0){
+				posPlayer.y += 22.9 / 8.0;
+			}
+			if (time >= 7.9 / 8.0){
+				busy = false;
+			}
+		}
+
 	}
 
 	/*if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
@@ -1076,31 +1242,31 @@ void Player::update(int deltaTime)
 
 	if (bJumping)
 	{
-	jumpAngle += JUMP_ANGLE_STEP;
-	if (jumpAngle == 180)
-	{
-	bJumping = false;
-	posPlayer.y = startY;
+		jumpAngle += JUMP_ANGLE_STEP;
+		if (jumpAngle == 180)
+		{
+			bJumping = false;
+			posPlayer.y = startY;
+		}
+		else
+		{
+			posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+			if (jumpAngle > 90)
+				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+		}
 	}
 	else
 	{
-	posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
-	if (jumpAngle > 90)
-	bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
-	}
-	}
-	else
-	{
-	posPlayer.y += FALL_STEP;
-	if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
-	{
-	if (Game::instance().getSpecialKey(GLUT_KEY_UP))
-	{
-	bJumping = true;
-	jumpAngle = 0;
-	startY = posPlayer.y;
-	}
-	}
+		posPlayer.y += FALL_STEP;
+		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+		{
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+			{
+				bJumping = true;
+				jumpAngle = 0;
+				startY = posPlayer.y;
+			}
+		}
 	}*/
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
@@ -1120,10 +1286,10 @@ glm::fvec2 Player::getPosPlayer() {
 	return posPlayer;
 }
 
-void Player::setSpikes(vector<Spikes *> &vec)
-{
-	spikeTraps = vec;
-}
+//void Player::setSpikes(vector<Spikes *> &vec)
+//{
+//	spikeTraps = vec;
+//}
 
 void Player::setPosition(const glm::vec2 &pos)
 {

@@ -24,10 +24,11 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
-	void setSpikes(vector<Spikes*> &vec);
+	//void setSpikes(vector<Spikes*> &vec);
 	glm::fvec2 getPosPlayer();
 	
 private:
+	bool fall;
 	bool bJumping;
 	bool busy;
 	bool alive;
@@ -40,7 +41,7 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	clock_t stamp;
-	vector<Spikes*> spikeTraps;
+	//vector<Spikes*> spikeTraps;
 
 };
 

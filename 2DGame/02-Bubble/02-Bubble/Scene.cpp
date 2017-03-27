@@ -9,7 +9,7 @@
 #define SCREEN_Y 16
 
 #define INIT_PLAYER_X_TILES 4
-#define INIT_PLAYER_Y_TILES 7
+#define INIT_PLAYER_Y_TILES 6
 
 
 Scene::Scene()
@@ -30,13 +30,13 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	//map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()-8));
 	player->setTileMap(map);
-
+	/*
 	Spikes* spiketrap = new Spikes();
 	spikes.push_back(spiketrap);
 	
@@ -46,7 +46,7 @@ void Scene::init()
 
 
 	player->setSpikes(spikes);
-
+	*/
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -55,9 +55,10 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	for (Spikes* spike : spikes){
+	
+	/*for (Spikes* spike : spikes){
 		spike->update(deltaTime);
-	}
+	}*/
 }
 
 void Scene::render()
@@ -71,10 +72,10 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
-	//map2->render();
-	for (Spikes* spike : spikes){
+	map2->render();
+	/*for (Spikes* spike : spikes){
 		spike->render();
-	}
+	}*/
 	player->render();
 	
 }

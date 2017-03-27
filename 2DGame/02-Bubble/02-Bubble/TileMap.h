@@ -30,8 +30,11 @@ public:
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY) const;
+	bool collisionMoveDownLeft(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY) const;
+	bool collisionMoveDownRight(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY) const;
 	
+	void dibuixaMapa(const glm::ivec2 &pos) const;
+
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
