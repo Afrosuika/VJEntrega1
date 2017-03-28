@@ -35,7 +35,7 @@ private:
 	bool takingdamage;
 	int hp, type, state, aggrodistance;
 	glm::ivec2 tileMapDispl;
-	glm::ivec2 posSoldier;
+	glm::fvec2 posSoldier;
 	float startY;
 	Texture spritesheet;
 	Sprite *sprite;

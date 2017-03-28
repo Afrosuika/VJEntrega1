@@ -1185,7 +1185,7 @@ void Player::update(int deltaTime)
 				if (time >= 4.0 / 8.0 && time < 5.0 / 8.0){
 					for (Soldier* soldat : soldiers){
 						glm::fvec2 possoldier = soldat->getPosRender();
-						if ((possoldier.x + 34) < posPlayer.x + 64 - 55){
+						if ((possoldier.x + 34) > posPlayer.x + 64 - 55){
 							soldat->takeDamage();
 							dealtdamage = true;
 						}
@@ -1378,7 +1378,7 @@ void Player::update(int deltaTime)
 			}
 		}
 
-		else if (sprite->animation() == RIGHT_FALL){ //en total, y+=62, x-=10
+		else if (sprite->animation() == RIGHT_FALL){ //en total, y+=64, x-=10
 			if (time >= 1.0 / 8.0  && time < 4.0 / 8.0){
 				posPlayer.x += 7.0 / 8.0;
 			}
@@ -1391,7 +1391,7 @@ void Player::update(int deltaTime)
 			}
 		}
 
-		else if (sprite->animation() == LEFT_FALL){ //en total, y+=62, x-=10
+		else if (sprite->animation() == LEFT_FALL){ //en total, y+=64, x-=10
 			if (time >= 1.0 / 8.0  && time < 4.0 / 8.0){
 				posPlayer.x -= 7.0 / 8.0;
 			}

@@ -37,38 +37,15 @@ void Soldier::init(Player *pl, int t, const glm::ivec2 &position, ShaderProgram 
 	aggrodistance = 150;
 	dealtdamage = false;
 
-	
+
 
 	if (type == 0) {
 		hp = 4;
 		spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 		spritesheet.loadFromFile("images/soldier-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	}
-	else {
-		hp = 6;
-		spritesheet.setWrapS(GL_MIRRORED_REPEAT);
-		spritesheet.loadFromFile("images/soldier-sprite-alt.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	}
+
 		sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
 		sprite->setNumberAnimations(16);
-
-		sprite->setAnimationSpeed(RIGHT_STAND, 8);
-		sprite->addKeyframe(RIGHT_STAND, glm::vec2(0.f, 0.f));
-
-		sprite->setAnimationSpeed(LEFT_STAND, 8);
-		sprite->addKeyframe(LEFT_STAND, glm::vec2(-0.2f, 0.f));
-
-		sprite->setAnimationSpeed(RIGHT_STEP_FORWARD, 8);
-		sprite->addKeyframe(RIGHT_STEP_FORWARD, glm::vec2(0.2f, 0.05f));
-
-		sprite->setAnimationSpeed(LEFT_STEP_FORWARD, 8);
-		sprite->addKeyframe(LEFT_STEP_FORWARD, glm::vec2(-0.4f, 0.05f));
-
-		sprite->setAnimationSpeed(RIGHT_STEP_BACK, 8);
-		sprite->addKeyframe(RIGHT_STEP_BACK, glm::vec2(0.2f, 0.05f));
-
-		sprite->setAnimationSpeed(LEFT_STEP_BACK, 8);
-		sprite->addKeyframe(LEFT_STEP_BACK, glm::vec2(-0.4f, 0.05f));
 
 		sprite->setAnimationSpeed(RIGHT_ATTACK, 8);
 		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.f, 0.f));
@@ -95,48 +72,96 @@ void Soldier::init(Player *pl, int t, const glm::ivec2 &position, ShaderProgram 
 		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-1.0f, 0.f));
 		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.6f, 0.f));
 		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.4f, 0.f));
+	}
+	else {
+		hp = 8;
+		spritesheet.setWrapS(GL_MIRRORED_REPEAT);
+		spritesheet.loadFromFile("images/soldier-sprite-alt.png", TEXTURE_PIXEL_FORMAT_RGBA);
 
-		sprite->setAnimationSpeed(RIGHT_FLINCH, 8);
-		sprite->addKeyframe(RIGHT_FLINCH, glm::vec2(0.4f, 0.05f));
-		sprite->addKeyframe(RIGHT_FLINCH, glm::vec2(0.4f, 0.05f));
-		sprite->addKeyframe(RIGHT_FLINCH, glm::vec2(0.4f, 0.05f));
+		sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
+		sprite->setNumberAnimations(16);
 
-		sprite->setAnimationSpeed(LEFT_FLINCH, 8);
-		sprite->addKeyframe(LEFT_FLINCH, glm::vec2(-0.6f, 0.05f));
-		sprite->addKeyframe(LEFT_FLINCH, glm::vec2(-0.6f, 0.05f));
-		sprite->addKeyframe(LEFT_FLINCH, glm::vec2(-0.6f, 0.05f));
+		sprite->setAnimationSpeed(RIGHT_ATTACK, 8);
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.2f, 0.f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.4f, 0.f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.6f, 0.f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.8f, 0.f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.f, 0.05f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.8f, 0.f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.4f, 0.f));
+		sprite->addKeyframe(RIGHT_ATTACK, glm::vec2(0.2f, 0.f));
 
-		sprite->setAnimationSpeed(RIGHT_DIE, 8);
-		sprite->addKeyframe(RIGHT_DIE, glm::vec2(0.6f, 0.05f));
-		sprite->addKeyframe(RIGHT_DIE, glm::vec2(0.8f, 0.05f));
-		sprite->addKeyframe(RIGHT_DIE, glm::vec2(0.0f, 0.1f));
-		sprite->addKeyframe(RIGHT_DIE, glm::vec2(0.2f, 0.1f));
-
-		sprite->setAnimationSpeed(LEFT_DIE, 8);
-		sprite->addKeyframe(LEFT_DIE, glm::vec2(-0.8f, 0.05f));
-		sprite->addKeyframe(LEFT_DIE, glm::vec2(-1.0f, 0.05f));
-		sprite->addKeyframe(LEFT_DIE, glm::vec2(-0.2f, 0.1f));
-		sprite->addKeyframe(LEFT_DIE, glm::vec2(-0.4f, 0.1f));
-
-		sprite->setAnimationSpeed(RIGHT_DEAD, 8);
-		sprite->addKeyframe(RIGHT_DEAD, glm::vec2(0.2f, 0.1f));
-
-		sprite->setAnimationSpeed(LEFT_DEAD, 8);
-		sprite->addKeyframe(LEFT_DEAD, glm::vec2(-0.4f, 0.1f));
-
-		sprite->setAnimationSpeed(RIGHT_SPIKEDEATH, 8);
-		sprite->addKeyframe(RIGHT_SPIKEDEATH, glm::vec2(0.4f, 0.1f));
-
-		sprite->setAnimationSpeed(LEFT_SPIKEDEATH, 8);
-		sprite->addKeyframe(LEFT_SPIKEDEATH, glm::vec2(-0.6f, 0.1f));
-		
+		sprite->setAnimationSpeed(LEFT_ATTACK, 8);
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.4f, 0.f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.6f, 0.f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.8f, 0.f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-1.0f, 0.f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.2f, 0.05f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-1.0f, 0.f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.6f, 0.f));
+		sprite->addKeyframe(LEFT_ATTACK, glm::vec2(-0.4f, 0.f));
+	}
 
 
+	sprite->setAnimationSpeed(RIGHT_STAND, 8);
+	sprite->addKeyframe(RIGHT_STAND, glm::vec2(0.f, 0.f));
+
+	sprite->setAnimationSpeed(LEFT_STAND, 8);
+	sprite->addKeyframe(LEFT_STAND, glm::vec2(-0.2f, 0.f));
+
+	sprite->setAnimationSpeed(RIGHT_STEP_FORWARD, 8);
+	sprite->addKeyframe(RIGHT_STEP_FORWARD, glm::vec2(0.2f, 0.05f));
+
+	sprite->setAnimationSpeed(LEFT_STEP_FORWARD, 8);
+	sprite->addKeyframe(LEFT_STEP_FORWARD, glm::vec2(-0.4f, 0.05f));
+
+	sprite->setAnimationSpeed(RIGHT_STEP_BACK, 8);
+	sprite->addKeyframe(RIGHT_STEP_BACK, glm::vec2(0.2f, 0.05f));
+
+	sprite->setAnimationSpeed(LEFT_STEP_BACK, 8);
+	sprite->addKeyframe(LEFT_STEP_BACK, glm::vec2(-0.4f, 0.05f));
+
+	sprite->setAnimationSpeed(RIGHT_FLINCH, 8);
+	sprite->addKeyframe(RIGHT_FLINCH, glm::vec2(0.4f, 0.05f));
+	sprite->addKeyframe(RIGHT_FLINCH, glm::vec2(0.4f, 0.05f));
+	sprite->addKeyframe(RIGHT_FLINCH, glm::vec2(0.4f, 0.05f));
+
+	sprite->setAnimationSpeed(LEFT_FLINCH, 8);
+	sprite->addKeyframe(LEFT_FLINCH, glm::vec2(-0.6f, 0.05f));
+	sprite->addKeyframe(LEFT_FLINCH, glm::vec2(-0.6f, 0.05f));
+	sprite->addKeyframe(LEFT_FLINCH, glm::vec2(-0.6f, 0.05f));
+
+	sprite->setAnimationSpeed(RIGHT_DIE, 8);
+	sprite->addKeyframe(RIGHT_DIE, glm::vec2(0.6f, 0.05f));
+	sprite->addKeyframe(RIGHT_DIE, glm::vec2(0.8f, 0.05f));
+	sprite->addKeyframe(RIGHT_DIE, glm::vec2(0.0f, 0.1f));
+	sprite->addKeyframe(RIGHT_DIE, glm::vec2(0.2f, 0.1f));
+
+	sprite->setAnimationSpeed(LEFT_DIE, 8);
+	sprite->addKeyframe(LEFT_DIE, glm::vec2(-0.8f, 0.05f));
+	sprite->addKeyframe(LEFT_DIE, glm::vec2(-1.0f, 0.05f));
+	sprite->addKeyframe(LEFT_DIE, glm::vec2(-0.2f, 0.1f));
+	sprite->addKeyframe(LEFT_DIE, glm::vec2(-0.4f, 0.1f));
+
+	sprite->setAnimationSpeed(RIGHT_DEAD, 8);
+	sprite->addKeyframe(RIGHT_DEAD, glm::vec2(0.2f, 0.1f));
+
+	sprite->setAnimationSpeed(LEFT_DEAD, 8);
+	sprite->addKeyframe(LEFT_DEAD, glm::vec2(-0.4f, 0.1f));
+
+	sprite->setAnimationSpeed(RIGHT_SPIKEDEATH, 8);
+	sprite->addKeyframe(RIGHT_SPIKEDEATH, glm::vec2(0.4f, 0.1f));
+
+	sprite->setAnimationSpeed(LEFT_SPIKEDEATH, 8);
+	sprite->addKeyframe(LEFT_SPIKEDEATH, glm::vec2(-0.6f, 0.1f));
 
 
-		sprite->changeAnimation(RIGHT_STAND);
-	
-	
+
+
+
+	sprite->changeAnimation(RIGHT_STAND);
+
+
 
 	posSoldier = position;
 	sprite->setPosition(glm::vec2(posSoldier.x, posSoldier.y));
@@ -168,7 +193,7 @@ void Soldier::update(int deltaTime)
 				stamp = clock();
 
 				if (posplayer.x + 64.0 > (posSoldier.x + 34) - aggrodistance && posplayer.x + 64.0 < (posSoldier.x + 34) + aggrodistance){
-					if (((posplayer.y + 8) - posSoldier.y + 8) > -10 && ((posplayer.y - 8) - posSoldier.y) < 10){						
+					if (((posplayer.y + 8) - posSoldier.y + 8) > -10 && ((posplayer.y - 8) - posSoldier.y) < 10){
 						state = FIGHTING;
 					}
 				}
@@ -324,13 +349,13 @@ void Soldier::update(int deltaTime)
 				}
 			}
 		}
-else{
-	if (sprite->animation() != (RIGHT_DEAD) && sprite->animation() != (RIGHT_SPIKEDEATH) && sprite->animation() != (LEFT_SPIKEDEATH)){
-		sprite->changeAnimation(RIGHT_DEAD);
-		busy = true;
-		stamp = clock();
-	}
-}
+		else{
+			if (sprite->animation() != (RIGHT_DEAD) && sprite->animation() != (RIGHT_SPIKEDEATH) && sprite->animation() != (LEFT_SPIKEDEATH)){
+				sprite->changeAnimation(RIGHT_DEAD);
+				busy = true;
+				stamp = clock();
+			}
+		}
 
 
 	}//next animation has ben chosen
@@ -361,7 +386,7 @@ else{
 		}
 
 		else if (sprite->animation() == RIGHT_STEP_FORWARD){
-			posSoldier.x += 5.0 / 8.0;			
+			posSoldier.x += 5.0 / 8.0;
 			if (time >= 1.0 / 8.0){
 				busy = false;
 			}
@@ -389,30 +414,60 @@ else{
 		}
 
 		else if (sprite->animation() == RIGHT_ATTACK){
-			if (!dealtdamage){
-				if (time >= 7.0 / 8.0 && time < 8.0 / 8.0){
-					if ((posplayer.x + 64.0 < (posSoldier.x + 34) + 50)){
-						player->takeDamage();
-						dealtdamage = true;
+			if (type == 0){
+				if (!dealtdamage){
+					if (time >= 7.0 / 8.0 && time < 8.0 / 8.0){
+						if ((posplayer.x + 64.0 < (posSoldier.x + 34) + 50)){
+							player->takeDamage();
+							dealtdamage = true;
+						}
 					}
 				}
+				if (time >= 10.9 / 8.0){
+					busy = false;
+				}
 			}
-			if (time >= 10.9 / 8.0){
-				busy = false;
+			else if (type == 1){
+				if (!dealtdamage){
+					if (time >= 4.0 / 8.0 && time < 5.0 / 8.0){
+						if ((posplayer.x + 64.0 < (posSoldier.x + 34) + 50)){
+							player->takeDamage();
+							dealtdamage = true;
+						}
+					}
+				}
+				if (time >= 7.9 / 8.0){
+					busy = false;
+				}
 			}
 		}
 
 		else if (sprite->animation() == LEFT_ATTACK){
-			if (!dealtdamage){
-				if (time >= 7.0 / 8.0 && time < 8.0 / 8.0){
-					if ((posplayer.x + 64.0 >(posSoldier.x + 34) - 50)){
-						player->takeDamage();
-						dealtdamage = true;
+			if (type == 0){
+				if (!dealtdamage){
+					if (time >= 7.0 / 8.0 && time < 8.0 / 8.0){
+						if ((posplayer.x + 64.0 >(posSoldier.x + 34) - 50)){
+							player->takeDamage();
+							dealtdamage = true;
+						}
 					}
 				}
+				if (time >= 10.9 / 8.0){
+					busy = false;
+				}
 			}
-			if (time >= 10.9 / 8.0){
-				busy = false;
+			else if (type == 1){
+				if (!dealtdamage){
+					if (time >= 4.0 / 8.0 && time < 5.0 / 8.0){
+						if ((posplayer.x + 64.0 >(posSoldier.x + 34) - 50)){
+							player->takeDamage();
+							dealtdamage = true;
+						}
+					}
+				}
+				if (time >= 7.9 / 8.0){
+					busy = false;
+				}
 			}
 		}
 
@@ -475,7 +530,7 @@ else{
 
 	}
 
-	
+
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posSoldier.x), float(tileMapDispl.y + posSoldier.y)));
 }
