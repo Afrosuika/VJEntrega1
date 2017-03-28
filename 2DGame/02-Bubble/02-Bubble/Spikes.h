@@ -2,7 +2,6 @@
 #define _SPIKES_INCLUDE
 
 #include "Sprite.h"
-#include "Player.h"
 #include "TileMap.h"
 
 class Player; //forward declaration
@@ -24,7 +23,7 @@ private:
 	bool busy;
 	glm::ivec2 tileMapDispl;
 	glm::fvec2 posPlayer;
-	glm::ivec2 posSpikes, spriteSize;
+	glm::ivec2 posSpikes;
 	Texture spritesheet;
 	Sprite *sprite;
 	Player *player;

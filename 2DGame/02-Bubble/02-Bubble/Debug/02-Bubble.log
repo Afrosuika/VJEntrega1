@@ -1,39 +1,24 @@
-﻿Compilación iniciada a las 27/03/2017 22:23:25.
-     1>Proyecto "C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\02-Bubble\02-Bubble.vcxproj" en el nodo 2 (Rebuild destinos).
+﻿Compilación iniciada a las 28/03/2017 6:23:09.
+     1>Proyecto "C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\02-Bubble\02-Bubble.vcxproj" en el nodo 2 (Build destinos).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\libs\Simple OpenGL Image Library\src" /I..\..\..\libs\freeglut\include /I"..\..\..\libs\glew-1.13.0\include" /I..\..\..\libs\glm /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp main.cpp Player.cpp Scene.cpp Shader.cpp ShaderProgram.cpp Spikes.cpp Sprite.cpp Texture.cpp TileMap.cpp
-         TileMap.cpp
-         Texture.cpp
-         Sprite.cpp
-     1>c:\users\dmnt\documents\vjentrega1\2dgame\02-bubble\02-bubble\sprite.cpp(46): warning C4018: '>=' : no coinciden signed/unsigned
-         Spikes.cpp
-         ShaderProgram.cpp
-         Shader.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\libs\Simple OpenGL Image Library\src" /I..\..\..\libs\freeglut\include /I"..\..\..\libs\glew-1.13.0\include" /I..\..\..\libs\glm /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Scene.cpp
          Scene.cpp
-         Player.cpp
-     1>c:\users\dmnt\documents\vjentrega1\2dgame\02-bubble\02-bubble\player.cpp(1203): warning C4305: '+=' : truncamiento de 'double' a 'float'
-     1>c:\users\dmnt\documents\vjentrega1\2dgame\02-bubble\02-bubble\player.cpp(1216): warning C4305: '+=' : truncamiento de 'double' a 'float'
-         main.cpp
-         Game.cpp
-         Generando código...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug" /LIBPATH:..\..\..\libs\freeglut\lib /LIBPATH:"..\..\..\libs\glew-1.13.0\lib\Release\Win32" SOIL.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.lib" /MACHINE:X86 Debug\Game.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug" /LIBPATH:..\..\..\libs\freeglut\lib /LIBPATH:"..\..\..\libs\glew-1.13.0\lib\Release\Win32" SOIL.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.lib" /MACHINE:X86 "Debug\02-Bubble.res"
+         Debug\Game.obj
          Debug\main.obj
          Debug\Player.obj
          Debug\Scene.obj
          Debug\Shader.obj
          Debug\ShaderProgram.obj
+         Debug\Soldier.obj
          Debug\Spikes.obj
          Debug\Sprite.obj
          Debug\Texture.obj
          Debug\TileMap.obj
-     1>SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-     1>SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-     1>SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(SOIL.obj)' o en 'C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-     1>SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(stb_image_aug.obj)' o en 'C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
          02-Bubble.vcxproj -> C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\Debug\02-Bubble.exe
-     1>Compilación del proyecto terminada "C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\02-Bubble\02-Bubble.vcxproj" (Rebuild destinos).
+     1>Compilación del proyecto terminada "C:\Users\DmnT\Documents\VJEntrega1\2DGame\02-Bubble\02-Bubble\02-Bubble.vcxproj" (Build destinos).
 
 Compilación correcta.
 
-Tiempo transcurrido 00:00:11.06
+Tiempo transcurrido 00:00:01.10

@@ -7,6 +7,7 @@
 #include "Spikes.h"
 #include "Game.h"
 #include <time.h>
+#include "Player.h"
 
 enum SpikeAnims
 {
@@ -65,7 +66,7 @@ void Spikes::update(int deltaTime)
 			stamp = clock();
 		}
 
-		if (posplayer.x + 64.0 > (posSpikes.x + 16) - 50 && posplayer.x + 64.0 < (posSpikes.x + 16) + 50){
+		if (posplayer.x + 64.0 > (posSpikes.x + 16) - 75 && posplayer.x + 64.0 < (posSpikes.x + 16) + 75){
 			if (sprite->animation() == DOWN){
 				sprite->changeAnimation(COMING_UP);
 				busy = true;

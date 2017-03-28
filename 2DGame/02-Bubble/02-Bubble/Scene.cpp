@@ -32,11 +32,12 @@ void Scene::init()
 	initShaders();
 	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()-8));
 	player->setTileMap(map);
-	/*
+	
 	Spikes* spiketrap = new Spikes();
 	spikes.push_back(spiketrap);
 	
@@ -46,7 +47,16 @@ void Scene::init()
 
 
 	player->setSpikes(spikes);
-	*/
+
+	Soldier* asoldier = new Soldier();
+	soldiers.push_back(asoldier);
+	soldiers[0]->init(player,0, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	soldiers[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 7) * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()+8));
+	soldiers[0]->setTileMap(map);
+	soldiers[0]->setSpikes(spikes);
+
+	player->setSoldiers(soldiers);
+	
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -56,9 +66,13 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	
-	/*for (Spikes* spike : spikes){
+	for (Spikes* spike : spikes){
 		spike->update(deltaTime);
-	}*/
+	}
+
+	for (Soldier* soldier : soldiers){
+		soldier->update(deltaTime);
+	}
 }
 
 void Scene::render()
@@ -73,10 +87,14 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	map2->render();
-	/*for (Spikes* spike : spikes){
+	for (Spikes* spike : spikes){
 		spike->render();
-	}*/
+	}
+	for (Soldier* soldier : soldiers){
+		soldier->render();
+	}
 	player->render();
+	
 	
 }
 

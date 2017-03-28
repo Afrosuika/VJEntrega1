@@ -7,6 +7,7 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Spikes.h"
+#include "Soldier.h"
 
 
 // Scene contains all the entities of our game.
@@ -30,7 +31,8 @@ private:
 private:
 	TileMap *map, *map2;
 	Player *player;
-	//vector<Spikes*> spikes;
+	vector<Spikes*> spikes;
+	vector<Soldier*> soldiers;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
