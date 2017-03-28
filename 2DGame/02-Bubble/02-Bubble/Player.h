@@ -44,6 +44,7 @@ private:
 	clock_t stamp;
 	vector<Spikes*> spikeTraps;
 	vector<Soldier*> soldiers;
+	bool dealtdamage;
 
 };
 

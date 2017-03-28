@@ -35,16 +35,17 @@ void Soldier::init(Player *pl, int t, const glm::ivec2 &position, ShaderProgram 
 	state = IDLE;
 	takingdamage = false;
 	aggrodistance = 150;
+	dealtdamage = false;
 
 	
 
 	if (type == 0) {
-		hp = 3;
+		hp = 4;
 		spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 		spritesheet.loadFromFile("images/soldier-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	}
 	else {
-		hp = 4;
+		hp = 6;
 		spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 		spritesheet.loadFromFile("images/soldier-sprite-alt.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	}
@@ -186,7 +187,9 @@ void Soldier::update(int deltaTime)
 
 					else if (takingdamage){
 						hp -= 1;
+						cout << "un soldat ha rebut mal\nvida restant= " << hp << "\n";
 						sprite->changeAnimation(RIGHT_FLINCH);
+						takingdamage = false;
 						busy = true;
 						stamp = clock();
 					}
@@ -202,6 +205,7 @@ void Soldier::update(int deltaTime)
 							if ((posplayer.x + 64.0 < (posSoldier.x + 34) + 50)){
 								//el príncep està prou a prop per tal d'atacar-lo
 								sprite->changeAnimation(RIGHT_ATTACK);
+								dealtdamage = false;
 								busy = true;
 								stamp = clock();
 							}
@@ -254,7 +258,9 @@ void Soldier::update(int deltaTime)
 
 					else if (takingdamage){
 						hp -= 1;
+						cout << "un soldat ha rebut mal\nvida restant= " << hp << "\n";
 						sprite->changeAnimation(LEFT_FLINCH);
+						takingdamage = false;
 						busy = true;
 						stamp = clock();
 					}
@@ -269,6 +275,7 @@ void Soldier::update(int deltaTime)
 							if ((posplayer.x + 64.0 > (posSoldier.x + 34) - 50)){
 								//el príncep està prou a prop per tal d'atacar-lo
 								sprite->changeAnimation(LEFT_ATTACK);
+								dealtdamage = false;
 								busy = true;
 								stamp = clock();
 							}
@@ -317,8 +324,15 @@ void Soldier::update(int deltaTime)
 				}
 			}
 		}
+else{
+	if (sprite->animation() != (RIGHT_DEAD) && sprite->animation() != (RIGHT_SPIKEDEATH) && sprite->animation() != (LEFT_SPIKEDEATH)){
+		sprite->changeAnimation(RIGHT_DEAD);
+		busy = true;
+		stamp = clock();
+	}
+}
 
-		
+
 	}//next animation has ben chosen
 
 
@@ -375,12 +389,28 @@ void Soldier::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_ATTACK){
+			if (!dealtdamage){
+				if (time >= 7.0 / 8.0 && time < 8.0 / 8.0){
+					if ((posplayer.x + 64.0 < (posSoldier.x + 34) + 50)){
+						player->takeDamage();
+						dealtdamage = true;
+					}
+				}
+			}
 			if (time >= 10.9 / 8.0){
 				busy = false;
 			}
 		}
 
 		else if (sprite->animation() == LEFT_ATTACK){
+			if (!dealtdamage){
+				if (time >= 7.0 / 8.0 && time < 8.0 / 8.0){
+					if ((posplayer.x + 64.0 >(posSoldier.x + 34) - 50)){
+						player->takeDamage();
+						dealtdamage = true;
+					}
+				}
+			}
 			if (time >= 10.9 / 8.0){
 				busy = false;
 			}
@@ -469,8 +499,8 @@ void Soldier::setPosition(const glm::vec2 &pos)
 
 void Soldier::takeDamage()
 {
-	hp -= 1;
 	takingdamage = true;
+	busy = false;
 }
 
 glm::ivec2 Soldier::getPosRender() {

@@ -32,6 +32,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	alive = true;
 	spikedanger = false;
 	hp = 5;
+	dealtdamage = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
@@ -737,6 +738,7 @@ void Player::update(int deltaTime)
 			}
 			else if (Game::instance().getKey('x')){
 				sprite->changeAnimation(RIGHT_ATTACK);
+				dealtdamage = false;
 				busy = true;
 				stamp = clock();
 			}
@@ -786,6 +788,7 @@ void Player::update(int deltaTime)
 			}
 			else if (Game::instance().getKey('x')){
 				sprite->changeAnimation(LEFT_ATTACK);
+				dealtdamage = false;
 				busy = true;
 				stamp = clock();
 			}
@@ -1161,12 +1164,34 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_ATTACK){
+			if (!dealtdamage){
+				if (time >= 4.0 / 8.0 && time < 5.0 / 8.0){
+					for (Soldier* soldat : soldiers){
+						glm::fvec2 possoldier = soldat->getPosRender();
+						if ((possoldier.x + 34) < posPlayer.x + 64 + 55){
+							soldat->takeDamage();
+							dealtdamage = true;
+						}
+					}
+				}
+			}
 			if (time >= 6.9 / 8.0){
 				busy = false;
 			}
 		}
 
 		else if (sprite->animation() == LEFT_ATTACK){
+			if (!dealtdamage){
+				if (time >= 4.0 / 8.0 && time < 5.0 / 8.0){
+					for (Soldier* soldat : soldiers){
+						glm::fvec2 possoldier = soldat->getPosRender();
+						if ((possoldier.x + 34) < posPlayer.x + 64 - 55){
+							soldat->takeDamage();
+							dealtdamage = true;
+						}
+					}
+				}
+			}
 			if (time >= 6.9 / 8.0){
 				busy = false;
 			}
@@ -1248,6 +1273,7 @@ void Player::update(int deltaTime)
 				posPlayer.x += 1.0*(5.0 / 8.0);
 			}
 			if (time >= 7.9 / 8.0){
+				posPlayer.y = startY - 64;
 				busy = false;
 			}
 		}
@@ -1260,6 +1286,7 @@ void Player::update(int deltaTime)
 				posPlayer.x -= 1.0*(5.0 / 8.0);
 			}
 			if (time >= 7.9 / 8.0){
+				posPlayer.y = startY - 64;
 				busy = false;
 			}
 		}
@@ -1474,6 +1501,7 @@ void Player::setPosition(const glm::vec2 &pos)
 void Player::takeDamage()
 {
 	hp -= 1;
+	cout << "el príncep ha rebut mal\npunts de vida restants= " << hp << "\n";
 }
 
 

@@ -43,6 +43,7 @@ private:
 	TileMap *map;
 	clock_t stamp;
 	vector<Spikes*> spikeTraps;
+	bool dealtdamage;
 
 };
 

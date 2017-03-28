@@ -55,6 +55,13 @@ void Scene::init()
 	soldiers[0]->setTileMap(map);
 	soldiers[0]->setSpikes(spikes);
 
+	Soldier* asoldier2 = new Soldier();
+	soldiers.push_back(asoldier2);
+	soldiers[1]->init(player, 1, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	soldiers[1]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 7) * map->getTileSize(), (INIT_PLAYER_Y_TILES-5) * map->getTileSize() + 8));
+	soldiers[1]->setTileMap(map);
+	soldiers[1]->setSpikes(spikes);
+
 	player->setSoldiers(soldiers);
 	
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
