@@ -32,6 +32,8 @@ void Scene::init()
 	initShaders();
 	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	lifesIndicator = TileMap::createTileMap("levels/vida3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
 
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -106,6 +108,7 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	map2->render();
+	lifesIndicator->render();
 	for (Spikes* spike : spikes){
 		spike->render();
 	}

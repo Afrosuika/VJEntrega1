@@ -30,7 +30,7 @@ private:
 	void initShaders();
 
 private:
-	TileMap *map, *map2;
+	TileMap *map, *map2, *lifesIndicator;
 	Player *player;
 	vector<Spikes*> spikes;
 	vector<Soldier*> soldiers;
