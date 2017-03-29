@@ -311,6 +311,10 @@ void Player::update(int deltaTime)
 
 			}
 		}
+		if (Game::instance().getKey('a')){
+			//cheat: si es manté apretat A el príncep és invulnerable
+			spikedanger = false;
+		}
 
 		if (hp <= 0){
 			sprite->changeAnimation(RIGHT_DEATH);
@@ -368,7 +372,7 @@ void Player::update(int deltaTime)
 				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v')){
-				//per ara, apretar la v simularà estar davant la porta gran
+				//cheat: apretar la v simula estar davant la porta gran
 				startY = posPlayer.y;
 				sprite->changeAnimation(RIGHT_JUMPUP);
 				busy = true;
@@ -381,7 +385,7 @@ void Player::update(int deltaTime)
 				stamp = clock();
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && Game::instance().getKey('v')){
-				//per ara, apretar la v simularà estar davant la porta gran
+				//cheat: apretar la v simula estar davant la porta gran
 				sprite->changeAnimation(ENTER_BIGDOOR);
 				busy = true;
 				stamp = clock();
@@ -884,10 +888,11 @@ void Player::update(int deltaTime)
 
 		else if (sprite->animation() == RIGHT_JUMPUP){
 			if (map->collisionClimbRight(posPlayer)) {
-				cout << "OH YES" << endl;
+				//cout << "OH YES" << endl;
 				sprite->changeAnimation(RIGHT_GRAB);
 			}
-			else if (Game::instance().getKey('c')){//per ara apretar la c simularà que hi ha un lloc on agafar-se
+			else if (Game::instance().getKey('c')){
+				//cheat: apretar la c simula que hi ha un lloc on agafar-se
 				sprite->changeAnimation(RIGHT_GRAB);
 			}
 			else{
@@ -899,10 +904,11 @@ void Player::update(int deltaTime)
 
 		else if (sprite->animation() == LEFT_JUMPUP){
 			if (map->collisionClimbLeft(posPlayer)) {
-				cout << "OH YES" << endl;
+				//cout << "OH YES" << endl;
 				sprite->changeAnimation(LEFT_GRAB);
 			}
-			else if (Game::instance().getKey('c')){//per ara apretar la c simularà que hi ha un lloc on agafar-se
+			else if (Game::instance().getKey('c')){
+				//cheat: apretar la c simula que hi ha un lloc on agafar-se
 				sprite->changeAnimation(LEFT_GRAB);
 			}
 			else{
@@ -1500,13 +1506,23 @@ void Player::setPosition(const glm::vec2 &pos)
 
 void Player::takeDamage()
 {
-	hp -= 1;
-	cout << "el príncep ha rebut mal\npunts de vida restants= " << hp << "\n";
+	if (Game::instance().getKey('a')){
+		//cheat: si es manté apretat A el príncep és invulnerable
+	}
+	else{
+		hp -= 1;
+		cout << "el príncep ha rebut mal\npunts de vida restants= " << hp << "\n";
+	}
 }
 
 void Player::getSliced(){
-	hp -= 100;
-	busy = false;
+	if (Game::instance().getKey('a')){
+		//cheat: si es manté apretat A el príncep és invulnerable
+	}
+	else{
+		hp -= 100;
+		busy = false;
+	}
 }
 
 

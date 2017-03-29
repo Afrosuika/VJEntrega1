@@ -186,6 +186,11 @@ void Soldier::update(int deltaTime)
 				}
 			}
 		}
+		if (Game::instance().getKey('s')){
+			//cheat: si es manté apretat S els enemics son invulnerables
+			spikedanger = false;
+		}
+
 		if (alive){
 			if (state == IDLE){
 				sprite->changeAnimation(RIGHT_STAND);
@@ -211,7 +216,16 @@ void Soldier::update(int deltaTime)
 					}
 
 					else if (takingdamage){
-						hp -= 1;
+						if (Game::instance().getKey('s')){
+							//cheat: si es manté apretat S els enemics son invulnerables
+						}
+						else if (Game::instance().getKey('d')){
+							//cheat: si es manté apretat D els enemics moren d'un sol atac
+							hp -= 100;
+						}
+						else{
+							hp -= 1;
+						}
 						cout << "un soldat ha rebut mal\nvida restant= " << hp << "\n";
 						sprite->changeAnimation(RIGHT_FLINCH);
 						takingdamage = false;
@@ -282,7 +296,16 @@ void Soldier::update(int deltaTime)
 					}
 
 					else if (takingdamage){
-						hp -= 1;
+						if (Game::instance().getKey('s')){
+							//cheat: si es manté apretat S els enemics son invulnerables
+						}
+						else if (Game::instance().getKey('d')){
+							//cheat: si es manté apretat D els enemics moren d'un sol atac
+							hp -= 100;
+						}
+						else{
+							hp -= 1;
+						}
 						cout << "un soldat ha rebut mal\nvida restant= " << hp << "\n";
 						sprite->changeAnimation(LEFT_FLINCH);
 						takingdamage = false;
@@ -572,6 +595,11 @@ bool Soldier::isAlive(){
 }
 
 void Soldier::getSliced(){
-	hp -= 100;
-	busy = false;
+	if (Game::instance().getKey('s')){
+		//cheat: si es manté apretat S els enemics son invulnerables
+	}
+	else{
+		hp -= 100;
+		busy = false;
+	}
 }
