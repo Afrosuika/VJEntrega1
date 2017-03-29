@@ -4,7 +4,7 @@
 #include "Sprite.h"
 #include "TileMap.h"
 
-class Player; //forward declaration
+class Player; 
 
 class Spikes
 {

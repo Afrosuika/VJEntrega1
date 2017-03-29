@@ -1504,6 +1504,11 @@ void Player::takeDamage()
 	cout << "el príncep ha rebut mal\npunts de vida restants= " << hp << "\n";
 }
 
+void Player::getSliced(){
+	hp -= 100;
+	busy = false;
+}
+
 
 
 

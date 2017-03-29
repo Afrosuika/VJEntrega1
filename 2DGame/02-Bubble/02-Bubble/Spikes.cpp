@@ -18,7 +18,7 @@ enum SpikeAnims
 
 void Spikes::init(Player *pl, const glm::ivec2 &position, ShaderProgram &shaderProgram)
 {
-		
+		busy = false;
 		spritesheet.loadFromFile("images/pues-spritesheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(1.0/3.0, 1), &spritesheet, &shaderProgram);
 		sprite->setNumberAnimations(4);

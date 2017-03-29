@@ -570,3 +570,8 @@ void Soldier::setSpikes(vector<Spikes *> &vec)
 bool Soldier::isAlive(){
 	return alive;
 }
+
+void Soldier::getSliced(){
+	hp -= 100;
+	busy = false;
+}

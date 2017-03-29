@@ -58,11 +58,19 @@ void Scene::init()
 	Soldier* asoldier2 = new Soldier();
 	soldiers.push_back(asoldier2);
 	soldiers[1]->init(player, 1, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	soldiers[1]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 7) * map->getTileSize(), (INIT_PLAYER_Y_TILES-5) * map->getTileSize() + 8));
+	soldiers[1]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 8.5) * map->getTileSize(), (INIT_PLAYER_Y_TILES-5) * map->getTileSize() + 8));
 	soldiers[1]->setTileMap(map);
 	soldiers[1]->setSpikes(spikes);
 
 	player->setSoldiers(soldiers);
+
+	Guillotina* guillotinatrap = new Guillotina();
+	guillotines.push_back(guillotinatrap);
+
+	guillotines[0]->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	guillotines[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 6) * map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSize()));
+	guillotines[0]->setTileMap(map);
+	guillotines[0]->setSoldiers(soldiers);
 	
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
@@ -79,6 +87,10 @@ void Scene::update(int deltaTime)
 
 	for (Soldier* soldier : soldiers){
 		soldier->update(deltaTime);
+	}
+
+	for (Guillotina* guillotina : guillotines){
+		guillotina->update(deltaTime);
 	}
 }
 
@@ -101,6 +113,9 @@ void Scene::render()
 		soldier->render();
 	}
 	player->render();
+	for (Guillotina* guillotina : guillotines){
+		guillotina->render();
+	}
 	
 	
 }

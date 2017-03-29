@@ -25,6 +25,7 @@ public:
 	void setSpikes(vector<Spikes*> &vec);
 	void takeDamage();
 	bool isAlive();
+	void getSliced();
 
 
 private:
