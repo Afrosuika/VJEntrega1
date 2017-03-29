@@ -1525,6 +1525,13 @@ void Player::getSliced(){
 	}
 }
 
-
+int Player::getHp() {
+	if (hp <= 0){
+		return 0;
+	}
+	else{
+		return hp;
+	}
+}
 
 

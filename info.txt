@@ -18,14 +18,14 @@ Oriol:
 
 
 Instruccions:
--Per moure el príncep, es fa amb les fletxes direccionals. Amunt per saltar.
+-Per moure el príncep, es fa amb les fletxes direccionals. Amunt és per saltar.
 -Si s'apreta una direcció i amunt alhora, es fa un salt cap endavant.
 -Si es salta cap amunt i hi ha una cornisa a la que agafar-se, el príncep s'hi queda agafat, llavors es pot apretar amunt per enfilar-se, o avall per deixar-se caure.
 -Apretant Z es poden donar passes curtes.
 -Apretant X es desenvaina l'espasa. L'espasa està disponible des del començament. Amb l'espasa desenvainada es poden donar passes curtes endavant o enrere, apretar X per a atacar, o apretar avall per envainar l'espasa.
--Apretant amunt davant la porta de final de nivell, s'hi entrarà per a avançar al següent nivell(només si està oberta)
+-Apretant amunt davant la porta de final de nivell s'hi entrarà per a avançar al següent nivell(només si està oberta)
 -Durant la partida, podràs trobar-te amb trampes de dos tipus: les trampes de punxes, i les trampes de guillotina. Les trampes de punxes es poden evitar saltant-hi per sobre, o bé passant-hi donant passes curtes(el príncep avança amb compte de no trepitjar-les). Pel que fa a les trampes de guillotina, si ets massa a prop del centre quan es tanquen, et tallaràn i moriràs inevitablement. Abans de tancar-se, sempre es mouen una mica, fixa-t'hi bé i podràs passar en el moment correcte.
--Durant la partida, et trobaràs amb enemics que se t'acostaràn i intentaràn atacar-te. Pots fer servir l'espasa per derrotar-los, o, si n'hi ha alguna a prop, els pots atraure a una trampa i deixar que hi caiguin. Els enemics estaran tant concentrats en intentar matar al príncep que no es fixaran per on van.
+-Durant la partida, et trobaràs amb enemics que se t'acostaràn i intentaràn atacar-te. Pots fer servir l'espasa per derrotar-los, o, si n'hi ha alguna a prop, els pots atraure a una trampa i deixar que hi caiguin. Els enemics estaran tant concentrats en intentar matar al príncep que no es fixaran per on van. Atenció! Els enemics vestits de verd i blau son soldats de rang superior; tenen més punts de vida que els altres i també ataquen més rápid.
 
 
 

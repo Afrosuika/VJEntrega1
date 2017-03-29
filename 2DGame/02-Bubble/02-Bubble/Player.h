@@ -28,6 +28,7 @@ public:
 	void setSoldiers(vector<Soldier*> &vec);
 	glm::fvec2 getPosPlayer();
 	void getSliced();
+	int getHp();
 
 private:
 	bool fall;
