@@ -28,6 +28,7 @@ public:
 
 private:
 	void initShaders();
+	glm::vec4 projectionMargins();
 
 private:
 	TileMap *map, *map2, *lifesIndicator;
@@ -38,7 +39,7 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-
+	float marginLeft, marginTop;
 };
 
 

@@ -32,12 +32,12 @@ void Scene::init()
 	initShaders();
 	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	lifesIndicator = TileMap::createTileMap("levels/vida3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	//lifesIndicator = TileMap::createTileMap("levels/vida3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()-8));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * (map->getBlockSize()).x, INIT_PLAYER_Y_TILES * (map->getBlockSize()).y - 8));
 	player->setTileMap(map);
 	
 	Spikes* spiketrap = new Spikes();
@@ -74,8 +74,27 @@ void Scene::init()
 	guillotines[0]->setTileMap(map);
 	guillotines[0]->setSoldiers(soldiers);
 	
-	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+	projection = glm::ortho(16.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 16.f);
+	marginLeft = 16.f + 32.f;
+	marginTop = 16.f + 64.f - 2.f;
+	
+	glm::vec4 projMargins = projectionMargins();
+	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
 	currentTime = 0.0f;
+}
+
+glm::vec4 Scene::projectionMargins(){
+	float left, right, top, bottom;
+	glm::fvec2 pos = player->getPosPlayer();
+	pos.x += 64.f;
+	int quadY = (pos.y / map->getBlockSize().y) / 3;
+	int quadX = ((pos.x - 16.f) / map->getBlockSize().x) / 10;
+	left = marginLeft + quadX*10.f*32.f;
+	right = left + 10 * 32.f;
+	top = marginTop + quadY*3.f*64.f;
+	bottom = top + 64.f*3.f + 2.f;
+	glm::vec4 ret = glm::vec4(left,right,bottom,top);
+	return ret;
 }
 
 void Scene::update(int deltaTime)
@@ -94,6 +113,10 @@ void Scene::update(int deltaTime)
 	for (Guillotina* guillotina : guillotines){
 		guillotina->update(deltaTime);
 	}
+	glm::vec4 projMargins = projectionMargins();
+	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
+	//projection = glm::ortho(left, right, bottom, top);
+	//lifesIndicator = TileMap::createTileMap("levels/vida3.txt", glm::vec2(left, top), texProgram);
 }
 
 void Scene::render()
@@ -108,7 +131,7 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	map2->render();
-	lifesIndicator->render();
+	//lifesIndicator->render();
 	for (Spikes* spike : spikes){
 		spike->render();
 	}
