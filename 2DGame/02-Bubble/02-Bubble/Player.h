@@ -13,6 +13,7 @@
 // all properties it needs to track its movement, jumping, and collisions.
 class Spikes;
 class Soldier;
+class Portagran;
 
 class Player
 {
@@ -26,6 +27,7 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	void setSpikes(vector<Spikes*> &vec);
 	void setSoldiers(vector<Soldier*> &vec);
+	void setPortagran(Portagran* port);
 	glm::fvec2 getPosPlayer();
 	void getSliced();
 	int getHp();
@@ -36,6 +38,7 @@ private:
 	bool busy;
 	bool alive;
 	bool spikedanger;
+	bool potacabarnivell;
 	glm::ivec2 tileMapDispl;
 	glm::fvec2 posPlayer;
 	int jumpAngle, hp;
@@ -46,6 +49,7 @@ private:
 	clock_t stamp;
 	vector<Spikes*> spikeTraps;
 	vector<Soldier*> soldiers;
+	Portagran* portagran;
 	bool dealtdamage;
 
 };

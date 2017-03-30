@@ -15,6 +15,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Guillotina.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Portagran.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="Spikes.h">
@@ -32,6 +33,7 @@
     <ClCompile Include="Guillotina.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Portagran.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />

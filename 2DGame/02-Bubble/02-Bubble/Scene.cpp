@@ -73,6 +73,14 @@ void Scene::init()
 	guillotines[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 6) * map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSize()));
 	guillotines[0]->setTileMap(map);
 	guillotines[0]->setSoldiers(soldiers);
+
+
+	portagran = new Portagran();
+	portagran->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	portagran->setPosition(glm::vec2((INIT_PLAYER_X_TILES-1) * map->getTileSize()-60, INIT_PLAYER_Y_TILES * map->getTileSize() -62));
+	portagran->setTileMap(map);
+
+	player->setPortagran(portagran);
 	
 	projection = glm::ortho(16.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 16.f);
 	marginLeft = 16.f + 32.f;
@@ -101,6 +109,10 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+
+	if (Game::instance().getKey('q')){
+		portagran->setMustopen(true);
+	}
 	
 	for (Spikes* spike : spikes){
 		spike->update(deltaTime);
@@ -113,6 +125,9 @@ void Scene::update(int deltaTime)
 	for (Guillotina* guillotina : guillotines){
 		guillotina->update(deltaTime);
 	}
+
+	portagran->update(deltaTime);
+
 	glm::vec4 projMargins = projectionMargins();
 	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
 	//projection = glm::ortho(left, right, bottom, top);
@@ -135,6 +150,7 @@ void Scene::render()
 	for (Spikes* spike : spikes){
 		spike->render();
 	}
+	portagran->render();
 	for (Soldier* soldier : soldiers){
 		soldier->render();
 	}

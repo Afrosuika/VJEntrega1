@@ -9,6 +9,7 @@
 #include "Spikes.h"
 #include "Soldier.h"
 #include "Guillotina.h"
+#include "Portagran.h"
 
 
 // Scene contains all the entities of our game.
@@ -36,6 +37,7 @@ private:
 	vector<Spikes*> spikes;
 	vector<Soldier*> soldiers;
 	vector<Guillotina*> guillotines;
+	Portagran* portagran;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;

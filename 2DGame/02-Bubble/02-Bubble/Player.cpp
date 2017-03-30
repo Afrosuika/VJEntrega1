@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "Spikes.h"
 #include "Soldier.h"
+#include "Portagran.h"
 
 
 #define JUMP_ANGLE_STEP 4
@@ -31,7 +32,8 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	busy = false;
 	alive = true;
 	spikedanger = false;
-	hp = 5;
+	potacabarnivell = false;
+	hp = 3;
 	dealtdamage = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -311,10 +313,25 @@ void Player::update(int deltaTime)
 
 			}
 		}
+
+
 		if (Game::instance().getKey('a')){
 			//cheat: si es manté apretat A el príncep és invulnerable
 			spikedanger = false;
 		}
+
+		glm::ivec2 portagranpos = portagran->getPosRender();
+		if (posPlayer.x + 64.0 > (portagranpos.x + 60) - 20 && posPlayer.x + 64.0 < (portagranpos.x + 60) + 20){			
+			if (((posPlayer.y + 8) - portagranpos.y-64) > -10 && ((posPlayer.y - 8) - portagranpos.y-64) < 10){				
+				if (portagran->getOberta()){
+					potacabarnivell = true;
+				}
+			}
+		}
+		else{
+			potacabarnivell = false;
+		}
+
 
 		if (hp <= 0){
 			sprite->changeAnimation(RIGHT_DEATH);
@@ -371,7 +388,7 @@ void Player::update(int deltaTime)
 					stamp = clock();
 				}
 			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v')){
+			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v') && !potacabarnivell){
 				//cheat: apretar la v simula estar davant la porta gran
 				startY = posPlayer.y;
 				sprite->changeAnimation(RIGHT_JUMPUP);
@@ -384,7 +401,7 @@ void Player::update(int deltaTime)
 				busy = true;
 				stamp = clock();
 			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && Game::instance().getKey('v')){
+			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && (Game::instance().getKey('v') || potacabarnivell)){
 				//cheat: apretar la v simula estar davant la porta gran
 				sprite->changeAnimation(ENTER_BIGDOOR);
 				busy = true;
@@ -448,16 +465,16 @@ void Player::update(int deltaTime)
 					stamp = clock();
 				}
 			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_LEFT) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v')){
-				startY = posPlayer.y;
-				//per ara, apretar la v simularà estar davant la porta gran
+			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !Game::instance().getSpecialKey(GLUT_KEY_LEFT) && !Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && !Game::instance().getKey('v') && !potacabarnivell){
+				//cheat: apretar la v simula estar davant la porta gran
+				startY = posPlayer.y;				
 				sprite->changeAnimation(LEFT_JUMPUP);
 				busy = true;
 				stamp = clock();
 			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && Game::instance().getKey('v')){
+			else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && (Game::instance().getKey('v') || potacabarnivell)){
 				startY = posPlayer.y;
-				//per ara, apretar la v simularà estar davant la porta gran
+				//cheat: apretar la v simula estar davant la porta gran
 				sprite->changeAnimation(ENTER_BIGDOOR);
 				busy = true;
 				stamp = clock();
@@ -1504,6 +1521,11 @@ void Player::setPosition(const glm::vec2 &pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
+void Player::setPortagran(Portagran* port)
+{
+	portagran = port;
+}
+
 void Player::takeDamage()
 {
 	if (Game::instance().getKey('a')){
@@ -1526,7 +1548,7 @@ void Player::getSliced(){
 }
 
 int Player::getHp() {
-	if (hp <= 0){
+	if (hp <= 0 || !alive){
 		return 0;
 	}
 	else{
