@@ -16,6 +16,7 @@ Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
+	manager = NULL;
 }
 
 Scene::~Scene()
@@ -24,15 +25,36 @@ Scene::~Scene()
 		delete map;
 	if(player != NULL)
 		delete player;
+	if (manager != NULL)
+		delete manager;
+	if (portagran != NULL)
+		delete portagran;
+	for (int i = 0; i < spikes.size(); ++i) {
+		if (spikes[i] != NULL)
+			delete spikes[i];
+	}
+	for (int i = 0; i < soldiers.size(); ++i) {
+		if (soldiers[i] != NULL)
+			delete soldiers[i];
+	}
+	for (int i = 0; i < guillotines.size(); ++i) {
+		if (guillotines[i] != NULL)
+			delete guillotines[i];
+	}
+
 }
 
 
 void Scene::init()
 {
 	initShaders();
+
 	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//lifesIndicator = TileMap::createTileMap("levels/vida3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+	manager = new SoundManager();
+	manager->playLevelMusic();
 
 
 	player = new Player();

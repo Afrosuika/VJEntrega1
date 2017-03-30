@@ -11,7 +11,8 @@ Ernest:
 -Animacions trampa de punxes
 -Animacions Soldat
 -Animacions trampa guillotina
--Interaccions Príncep-Soldats-Trampes
+-Animacions porta de final de nivell
+-Interaccions Príncep-Soldats-Trampes-Porta final
 
 Oriol:
 
@@ -35,3 +36,4 @@ Cheats:
 -Si es manté apretat A, el príncep serà invulnerable tant a les trampes com als atacs enemics.
 -Si es manté apretat S, els enemics seràn invulnerables a les trampes i als atacs del príncep(els atacs els continuaran llançant enrere, però no rebràn mal).
 -Si es manté apretat D, els enemics moriràn instantàniament amb un sol atac.
+-Apretant Q, es pot fer que la porta de final de nivell s'obri.
