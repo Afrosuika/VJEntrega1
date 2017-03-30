@@ -6,12 +6,12 @@ Funcionalitats:
 
 Ernest:
 -Spritesheet Príncep
--Spritesheet Soldat
+-Spritesheets Soldat
 -Animacions Príncep
 -Animacions trampa de punxes
 -Animacions Soldat
 -Animacions trampa guillotina
--Interaccions Príncep-Soldat-Trampes
+-Interaccions Príncep-Soldats-Trampes
 
 Oriol:
 

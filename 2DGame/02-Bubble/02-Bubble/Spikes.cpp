@@ -51,7 +51,7 @@ void Spikes::init(Player *pl, const glm::ivec2 &position, ShaderProgram &shaderP
 
 void Spikes::update(int deltaTime)
 {
-
+	sprite->update(deltaTime);
 	if (!busy){//check if animation has to change
 		glm::fvec2 posplayer = player->getPosPlayer();
 
