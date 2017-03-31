@@ -51,7 +51,6 @@ void Scene::init()
 
 	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	//lifesIndicator = TileMap::createTileMap("levels/vida3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 	manager = new SoundManager();
 	manager->playLevelMusic();
@@ -61,6 +60,9 @@ void Scene::init()
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * (map->getBlockSize()).x, INIT_PLAYER_Y_TILES * (map->getBlockSize()).y - 8));
 	player->setTileMap(map);
+
+	life = new Life();
+	life->init(player, glm::vec2(0.f, 0.f), texProgram);
 	
 	Spikes* spiketrap = new Spikes();
 	spikes.push_back(spiketrap);
@@ -99,7 +101,7 @@ void Scene::init()
 
 	portagran = new Portagran();
 	portagran->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	portagran->setPosition(glm::vec2((INIT_PLAYER_X_TILES-1) * map->getTileSize()-60, INIT_PLAYER_Y_TILES * map->getTileSize() -62));
+	portagran->setPosition(glm::vec2( map->getTileSize()+20, 2 * map->getTileSize() -62));
 	portagran->setTileMap(map);
 
 	player->setPortagran(portagran);
@@ -149,9 +151,11 @@ void Scene::update(int deltaTime)
 	}
 
 	portagran->update(deltaTime);
+	life->update(deltaTime);
 
 	glm::vec4 projMargins = projectionMargins();
-	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
+	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
+	life->setPosition(glm::vec2(projMargins[0], projMargins[3]));
 	//projection = glm::ortho(left, right, bottom, top);
 	//lifesIndicator = TileMap::createTileMap("levels/vida3.txt", glm::vec2(left, top), texProgram);
 }
@@ -167,8 +171,6 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
-	map2->render();
-	//lifesIndicator->render();
 	for (Spikes* spike : spikes){
 		spike->render();
 	}
@@ -180,8 +182,15 @@ void Scene::render()
 	for (Guillotina* guillotina : guillotines){
 		guillotina->render();
 	}
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	modelview = glm::mat4(1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	map2->render();
 	
-	
+	life->render();
 }
 
 void Scene::initShaders()

@@ -11,7 +11,7 @@
 #include "Guillotina.h"
 #include "Portagran.h"
 #include "SoundManager.h"
-
+#include "Life.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -35,6 +35,7 @@ private:
 private:
 	TileMap *map, *map2, *lifesIndicator;
 	Player *player;
+	Life *life;
 	vector<Spikes*> spikes;
 	vector<Soldier*> soldiers;
 	vector<Guillotina*> guillotines;
