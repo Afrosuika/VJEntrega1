@@ -49,8 +49,10 @@ void Scene::init()
 {
 	initShaders();
 
-	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	/*map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/
+	map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 	manager = new SoundManager();
 	manager->playLevelMusic();
@@ -112,7 +114,7 @@ void Scene::init()
 	marginTop = 16.f + 64.f - 2.f;
 	
 	glm::vec4 projMargins = projectionMargins();
-	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
+	//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
 	currentTime = 0.0f;
 }
 
@@ -155,10 +157,8 @@ void Scene::update(int deltaTime)
 	life->update(deltaTime);
 
 	glm::vec4 projMargins = projectionMargins();
-	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
+	//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
 	life->setPosition(glm::vec2(projMargins[0], projMargins[3]));
-	//projection = glm::ortho(left, right, bottom, top);
-	//lifesIndicator = TileMap::createTileMap("levels/vida3.txt", glm::vec2(left, top), texProgram);
 }
 
 void Scene::render()
