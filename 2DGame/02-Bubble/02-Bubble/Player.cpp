@@ -1596,7 +1596,7 @@ void Player::takeDamage()
 	else{
 		manager->playPrinceOomp();
 		hp -= 1;
-		cout << "el príncep ha rebut mal\npunts de vida restants= " << hp << "\n";
+		//cout << "el príncep ha rebut mal\npunts de vida restants= " << hp << "\n";
 	}
 }
 

@@ -227,7 +227,7 @@ void Soldier::update(int deltaTime)
 						else{
 							hp -= 1;
 						}
-						cout << "un soldat ha rebut mal\nvida restant= " << hp << "\n";
+						//cout << "un soldat ha rebut mal\nvida restant= " << hp << "\n";
 						sprite->changeAnimation(RIGHT_FLINCH);
 						takingdamage = false;
 						busy = true;
@@ -308,7 +308,7 @@ void Soldier::update(int deltaTime)
 						else{
 							hp -= 1;
 						}
-						cout << "un soldat ha rebut mal\nvida restant= " << hp << "\n";
+						//cout << "un soldat ha rebut mal\nvida restant= " << hp << "\n";
 						sprite->changeAnimation(LEFT_FLINCH);
 						takingdamage = false;
 						busy = true;
