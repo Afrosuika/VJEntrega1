@@ -10,7 +10,7 @@
 #include "Soldier.h"
 #include "Guillotina.h"
 #include "Portagran.h"
-#include "SoundManager.h"
+#include "SoundManager2.h"
 #include "Life.h"
 
 // Scene contains all the entities of our game.
@@ -41,7 +41,7 @@ private:
 	vector<Guillotina*> guillotines;
 	Portagran* portagran;
 	ShaderProgram texProgram;
-	SoundManager *manager;
+	SoundManager2 *manager;
 	float currentTime;
 	glm::mat4 projection;
 	float marginLeft, marginTop;

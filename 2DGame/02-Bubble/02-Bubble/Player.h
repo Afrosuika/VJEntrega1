@@ -7,6 +7,7 @@
 #include "TileMap.h"
 #include <ctime> 
 #include <time.h>
+#include "SoundManager2.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -46,6 +47,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	SoundManager2 *manager;
 	clock_t stamp;
 	vector<Spikes*> spikeTraps;
 	vector<Soldier*> soldiers;

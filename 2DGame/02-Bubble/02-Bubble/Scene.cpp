@@ -54,7 +54,7 @@ void Scene::init()
 	map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
-	manager = new SoundManager();
+	manager = new SoundManager2();
 	manager->playLevelMusic();
 
 

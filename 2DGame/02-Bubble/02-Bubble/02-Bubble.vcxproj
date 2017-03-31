@@ -20,6 +20,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="SoundManager2.h" />
     <ClInclude Include="Spikes.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
@@ -42,6 +43,7 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="SoundManager2.cpp" />
     <ClCompile Include="Spikes.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />

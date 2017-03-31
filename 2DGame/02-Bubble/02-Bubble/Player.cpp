@@ -33,6 +33,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	alive = true;
 	spikedanger = false;
 	potacabarnivell = false;
+	manager = new SoundManager2();
 	hp = 3;
 	dealtdamage = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
@@ -1216,6 +1217,7 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == RIGHT_ATTACK){
 			if (!dealtdamage){
 				if (time >= 4.0 / 8.0 && time < 5.0 / 8.0){
+					manager->playAttack();
 					for (Soldier* soldat : soldiers){
 						glm::fvec2 possoldier = soldat->getPosRender();
 						if ((possoldier.x + 34) < posPlayer.x + 64 + 55){
