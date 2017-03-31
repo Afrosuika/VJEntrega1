@@ -1,20 +1,16 @@
+Integrants del grup:
 Ernest Puigdemont Velasco
 Oriol Capó del Nido
 
 
 Funcionalitats:
-
-Ernest:
--Spritesheet Príncep
--Spritesheets Soldat
--Animacions Príncep
--Animacions trampa de punxes
--Animacions Soldat
--Animacions trampa guillotina
--Animacions porta de final de nivell
--Interaccions Príncep-Soldats-Trampes-Porta final
-
-Oriol:
+-Interfície gràfica amb medidor de vida del príncep.
+-Dos nivells d'aspecte i distribució diferent.
+-Dues de les trampes del joc: trampa de punxes i trampa de guillotina
+-Dos enemics d'aspecte diferent, i amb característiques de lluita diferents.
+-Sistema de combat funcional. Els atacs del príncep atordeixen als enemics i els fan retrocedir. No està implementat bloquejar els atacs, però es pot esquivar fent una passa enrere.
+-Sons agafats del joc original, a més de sons de mort dels enemics, procedents d'altres fonts.
+-Es pot matar als enemics fent-los caure a les trampes.
 
 
 
@@ -24,9 +20,10 @@ Instruccions:
 -Si es salta cap amunt i hi ha una cornisa a la que agafar-se, el príncep s'hi queda agafat, llavors es pot apretar amunt per enfilar-se, o avall per deixar-se caure.
 -Apretant Z es poden donar passes curtes.
 -Apretant X es desenvaina l'espasa. L'espasa està disponible des del començament. Amb l'espasa desenvainada es poden donar passes curtes endavant o enrere, apretar X per a atacar, o apretar avall per envainar l'espasa.
--Apretant amunt davant la porta de final de nivell s'hi entrarà per a avançar al següent nivell(només si està oberta)
 -Durant la partida, podràs trobar-te amb trampes de dos tipus: les trampes de punxes, i les trampes de guillotina. Les trampes de punxes es poden evitar saltant-hi per sobre, o bé passant-hi donant passes curtes(el príncep avança amb compte de no trepitjar-les). Pel que fa a les trampes de guillotina, si ets massa a prop del centre quan es tanquen, et tallaràn i moriràs inevitablement. Abans de tancar-se, sempre es mouen una mica, fixa-t'hi bé i podràs passar en el moment correcte.
--Durant la partida, et trobaràs amb enemics que se t'acostaràn i intentaràn atacar-te. Pots fer servir l'espasa per derrotar-los, o, si n'hi ha alguna a prop, els pots atraure a una trampa i deixar que hi caiguin. Els enemics estaran tant concentrats en intentar matar al príncep que no es fixaran per on van. Atenció! Els enemics vestits de verd i blau son soldats de rang superior; tenen més punts de vida que els altres i també ataquen més rápid.
+-Durant la partida, et trobaràs amb enemics que se t'acostaràn i intentaràn atacar-te. Pots fer servir l'espasa per derrotar-los, o, si n'hi ha alguna a prop, els pots atraure a una trampa i deixar que hi caiguin. Els enemics estaran tant concentrats en intentar matar al príncep que no es fixaran per on van. Atenció! Els enemics vestits de verd i blau son soldats de rang superior; tenen més punts de vida que els altres i també ataquen més rápid. Quan estiguis combatent contra un enemic, pots esquivar els seus atacs donant rápid pas enrere, i contraatacar, ja que la teva espasa és una mica més llarga que la dels enemics.
+-Apretant amunt davant la porta de final de nivell s'hi entrarà per a avançar al següent nivell(només si està oberta)
+-Per tal de que la porta de final de nivell s'obri, cal derrotar a tots els soldats del nivell.
 
 
 
@@ -36,4 +33,8 @@ Cheats:
 -Si es manté apretat A, el príncep serà invulnerable tant a les trampes com als atacs enemics.
 -Si es manté apretat S, els enemics seràn invulnerables a les trampes i als atacs del príncep(els atacs els continuaran llançant enrere, però no rebràn mal).
 -Si es manté apretat D, els enemics moriràn instantàniament amb un sol atac.
--Apretant Q, es pot fer que la porta de final de nivell s'obri.
+-Apretant Q, es pot fer que la porta de final de nivell s'obri sense derrotar els soldats.
+
+
+--GITHUB--
+https://github.com/Afrosuika/VJEntrega1
