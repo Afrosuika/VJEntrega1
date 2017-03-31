@@ -8,8 +8,8 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 4
-#define INIT_PLAYER_Y_TILES 6
+#define INIT_PLAYER_X_TILES 43 
+#define INIT_PLAYER_Y_TILES 9
 
 
 Scene::Scene()
@@ -50,9 +50,11 @@ void Scene::init()
 	initShaders();
 
 	/*map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/
+	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/ 
+	map = TileMap::createTileMap("levels/Nivell1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/Nivell1b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 	manager = new SoundManager();
 	manager->playLevelMusic();
@@ -114,7 +116,7 @@ void Scene::init()
 	marginTop = 16.f + 64.f - 2.f;
 	
 	glm::vec4 projMargins = projectionMargins();
-	//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
+	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
 	currentTime = 0.0f;
 }
 
@@ -123,7 +125,7 @@ glm::vec4 Scene::projectionMargins(){
 	glm::fvec2 pos = player->getPosPlayer();
 	pos.x += 64.f;
 	int quadY = (pos.y / map->getBlockSize().y) / 3;
-	int quadX = ((pos.x - 16.f) / map->getBlockSize().x) / 10;
+	int quadX = ((pos.x - 16.f) / map->getBlockSize().x) /10;
 	left = marginLeft + quadX*10.f*32.f;
 	right = left + 10 * 32.f;
 	top = marginTop + quadY*3.f*64.f;
@@ -156,8 +158,8 @@ void Scene::update(int deltaTime)
 	portagran->update(deltaTime);
 	life->update(deltaTime);
 
-	glm::vec4 projMargins = projectionMargins();
-	//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
+	glm::vec4 projMargins = projectionMargins(); 
+	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
 	life->setPosition(glm::vec2(projMargins[0], projMargins[3]));
 }
 
