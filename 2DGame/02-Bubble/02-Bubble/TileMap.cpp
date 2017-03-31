@@ -197,7 +197,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	x = (pos.x + 64) / blockSizeX;
 	y = (pos.y + 64) / blockSizeY;
 
-	int posX = (pos.x + 32) / blockSizeX;
+	int posX = (pos.x + 64 + 20) / blockSizeX;
 	int tile = map[y*mapSize.x + posX];
 	if (tile == 8 || tile == 12 || tile == 14){
 		return true;
@@ -267,6 +267,16 @@ bool TileMap::collisionClimbRight(const glm::ivec2 &pos) const
 	return false;
 }
 
+bool TileMap::collisionMoveDown(const glm::ivec2 &pos) const
+{
+	int x0, y0, y1;
+	x0 = ((pos.x + 64) / blockSizeX);
+	y0 = ((pos.y + 64) / blockSizeY);
+	y1 = ((pos.y + 64 + 15) / blockSizeY);
+	int tile = map[y1*mapSize.x + x0];
+	if (tile == 9 || tile == 10) return true;
+	return false;
+}
 
 
 

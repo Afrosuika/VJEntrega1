@@ -276,21 +276,28 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 	sprite->setAnimationSpeed(RIGHT_FALL, 8);
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.4f));
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.4f));
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.4f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.4f, 0.4f));
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.6f, 0.4f));
-	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.8f, 0.4f));
-	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.45f));
-	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.45f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.6f, 0.4f));
+	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.8f, 0.4f));
+	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.45f));
+	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.45f));
 
 	sprite->setAnimationSpeed(LEFT_FALL, 8);
 	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.4f));
 	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.6f, 0.4f));
 	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.6f, 0.4f));
 	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.8f, 0.4f));
-	sprite->addKeyframe(LEFT_FALL, glm::vec2(-1.0f, 0.4f));
-	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.45f));
-	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.45f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.8f, 0.4f));
+	//sprite->addKeyframe(LEFT_FALL, glm::vec2(-1.0f, 0.4f));
+	//sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.45f));
+	//sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.45f));
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
@@ -513,6 +520,12 @@ void Player::update(int deltaTime)
 					busy = true;
 					stamp = clock();
 				}
+				else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(RIGHT_FALL);
+					startY = posPlayer.y;
+					busy = true;
+					stamp = clock();
+				}
 				else {
 					sprite->changeAnimation(RIGHT_WINDDOWN);
 					busy = true;
@@ -550,6 +563,12 @@ void Player::update(int deltaTime)
 				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
 				{
 					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+					sprite->changeAnimation(LEFT_FALL);
+					startY = posPlayer.y;
 					busy = true;
 					stamp = clock();
 				}
@@ -984,13 +1003,21 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_JUMPFWRD){
-			sprite->changeAnimation(RIGHT_FWRDLAND);
+			if (map->collisionMoveRight(posPlayer, glm::vec2(32, 32))){
+				sprite->changeAnimation(STAND_RIGHT);
+			}
+			else 
+				sprite->changeAnimation(RIGHT_FWRDLAND);
 			busy = true;
 			stamp = clock();
 		}
 
 		else if (sprite->animation() == LEFT_JUMPFWRD){
-			sprite->changeAnimation(LEFT_FWRDLAND);
+			if (map->collisionMoveLeft(posPlayer, glm::vec2(32, 32))){
+				sprite->changeAnimation(STAND_LEFT);
+			}
+			else
+				sprite->changeAnimation(LEFT_FWRDLAND);
 			busy = true;
 			stamp = clock();
 		}
@@ -1315,38 +1342,50 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_JUMPFWRD){
-			if (time >= 5.0 / 8.0  && time < 7.0 / 8.0){
-				posPlayer.y -= 4.0 / 8.0;
-			}
-			else if (time >= 8.0 / 8.0  && time < 10.0 / 8.0){
-				posPlayer.y += 4.0 / 8.0;
-			}
-
-			if (time >= 5.0 / 8.0  && time < 10.0 / 8.0){
-				posPlayer.x += 1.0*(14.0 / 8.0);
-			}
-
-			if (time >= 9.9 / 8.0){
+			if (map->collisionMoveRight(posPlayer, glm::vec2(32, 32))){
 				posPlayer.y = startY;
 				busy = false;
+			}
+			else {
+				if (time >= 5.0 / 8.0  && time < 7.0 / 8.0){
+					posPlayer.y -= 4.0 / 8.0;
+				}
+				else if (time >= 8.0 / 8.0  && time < 10.0 / 8.0){
+					posPlayer.y += 4.0 / 8.0;
+				}
+
+				if (time >= 5.0 / 8.0  && time < 10.0 / 8.0){
+					posPlayer.x += 1.0*(14.0 / 8.0);
+				}
+
+				if (time >= 9.9 / 8.0){
+					posPlayer.y = startY;
+					busy = false;
+				}
 			}
 		}
 
 		else if (sprite->animation() == LEFT_JUMPFWRD){
-			if (time >= 5.0 / 8.0  && time < 7.0 / 8.0){
-				posPlayer.y -= 4.0 / 8.0;
-			}
-			else if (time >= 8.0 / 8.0  && time < 10.0 / 8.0){
-				posPlayer.y += 4.0 / 8.0;
-			}
-
-			if (time >= 5.0 / 8.0  && time < 10.0 / 8.0){
-				posPlayer.x -= 1.0*(14.0 / 8.0);
-			}
-
-			if (time >= 9.9 / 8.0){
+			if (map->collisionMoveLeft(posPlayer, glm::vec2(32, 32))){
 				posPlayer.y = startY;
 				busy = false;
+			}
+			else {
+				if (time >= 5.0 / 8.0  && time < 7.0 / 8.0){
+					posPlayer.y -= 4.0 / 8.0;
+				}
+				else if (time >= 8.0 / 8.0  && time < 10.0 / 8.0){
+					posPlayer.y += 4.0 / 8.0;
+				}
+
+				if (time >= 5.0 / 8.0  && time < 10.0 / 8.0){
+					posPlayer.x -= 1.0*(14.0 / 8.0);
+				}
+
+				if (time >= 9.9 / 8.0){
+					posPlayer.y = startY;
+					busy = false;
+				}
 			}
 		}
 
