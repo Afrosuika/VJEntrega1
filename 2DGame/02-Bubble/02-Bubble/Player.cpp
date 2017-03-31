@@ -286,7 +286,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.6f, 0.4f));
 	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.8f, 0.4f));
 	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.45f));
-	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.45f));
+	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.45f)); 
 
 	sprite->setAnimationSpeed(LEFT_FALL, 8);
 	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.4f));
