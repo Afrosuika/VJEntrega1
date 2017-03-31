@@ -63,6 +63,7 @@ void Scene::init()
 
 	life = new Life();
 	life->init(player, glm::vec2(0.f, 0.f), texProgram);
+
 	
 	Spikes* spiketrap = new Spikes();
 	spikes.push_back(spiketrap);
