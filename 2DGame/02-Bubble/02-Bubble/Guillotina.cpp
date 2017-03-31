@@ -97,6 +97,7 @@ void Guillotina::update(int deltaTime)
 		else if (sprite->animation() == MOVING){
 			if (time >= 12.0 / 8.0 && time <= 13.0 / 8.0){
 				if (!damagedone){
+					manager->playGuillotineSnap();
 					//cout << "la guillotina ataca!\n";
 					if (posplayer.x + 64.0 > (posGuillotina.x + 12) - 15 && posplayer.x + 64.0 < (posGuillotina.x + 12) + 15){
 						if (((posplayer.y + 8) - posGuillotina.y) > -10 && ((posplayer.y - 8) - posGuillotina.y) < 10){
@@ -148,4 +149,8 @@ void Guillotina::setPosition(const glm::vec2 &pos)
 void Guillotina::setSoldiers(vector<Soldier *> &vec)
 {
 	soldats = vec;
+}
+
+void Guillotina::setSoundManager(SoundManager2* man){
+	manager = man;
 }

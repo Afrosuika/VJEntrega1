@@ -2,22 +2,78 @@
 #include <iostream>
 
 SoundManager2::SoundManager2() {
-	/*if (!levelmusic.openFromFile("sound/levelBGM.WAV")){
-		std::cout << "error loading music" << std::endl;
-	}
-	if (!attackBuff.loadFromFile("sound/fortest.mp3")){
-		std::cout << "error loading attack sound" << std::endl;
-	}*/
+	bigdooropening = false;
 }
 
 void SoundManager2::stopAll() {
 	PlaySound(NULL, 0, 0);
 }
 
-void SoundManager2::playLevelMusic() {
-	PlaySound(TEXT("sound/levelBGM.wav"), NULL, SND_ASYNC | SND_FILENAME);
+void SoundManager2::BigDoorFinished(){
+	bigdooropening = false;
 }
 
-void SoundManager2::playAttack(){
-	PlaySound(TEXT("sound/levelBGM.wav"), NULL, SND_ASYNC | SND_FILENAME);
+void SoundManager2::playBigdoorOpen() {
+	std::cout << (PlaySound(TEXT("sound/PoP_sounds/PoP_bigdoor_open.wav"), NULL, SND_ASYNC | SND_FILENAME))<<"\n";
+	bigdooropening = true;
+}
+
+void SoundManager2::playEndLevel(){
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/PoP_sounds/PoP_endlevel_fanfare.wav"), NULL, SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playEnemyHit() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/PoP_sounds/PoP_enemy_hit.wav"), NULL, SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playGuillotineSnap() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/PoP_sounds/PoP_guillotine_snap.wav"), NULL, SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playPrinceOomp() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/PoP_sounds/PoP_prince_oomp.wav"), NULL, SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playPrinceSlash(){
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/PoP_sounds/PoP_prince_slash.wav"), NULL, SND_NOSTOP |SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playPrinceSteps() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/PoP_sounds/PoP_prince_steps.wav"), NULL, SND_NOSTOP | SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playPrinceUnsheathe() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/PoP_sounds/PoP_prince_unsheathe.wav"), NULL, SND_NOSTOP | SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playSpikesUp() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/PoP_sounds/PoP_spikes_up.wav"), NULL, SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playWilhelm() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/other_sounds/wilhelm.wav"), NULL, SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playShogunScream() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/other_sounds/shogun-eeeeyyaaaagh.wav"), NULL, SND_ASYNC | SND_FILENAME);
+	}
 }

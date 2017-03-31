@@ -8,8 +8,11 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 43 
-#define INIT_PLAYER_Y_TILES 9
+#define INIT_PLAYER_X_TILES 4 
+#define INIT_PLAYER_Y_TILES 6
+
+/*#define INIT_PLAYER_X_TILES 43 
+#define INIT_PLAYER_Y_TILES 9*/
 
 
 Scene::Scene()
@@ -49,21 +52,21 @@ void Scene::init()
 {
 	initShaders();
 
-	/*map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/ 
-	map = TileMap::createTileMap("levels/Nivell1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/Nivell1b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	/*map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram); */
+	/*map = TileMap::createTileMap("levels/Nivell1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/Nivell1b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/
 
 	manager = new SoundManager2();
-	manager->playLevelMusic();
 
 
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * (map->getBlockSize()).x, INIT_PLAYER_Y_TILES * (map->getBlockSize()).y - 8));
 	player->setTileMap(map);
+	player->setSoundManager(manager);
 
 	life = new Life();
 	life->init(player, glm::vec2(0.f, 0.f), texProgram);
@@ -75,6 +78,7 @@ void Scene::init()
 	spikes[0]->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	spikes[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES+4) * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	spikes[0]->setTileMap(map);
+	spikes[0]->setSoundManager(manager);
 
 
 	player->setSpikes(spikes);
@@ -85,6 +89,7 @@ void Scene::init()
 	soldiers[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 7) * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()+8));
 	soldiers[0]->setTileMap(map);
 	soldiers[0]->setSpikes(spikes);
+	soldiers[0]->setSoundManager(manager);
 
 	Soldier* asoldier2 = new Soldier();
 	soldiers.push_back(asoldier2);
@@ -92,6 +97,7 @@ void Scene::init()
 	soldiers[1]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 8.5) * map->getTileSize(), (INIT_PLAYER_Y_TILES-5) * map->getTileSize() + 8));
 	soldiers[1]->setTileMap(map);
 	soldiers[1]->setSpikes(spikes);
+	soldiers[1]->setSoundManager(manager);
 
 	player->setSoldiers(soldiers);
 
@@ -102,12 +108,14 @@ void Scene::init()
 	guillotines[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 6) * map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSize()));
 	guillotines[0]->setTileMap(map);
 	guillotines[0]->setSoldiers(soldiers);
+	guillotines[0]->setSoundManager(manager);
 
 
 	portagran = new Portagran();
 	portagran->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	portagran->setPosition(glm::vec2( map->getTileSize()+20, 2 * map->getTileSize() -62));
 	portagran->setTileMap(map);
+	portagran->setSoundManager(manager);
 
 	player->setPortagran(portagran);
 	

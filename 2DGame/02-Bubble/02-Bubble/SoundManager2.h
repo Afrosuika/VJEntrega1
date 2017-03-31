@@ -9,11 +9,22 @@ class SoundManager2
 
 public:
 	SoundManager2();
+	void BigDoorFinished();
 	void stopAll();
-	void playLevelMusic();
-	void playAttack();
+	void playBigdoorOpen();
+	void playEndLevel();
+	void playEnemyHit();
+	void playGuillotineSnap();
+	void playPrinceOomp();
+	void playPrinceSlash();
+	void playPrinceSteps();
+	void playPrinceUnsheathe();
+	void playSpikesUp();
+	void playWilhelm();
+	void playShogunScream();
 
 private:
+	bool bigdooropening;
 
 };
 

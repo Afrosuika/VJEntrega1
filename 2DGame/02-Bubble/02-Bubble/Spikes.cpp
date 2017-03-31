@@ -67,10 +67,13 @@ void Spikes::update(int deltaTime)
 		}
 
 		if (posplayer.x + 64.0 > (posSpikes.x + 16) - 75 && posplayer.x + 64.0 < (posSpikes.x + 16) + 75){
-			if (sprite->animation() == DOWN){
-				sprite->changeAnimation(COMING_UP);
-				busy = true;
-				stamp = clock();
+			if (((posplayer.y + 8) - posSpikes.y) > -10 && ((posplayer.y - 8) - posSpikes.y) < 10){
+				if (sprite->animation() == DOWN){
+					manager->playSpikesUp();
+					sprite->changeAnimation(COMING_UP);
+					busy = true;
+					stamp = clock();
+				}
 			}
 
 		}
@@ -133,5 +136,9 @@ void Spikes::setPosition(const glm::vec2 &pos)
 {
 	posSpikes = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posSpikes.x), float(tileMapDispl.y + posSpikes.y)));
+}
+
+void Spikes::setSoundManager(SoundManager2* man){
+	manager = man;
 }
 

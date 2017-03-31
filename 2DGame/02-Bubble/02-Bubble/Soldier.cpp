@@ -209,13 +209,14 @@ void Soldier::update(int deltaTime)
 				//state=FIGHTING
 				if ((posplayer.x + 64.0 > (posSoldier.x + 34) && posplayer.x + 64.0 < (posSoldier.x + 34) + aggrodistance) && (((posplayer.y + 8) - posSoldier.y + 8) > -10 && ((posplayer.y - 8) - posSoldier.y) < 10)){
 					//el príncep està a prop del soldat, a la seva dreta i a la mateixa altura
-					if (hp <= 0){
+					if (hp <= 0){						
 						sprite->changeAnimation(RIGHT_DIE);
 						busy = true;
 						stamp = clock();
 					}
 
 					else if (takingdamage){
+						manager->playEnemyHit();
 						if (Game::instance().getKey('s')){
 							//cheat: si es manté apretat S els enemics son invulnerables
 						}
@@ -296,6 +297,7 @@ void Soldier::update(int deltaTime)
 					}
 
 					else if (takingdamage){
+						manager->playEnemyHit();
 						if (Game::instance().getKey('s')){
 							//cheat: si es manté apretat S els enemics son invulnerables
 						}
@@ -509,6 +511,12 @@ void Soldier::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_DIE){
+			if (type == 0){
+				manager->playWilhelm();
+			}
+			else{
+				manager->playShogunScream();
+			}
 			if (time >= 3.9 / 8.0){
 				alive = false;
 				busy = false;
@@ -516,6 +524,12 @@ void Soldier::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == LEFT_DIE){
+			if (type == 0){
+				manager->playWilhelm();
+			}
+			else{
+				manager->playShogunScream();
+			}
 			if (time >= 3.9 / 8.0){
 				alive = false;
 				busy = false;
@@ -537,6 +551,12 @@ void Soldier::update(int deltaTime)
 		}
 
 		if (sprite->animation() == RIGHT_SPIKEDEATH){
+			if (type == 0){
+				manager->playWilhelm();
+			}
+			else{
+				manager->playShogunScream();
+			}
 			if (time >= 1.0 / 8.0){
 				alive = false;
 				busy = false;
@@ -544,6 +564,12 @@ void Soldier::update(int deltaTime)
 		}
 
 		if (sprite->animation() == LEFT_SPIKEDEATH){
+			if (type == 0){
+				manager->playWilhelm();
+			}
+			else{
+				manager->playShogunScream();
+			}
 			if (time >= 1.0 / 8.0){
 				alive = false;
 				busy = false;
@@ -588,6 +614,10 @@ glm::ivec2 Soldier::getPosRender() {
 void Soldier::setSpikes(vector<Spikes *> &vec)
 {
 	spikeTraps = vec;
+}
+
+void Soldier::setSoundManager(SoundManager2* man){
+	manager = man;
 }
 
 bool Soldier::isAlive(){

@@ -69,6 +69,7 @@ void Portagran::update(int deltaTime)
 		if (sprite->animation() == CLOSED){
 			if (mustopen){
 				sprite->changeAnimation(OPENING);
+				manager->playBigdoorOpen();
 				busy = true;
 				stamp = clock();
 			}
@@ -81,6 +82,7 @@ void Portagran::update(int deltaTime)
 
 		else if (sprite->animation() == OPENING){
 			sprite->changeAnimation(OPEN);
+			manager->BigDoorFinished();
 			oberta = true;
 			busy = true;
 			stamp = clock();
@@ -131,6 +133,10 @@ void Portagran::setPosition(const glm::vec2 &pos)
 {
 	posPortagran = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPortagran.x), float(tileMapDispl.y + posPortagran.y)));
+}
+
+void Portagran::setSoundManager(SoundManager2* man){
+	manager = man;
 }
 
 void Portagran::setMustopen(bool cond)

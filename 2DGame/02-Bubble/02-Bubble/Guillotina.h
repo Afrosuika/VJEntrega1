@@ -3,6 +3,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "SoundManager2.h"
 #include <time.h>
 
 class Player;
@@ -20,6 +21,7 @@ public:
 	glm::ivec2 getPosRender();
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	void setSoundManager(SoundManager2* manager);
 	void setSoldiers(vector<Soldier*> &vec);
 
 private:
@@ -32,6 +34,7 @@ private:
 	Sprite *sprite;
 	Player *player;
 	TileMap *map;
+	SoundManager2 *manager;
 	clock_t stamp;
 	vector<Soldier*> soldats;
 	bool damagedone;

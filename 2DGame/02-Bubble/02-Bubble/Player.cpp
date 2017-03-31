@@ -1049,6 +1049,7 @@ void Player::update(int deltaTime)
 		}
 		else if (sprite->animation() == ENTER_BIGDOOR){
 			sprite->changeAnimation(GONE);
+			manager->playEndLevel();
 			//cout << "aqui es faria trigger de \"nextlevel\" o algo aixi \n";
 			busy = true;
 			stamp = clock();
@@ -1109,6 +1110,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_WINDUP){
+			manager->playPrinceSteps();
 			posPlayer.x += 1.0;
 			if (time >= 2.9 / 8.0){
 				busy = false;
@@ -1116,6 +1118,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == LEFT_WINDUP){
+			manager->playPrinceSteps();
 			posPlayer.x -= 1.0;
 			if (time >= 2.9 / 8.0){
 				busy = false;
@@ -1123,6 +1126,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == MOVE_RIGHT){
+			manager->playPrinceSteps();
 			posPlayer.x += 1.0;
 			if (time >= 2.9 / 8.0){
 				busy = false;
@@ -1130,6 +1134,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == MOVE_LEFT){
+			manager->playPrinceSteps();
 			posPlayer.x -= 1.0;
 			if (time >= 2.9 / 8.0){
 				busy = false;
@@ -1137,6 +1142,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_WINDDOWN){
+			manager->playPrinceSteps();
 			posPlayer.x += 3.0 / 4.0;
 			if (time >= 3.9 / 8.0){
 				busy = false;
@@ -1144,6 +1150,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == LEFT_WINDDOWN){
+			manager->playPrinceSteps();
 			posPlayer.x -= 3.0 / 4.0;
 			if (time >= 3.9 / 8.0){
 				busy = false;
@@ -1151,12 +1158,14 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_UNSHEATHE){
+			manager->playPrinceUnsheathe();
 			if (time >= 2.9 / 8.0){
 				busy = false;
 			}
 		}
 
 		else if (sprite->animation() == LEFT_UNSHEATHE){
+			manager->playPrinceUnsheathe();
 			if (time >= 2.9 / 8.0){
 				busy = false;
 			}
@@ -1217,12 +1226,14 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == RIGHT_ATTACK){
 			if (!dealtdamage){
 				if (time >= 4.0 / 8.0 && time < 5.0 / 8.0){
-					manager->playAttack();
+					manager->playPrinceSlash();
 					for (Soldier* soldat : soldiers){
 						glm::fvec2 possoldier = soldat->getPosRender();
 						if ((possoldier.x + 34) < posPlayer.x + 64 + 55){
-							soldat->takeDamage();
-							dealtdamage = true;
+							if (((posPlayer.y + 8) - possoldier.y) > -10 && ((posPlayer.y - 8) - possoldier.y) < 10){
+								soldat->takeDamage();
+								dealtdamage = true;
+							}
 						}
 					}
 				}
@@ -1235,11 +1246,14 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == LEFT_ATTACK){
 			if (!dealtdamage){
 				if (time >= 4.0 / 8.0 && time < 5.0 / 8.0){
+					manager->playPrinceSlash();
 					for (Soldier* soldat : soldiers){
 						glm::fvec2 possoldier = soldat->getPosRender();
 						if ((possoldier.x + 34) > posPlayer.x + 64 - 55){
-							soldat->takeDamage();
-							dealtdamage = true;
+							if (((posPlayer.y + 8) - possoldier.y) > -10 && ((posPlayer.y - 8) - possoldier.y) < 10){
+								soldat->takeDamage();
+								dealtdamage = true;
+							}
 						}
 					}
 				}
@@ -1392,6 +1406,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == RIGHT_FWRDLAND){
+			manager->playPrinceSteps();
 			if (time >= 0.0 / 8.0){
 				posPlayer.x += 1.0*(6.0 / 8.0);
 			}
@@ -1401,6 +1416,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == LEFT_FWRDLAND){
+			manager->playPrinceSteps();
 			if (time >= 0.0 / 8.0){
 				posPlayer.x -= 1.0*(6.0 / 8.0);
 			}
@@ -1410,6 +1426,7 @@ void Player::update(int deltaTime)
 		}
 
 		else if (sprite->animation() == ENTER_BIGDOOR){
+			manager->playPrinceSteps();
 			if (time >= 9.9 / 8.0){
 				busy = false;
 			}
@@ -1567,12 +1584,17 @@ void Player::setPortagran(Portagran* port)
 	portagran = port;
 }
 
+void Player::setSoundManager(SoundManager2* man){
+	manager = man;
+}
+
 void Player::takeDamage()
 {
 	if (Game::instance().getKey('a')){
 		//cheat: si es manté apretat A el príncep és invulnerable
 	}
 	else{
+		manager->playPrinceOomp();
 		hp -= 1;
 		cout << "el príncep ha rebut mal\npunts de vida restants= " << hp << "\n";
 	}
