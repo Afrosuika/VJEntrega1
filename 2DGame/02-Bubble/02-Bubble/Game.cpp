@@ -7,6 +7,7 @@ void Game::init()
 {
 	level = 1;
 	fst = true;
+	scnd = true;
 	bPlay = true;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	scene.init();
@@ -15,19 +16,29 @@ void Game::init()
 bool Game::update(int deltaTime)
 {
 	if (scene.levelFinished() && fst) changeLevel();
+	else if (level == 2 && scene2.levelFinished() && scnd) changeLevel();
 
 	if (level==1) scene.update(deltaTime);
 	else if (level == 2) scene2.update(deltaTime);
+	else if (level == 3) scene3.update(deltaTime);
 	
 	return bPlay;
 }
 
 void Game::changeLevel(){
-	scene.stop();
-	scene.~Scene();
-	fst = false;
-	level = 2;
-	scene2.init();
+	if (level == 1){
+		scene.stop();
+		scene.~Scene();
+		fst = false;
+		scene2.init();
+	}
+	else if (level == 2){
+		scene2.stop();
+		scene2.~Scene2();
+		scnd = false;
+		scene3.init();
+	}
+	level++;
 }
 
 void Game::render()
@@ -35,6 +46,7 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (level == 1) scene.render();
 	else if (level == 2) scene2.render();
+	else if (level == 3) scene3.render();
 }
 
 void Game::keyPressed(int key)

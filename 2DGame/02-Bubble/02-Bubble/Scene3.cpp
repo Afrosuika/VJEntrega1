@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Scene2.h"
+#include "Scene3.h"
 #include "Game.h"
 
 
@@ -15,14 +15,14 @@
 #define INIT_PLAYER_Y_TILES 9 
 
 
-Scene2::Scene2()
+Scene3::Scene3()
 {
 	map = NULL;
 	player = NULL;
 	manager = NULL;
 }
 
-Scene2::~Scene2()
+Scene3::~Scene3()
 {
 	if (map != NULL)
 		delete map;
@@ -48,7 +48,7 @@ Scene2::~Scene2()
 }
 
 
-void Scene2::init()
+void Scene3::init()
 {
 	initShaders();
 
@@ -56,10 +56,10 @@ void Scene2::init()
 	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/
 	/*map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram); */
-	map = TileMap::createTileMap("levels/Nivell1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/Nivell1b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	/*map = TileMap::createTileMap("levels/Nivell2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/Nivell2b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/
+	/*map = TileMap::createTileMap("levels/Nivell1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/Nivell1b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/
+	map = TileMap::createTileMap("levels/Nivell2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/Nivell2b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 	manager = new SoundManager2();
 
@@ -115,13 +115,13 @@ void Scene2::init()
 
 	portagran = new Portagran();
 	portagran->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	portagran->setPosition(glm::vec2(INIT_PLAYER_X_TILES * (map->getBlockSize()).x + 20, INIT_PLAYER_Y_TILES * (map->getBlockSize()).y - 62));
+	portagran->setPosition(glm::vec2(map->getTileSize() + 20, 2 * map->getTileSize() - 62));
 	portagran->setTileMap(map);
 	portagran->setSoundManager(manager);
 
 	player->setPortagran(portagran);
 
-	projection = glm::ortho(16.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 16.f);
+	projection = glm::ortho(16.f, float(3900 - 1), float(600 - 1), 16.f);
 	marginLeft = 16.f + 32.f;
 	marginTop = 16.f + 64.f - 2.f;
 
@@ -132,11 +132,11 @@ void Scene2::init()
 	dontRender = false;
 }
 
-void Scene2::stop(){
+void Scene3::stop(){
 	dontRender = true;
 }
 
-glm::vec4 Scene2::projectionMargins(){
+glm::vec4 Scene3::projectionMargins(){
 	float left, right, top, bottom;
 	glm::fvec2 pos = player->getPosPlayer();
 	pos.x += 64.f;
@@ -150,7 +150,7 @@ glm::vec4 Scene2::projectionMargins(){
 	return ret;
 }
 
-void Scene2::update(int deltaTime)
+void Scene3::update(int deltaTime)
 {
 	if (!dontRender){
 		currentTime += deltaTime;
@@ -182,7 +182,7 @@ void Scene2::update(int deltaTime)
 	}
 }
 
-void Scene2::render()
+void Scene3::render()
 {
 	if (!dontRender){
 		glm::mat4 modelview;
@@ -217,7 +217,7 @@ void Scene2::render()
 	}
 }
 
-void Scene2::initShaders()
+void Scene3::initShaders()
 {
 	Shader vShader, fShader;
 
