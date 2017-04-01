@@ -33,8 +33,10 @@ public:
 	glm::fvec2 getPosPlayer();
 	void getSliced();
 	int getHp();
+	bool levelFinished() { return isLevelFinished; }
 
 private:
+	bool isLevelFinished;
 	bool fall;
 	bool bJumping;
 	bool busy;
