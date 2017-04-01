@@ -47,6 +47,10 @@ Scene::~Scene()
 		if (guillotines[i] != NULL)
 			delete guillotines[i];
 	}
+	for (int i = 0; i < portals.size(); ++i) {
+		if (portals[i] != NULL)
+			delete portals[i];
+	}
 	if (life != NULL)
 		delete life;
 
@@ -84,7 +88,7 @@ void Scene::init()
 	spikes.push_back(spiketrap);
 	
 	spikes[0]->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	spikes[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES+4) * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	spikes[0]->setPosition(glm::vec2((8) * map->getTileSize(), 6 * map->getTileSize()));
 	spikes[0]->setTileMap(map);
 	spikes[0]->setSoundManager(manager);
 
@@ -94,7 +98,7 @@ void Scene::init()
 	Soldier* asoldier = new Soldier();
 	soldiers.push_back(asoldier);
 	soldiers[0]->init(player,0, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	soldiers[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 7) * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()+8));
+	soldiers[0]->setPosition(glm::vec2((11) * map->getTileSize(), 6 * map->getTileSize()+8));
 	soldiers[0]->setTileMap(map);
 	soldiers[0]->setSpikes(spikes);
 	soldiers[0]->setSoundManager(manager);
@@ -102,7 +106,7 @@ void Scene::init()
 	Soldier* asoldier2 = new Soldier();
 	soldiers.push_back(asoldier2);
 	soldiers[1]->init(player, 1, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	soldiers[1]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 8.5) * map->getTileSize(), (INIT_PLAYER_Y_TILES-5) * map->getTileSize() + 8));
+	soldiers[1]->setPosition(glm::vec2((12.5) * map->getTileSize(), (1) * map->getTileSize() + 8));
 	soldiers[1]->setTileMap(map);
 	soldiers[1]->setSpikes(spikes);
 	soldiers[1]->setSoundManager(manager);
@@ -113,7 +117,7 @@ void Scene::init()
 	guillotines.push_back(guillotinatrap);
 
 	guillotines[0]->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	guillotines[0]->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 6) * map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSize()));
+	guillotines[0]->setPosition(glm::vec2((10) * map->getTileSize(), (6) * map->getTileSize()));
 	guillotines[0]->setTileMap(map);
 	guillotines[0]->setSoldiers(soldiers);
 	guillotines[0]->setSoundManager(manager);
@@ -126,6 +130,25 @@ void Scene::init()
 	portagran->setSoundManager(manager);
 
 	player->setPortagran(portagran);
+
+	Portal* portal1 = new Portal();
+	Portal* portal2 = new Portal();
+
+	portal1->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	portal1->setPosition(glm::vec2((6) * map->getBlockSize().x, (2) * map->getTileSize()));
+	portal1->setTileMap(map);
+	portal1->setSoundManager(manager);
+	portal1->setPair(portal2);
+
+	portal2->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	portal2->setPosition(glm::vec2((8) * map->getBlockSize().x, (2) * map->getTileSize()));
+	portal2->setTileMap(map);
+	portal2->setSoundManager(manager);
+	portal2->setPair(portal1);
+
+
+	portals.push_back(portal1);
+	portals.push_back(portal2);
 	
 	projection = glm::ortho(16.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 16.f);
 	marginLeft = 16.f + 32.f;
@@ -171,6 +194,10 @@ void Scene::update(int deltaTime)
 			spike->update(deltaTime);
 		}
 
+		for (Portal* portal : portals){
+			portal->update(deltaTime);
+		}
+
 		for (Soldier* soldier : soldiers){
 			soldier->update(deltaTime);
 		}
@@ -202,6 +229,9 @@ void Scene::render()
 		map->render();
 		for (Spikes* spike : spikes){
 			spike->render();
+		}
+		for (Portal* portal : portals){
+			portal->render();
 		}
 		portagran->render();
 		for (Soldier* soldier : soldiers){
