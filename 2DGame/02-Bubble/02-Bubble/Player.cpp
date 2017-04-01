@@ -1595,7 +1595,7 @@ void Player::setSoundManager(SoundManager2* man){
 
 void Player::takeDamage()
 {
-	if (Game::instance().getKey('a')){
+	if (Game::instance().getKey('a') || !alive){
 		//cheat: si es manté apretat A el príncep és invulnerable
 	}
 	else{

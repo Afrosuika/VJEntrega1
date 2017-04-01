@@ -9,8 +9,9 @@ Funcionalitats:
 -Dues de les trampes del joc: trampa de punxes i trampa de guillotina
 -Dos enemics d'aspecte diferent, i amb característiques de lluita diferents.
 -Sistema de combat funcional. Els atacs del príncep atordeixen als enemics i els fan retrocedir. No està implementat bloquejar els atacs, però es pot esquivar fent una passa enrere.
--Sons agafats del joc original, a més de sons de mort dels enemics, procedents d'altres fonts.
+-Sons, agafats del joc original, a més de sons de mort dels enemics i sons dels portals màgics, procedents d'altres fonts.
 -Es pot matar als enemics fent-los caure a les trampes.
+-Com a element diferent al joc original, hem afegit portals màgics, que estàn pels nivells, i et permeten moure't d'un a l'altre.
 
 
 
@@ -24,6 +25,7 @@ Instruccions:
 -Durant la partida, et trobaràs amb enemics que se t'acostaràn i intentaràn atacar-te. Pots fer servir l'espasa per derrotar-los, o, si n'hi ha alguna a prop, els pots atraure a una trampa i deixar que hi caiguin. Els enemics estaran tant concentrats en intentar matar al príncep que no es fixaran per on van. Atenció! Els enemics vestits de verd i blau son soldats de rang superior; tenen més punts de vida que els altres i també ataquen més rápid. Quan estiguis combatent contra un enemic, pots esquivar els seus atacs donant rápid pas enrere, i contraatacar, ja que la teva espasa és una mica més llarga que la dels enemics.
 -Apretant amunt davant la porta de final de nivell s'hi entrarà per a avançar al següent nivell(només si està oberta)
 -Per tal de que la porta de final de nivell s'obri, cal derrotar a tots els soldats del nivell.
+-En els nivell, pots trobar portals màgics que estàn conectats entre ells. Pots entrar-hi apretant la fletxa avall. Tingues en compte que després d'utilitzar-los, tarden uns instants en tornar a funcionar.
 
 
 

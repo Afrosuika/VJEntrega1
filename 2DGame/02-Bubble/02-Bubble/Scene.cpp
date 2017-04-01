@@ -9,7 +9,7 @@
 #define SCREEN_Y 16 
 
 #define INIT_PLAYER_X_TILES 4
-#define INIT_PLAYER_Y_TILES 2
+#define INIT_PLAYER_Y_TILES 6
 
 /*#define INIT_PLAYER_X_TILES 43 
 #define INIT_PLAYER_Y_TILES 9*/
@@ -198,7 +198,12 @@ void Scene::update(int deltaTime)
 			portal->update(deltaTime);
 		}
 
+		bool soldatsmorts = true;
+
 		for (Soldier* soldier : soldiers){
+			if (soldier->isAlive()){
+				soldatsmorts = false;
+			}
 			soldier->update(deltaTime);
 		}
 
@@ -206,6 +211,7 @@ void Scene::update(int deltaTime)
 			guillotina->update(deltaTime);
 		}
 
+		portagran->setMustopen(soldatsmorts);
 		portagran->update(deltaTime);
 		life->update(deltaTime);
 
