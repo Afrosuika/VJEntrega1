@@ -184,11 +184,7 @@ void Scene::update(int deltaTime)
 	if (!dontRender){
 		currentTime += deltaTime;
 		player->update(deltaTime);
-		isLevelFinished = player->levelFinished();
-
-		if (Game::instance().getKey('q')){
-			portagran->setMustopen(true);
-		}
+		isLevelFinished = player->levelFinished();		
 
 		for (Spikes* spike : spikes){
 			spike->update(deltaTime);
@@ -212,6 +208,9 @@ void Scene::update(int deltaTime)
 		}
 
 		portagran->setMustopen(soldatsmorts);
+		if (Game::instance().getKey('q')){
+			portagran->setMustopen(true);
+		}
 		portagran->update(deltaTime);
 		life->update(deltaTime);
 
