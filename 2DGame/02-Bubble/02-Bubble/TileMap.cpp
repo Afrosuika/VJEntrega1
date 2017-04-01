@@ -238,11 +238,20 @@ bool TileMap::collisionClimbLeft(const glm::ivec2 &pos) const
 
 	int tileUp = map[y12*mapSize.x + x0];
 	int tileUpLeft = map[y12*mapSize.x + x1];
-
 	bool up = (tileUp == 9 || tileUp == 10);
-	bool upleft1 = tileUpLeft != 4 && tileUpLeft != 6 && tileUpLeft != 7 && tileUpLeft != 8;
+	bool upleft1 = tileUpLeft != 6 && tileUpLeft != 7 && tileUpLeft != 8;
 	bool upleft2 = tileUpLeft != 9 && tileUpLeft != 10 && tileUpLeft != 11 && tileUpLeft != 12 && tileUpLeft != 14;
 	if (up && upleft1 && upleft2) return true;
+
+	for (float pix = 0; pix <= 10; pix += 0.5){
+		x1 = ((pos.x + 64 + pix) / blockSizeX);
+		tileUp = map[y12*mapSize.x + x1];
+		tileUpLeft = map[y12*mapSize.x + x0];
+		bool up = (tileUp == 9 || tileUp == 10);
+		bool upleft1 = tileUpLeft != 6 && tileUpLeft != 7 && tileUpLeft != 8;
+		bool upleft2 = tileUpLeft != 9 && tileUpLeft != 10 && tileUpLeft != 11 && tileUpLeft != 12 && tileUpLeft != 14;
+		if (up && upleft1 && upleft2) return true;
+	}
 
 	return false;
 }
@@ -253,14 +262,14 @@ bool TileMap::collisionClimbRight(const glm::ivec2 &pos) const
 	x0 = ((pos.x + 64) / blockSizeX);
 	y0 = ((pos.y + 64) / blockSizeY);
 
-	x1 = ((pos.x + 64 + 15) / blockSizeX);
+	x1 = ((pos.x + 64 + 20) / blockSizeX);
 	y12 = (pos.y / blockSizeY);
 
 	int tileUp = map[y12*mapSize.x + x0];
 	int tileUpLeft = map[y12*mapSize.x + x1];
 
 	bool up = (tileUp == 9 || tileUp == 10);
-	bool upleft1 = tileUpLeft != 4 && tileUpLeft != 6 && tileUpLeft != 7 && tileUpLeft != 8;
+	bool upleft1 = tileUpLeft != 6 && tileUpLeft != 7 && tileUpLeft != 8;
 	bool upleft2 = tileUpLeft != 9 && tileUpLeft != 10 && tileUpLeft != 11 && tileUpLeft != 12 && tileUpLeft != 14;
 	if (up && upleft1 && upleft2) return true;
 

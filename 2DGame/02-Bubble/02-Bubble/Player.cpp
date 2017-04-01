@@ -21,7 +21,8 @@ enum PlayerAnims
 	RIGHT_FENCING_STEPBACK, LEFT_FENCING_STEPBACK, RIGHT_SHEATHE, LEFT_SHEATHE, RIGHT_ATTACK, LEFT_ATTACK,
 	RIGHT_SMALLSTEP, LEFT_SMALLSTEP, RIGHT_JUMPUP, LEFT_JUMPUP, RIGHT_LAND, LEFT_LAND, RIGHT_GRAB, LEFT_GRAB,
 	RIGHT_CLIMB, LEFT_CLIMB, RIGHT_JUMPFWRD, LEFT_JUMPFWRD, ENTER_BIGDOOR, GONE, RIGHT_FWRDLAND, LEFT_FWRDLAND,
-	RIGHT_DEATH, LEFT_DEATH, RIGHT_SPIKEDEATH, LEFT_SPIKEDEATH, RIGHT_FALL, LEFT_FALL
+	RIGHT_DEATH, LEFT_DEATH, RIGHT_SPIKEDEATH, LEFT_SPIKEDEATH, RIGHT_FALL, LEFT_FALL, RIGHT_STRAIGHTFALL,
+	LEFT_STRAIGHTFALL, RIGHT_ARISE, LEFT_ARISE
 };
 
 
@@ -40,7 +41,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(42);
+	sprite->setNumberAnimations(46);
 
 
 	sprite->setAnimationSpeed(STAND_RIGHT, 8);
@@ -281,27 +282,40 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setAnimationSpeed(RIGHT_FALL, 8);
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.4f));
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.4f));
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.4f));
 	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.4f));
-	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.4f, 0.4f));
-	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.4f, 0.4f));
-	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.6f, 0.4f));
-	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.6f, 0.4f));
-	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.8f, 0.4f));
-	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.0f, 0.45f));
-	//sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.45f)); 
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.2f, 0.4f));
+	/*sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.4f, 0.4f));
+	sprite->addKeyframe(RIGHT_FALL, glm::vec2(0.6f, 0.4f));*/
+	
 
 	sprite->setAnimationSpeed(LEFT_FALL, 8);
 	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.4f));
 	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.4f));
 	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.4f));
-	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.6f, 0.4f));
-	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.6f, 0.4f));
-	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.8f, 0.4f));
-	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.8f, 0.4f));
-	//sprite->addKeyframe(LEFT_FALL, glm::vec2(-1.0f, 0.4f));
-	//sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.2f, 0.45f));
-	//sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.45f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.4f, 0.4f));
+	/*sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.6f, 0.4f));
+	sprite->addKeyframe(LEFT_FALL, glm::vec2(-0.8f, 0.4f));*/
+	
+
+	sprite->setAnimationSpeed(RIGHT_ARISE, 8);
+	sprite->addKeyframe(RIGHT_ARISE, glm::vec2(0.8f, 0.4f));
+	sprite->addKeyframe(RIGHT_ARISE, glm::vec2(0.0f, 0.45f));
+	sprite->addKeyframe(RIGHT_ARISE, glm::vec2(0.2f, 0.45f));
+
+	sprite->setAnimationSpeed(LEFT_ARISE, 8);
+	sprite->addKeyframe(LEFT_ARISE, glm::vec2(-1.0f, 0.4f));
+	sprite->addKeyframe(LEFT_ARISE, glm::vec2(-0.2f, 0.45f));
+	sprite->addKeyframe(LEFT_ARISE, glm::vec2(-0.4f, 0.45f));
+
+	sprite->setAnimationSpeed(RIGHT_STRAIGHTFALL, 8);
+	sprite->addKeyframe(RIGHT_STRAIGHTFALL, glm::vec2(0.2f, 0.4f));
+
+	sprite->setAnimationSpeed(LEFT_STRAIGHTFALL, 8);
+	sprite->addKeyframe(LEFT_STRAIGHTFALL, glm::vec2(-0.4f, 0.4f));
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
@@ -1061,29 +1075,65 @@ void Player::update(int deltaTime)
 		}
 		else if (sprite->animation() == RIGHT_FALL){
 			if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
-				sprite->changeAnimation(RIGHT_FALL);
+				sprite->changeAnimation(RIGHT_STRAIGHTFALL);
 				startY = posPlayer.y;
 				busy = true;
 				stamp = clock();
 			}
 			else {
-				sprite->changeAnimation(STAND_RIGHT);
+				sprite->changeAnimation(RIGHT_ARISE);
 				busy = true;
 				stamp = clock();
 			}
 		}
 		else if (sprite->animation() == LEFT_FALL){
 			if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
-				sprite->changeAnimation(LEFT_FALL);
+				sprite->changeAnimation(LEFT_STRAIGHTFALL);
 				startY = posPlayer.y;
 				busy = true;
 				stamp = clock();
 			}
 			else {
-				sprite->changeAnimation(STAND_LEFT);
+				sprite->changeAnimation(LEFT_ARISE);
 				busy = true;
 				stamp = clock();
 			}
+		}
+		else if (sprite->animation() == RIGHT_STRAIGHTFALL){
+			if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+				sprite->changeAnimation(RIGHT_STRAIGHTFALL);
+				startY = posPlayer.y;
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(RIGHT_ARISE);
+				busy = true;
+				stamp = clock();
+			}
+		}
+		else if (sprite->animation() == LEFT_STRAIGHTFALL){
+			if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+				sprite->changeAnimation(LEFT_STRAIGHTFALL);
+				startY = posPlayer.y;
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(LEFT_ARISE);
+				busy = true;
+				stamp = clock();
+			}
+		}
+		else if (sprite->animation() == RIGHT_ARISE){
+			sprite->changeAnimation(STAND_RIGHT);
+			busy = true;
+			stamp = clock();
+		}
+		else if (sprite->animation() == LEFT_ARISE){
+			sprite->changeAnimation(STAND_LEFT);
+			busy = true;
+			stamp = clock();
 		}
 
 
@@ -1341,7 +1391,7 @@ void Player::update(int deltaTime)
 				posPlayer.y -= 16.0 / 8.0;
 			}
 			if (time >= 3.0 / 8.0  && time < 6.0 / 8.0){
-				posPlayer.x += 1.0*(5.0 / 8.0);
+				posPlayer.x += 1.0*(3.0 / 8.0);
 			}
 			if (time >= 7.9 / 8.0){
 				posPlayer.y = startY - 64;
@@ -1354,7 +1404,7 @@ void Player::update(int deltaTime)
 				posPlayer.y -= 16.0 / 8.0;
 			}
 			if (time >= 3.0 / 8.0  && time < 6.0 / 8.0){
-				posPlayer.x -= 1.0*(5.0 / 8.0);
+				posPlayer.x -= 1.0*(3.0 / 8.0);
 			}
 			if (time >= 7.9 / 8.0){
 				posPlayer.y = startY - 64;
@@ -1471,7 +1521,7 @@ void Player::update(int deltaTime)
 			if (time >= 3.0 / 8.0  && time < 6.0 / 8.0){
 				posPlayer.y += 22.9 / 8.0;
 			}
-			if (time >= 7.9 / 8.0){
+			if (time >= 6.1 / 8.0){
 				posPlayer.y = startY + 64;
 				busy = false;
 			}
@@ -1484,12 +1534,40 @@ void Player::update(int deltaTime)
 			if (time >= 3.0 / 8.0  && time < 6.0 / 8.0){
 				posPlayer.y += 22.9 / 8.0;
 			}
+			if (time >= 6.1 / 8.0){
+				posPlayer.y = startY + 64;
+				busy = false;
+			}
+		}
+		
+		else if (sprite->animation() == RIGHT_STRAIGHTFALL){
+			if (time >= 1.0 / 8.0  && time < 6.0 / 8.0){
+				posPlayer.y += 14. / 8.0;
+			}
 			if (time >= 7.9 / 8.0){
 				posPlayer.y = startY + 64;
 				busy = false;
 			}
 		}
-
+		else if (sprite->animation() == LEFT_STRAIGHTFALL){
+			if (time >= 1.0 / 8.0  && time < 6.0 / 8.0){
+				posPlayer.y += 14. / 8.0;
+			}
+			if (time >= 7.9 / 8.0){
+				posPlayer.y = startY + 64;
+				busy = false;
+			}
+		}
+		else if (sprite->animation() == RIGHT_ARISE){
+			if (time >= 2.9 / 8.0){
+				busy = false;
+			}
+		}
+		else if (sprite->animation() == LEFT_ARISE){
+			if (time >= 2.9 / 8.0){
+				busy = false;
+			}
+		}
 	}
 
 	/*if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))

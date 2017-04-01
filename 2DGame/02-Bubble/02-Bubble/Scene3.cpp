@@ -121,7 +121,9 @@ void Scene3::init()
 
 	player->setPortagran(portagran);
 
-	projection = glm::ortho(16.f, float(3900 - 1), float(600 - 1), 16.f);
+	int width = 32.f*120.f;
+	int height = 64.f*10.5f;
+	projection = glm::ortho(16.f, float(width - 1), float(height - 1), 16.f);
 	marginLeft = 16.f + 32.f;
 	marginTop = 16.f + 64.f - 2.f;
 
