@@ -1,5 +1,5 @@
-#ifndef _SCENE_INCLUDE
-#define _SCENE_INCLUDE
+#ifndef _SCENE2_INCLUDE
+#define _SCENE2_INCLUDE
 
 
 #include <glm/glm.hpp>
@@ -12,18 +12,17 @@
 #include "Portagran.h"
 #include "SoundManager2.h"
 #include "Life.h"
-#include "Portal.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
 
 
-class Scene
+class Scene2
 {
 
 public:
-	Scene();
-	~Scene();
+	Scene2();
+	~Scene2();
 
 	void init();
 	void update(int deltaTime);
@@ -36,13 +35,12 @@ private:
 	glm::vec4 projectionMargins();
 
 private:
-	TileMap *map, *map2;
+	TileMap *map, *map2, *lifesIndicator;
 	Player *player;
 	Life *life;
 	vector<Spikes*> spikes;
 	vector<Soldier*> soldiers;
 	vector<Guillotina*> guillotines;
-	vector<Portal*> portals;
 	Portagran* portagran;
 	ShaderProgram texProgram;
 	SoundManager2 *manager;
@@ -54,5 +52,5 @@ private:
 };
 
 
-#endif // _SCENE_INCLUDE
+#endif // _SCENE2_INCLUDE
 

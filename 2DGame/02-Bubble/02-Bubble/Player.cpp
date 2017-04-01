@@ -27,6 +27,7 @@ enum PlayerAnims
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
+	isLevelFinished = false;
 	fall = false;
 	bJumping = false;
 	busy = false;
@@ -1428,6 +1429,7 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == ENTER_BIGDOOR){
 			manager->playPrinceSteps();
 			if (time >= 9.9 / 8.0){
+				isLevelFinished = true;
 				busy = false;
 			}
 		}
