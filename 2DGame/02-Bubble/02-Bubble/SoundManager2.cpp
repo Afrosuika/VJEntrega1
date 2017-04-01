@@ -19,9 +19,7 @@ void SoundManager2::playBigdoorOpen() {
 }
 
 void SoundManager2::playEndLevel(){
-	if (!bigdooropening){
-		PlaySound(TEXT("sound/PoP_sounds/PoP_endlevel_fanfare.wav"), NULL, SND_ASYNC | SND_FILENAME);
-	}
+		PlaySound(TEXT("sound/PoP_sounds/PoP_endlevel_fanfare.wav"), NULL, SND_FILENAME);
 }
 
 void SoundManager2::playEnemyHit() {
@@ -75,5 +73,11 @@ void SoundManager2::playWilhelm() {
 void SoundManager2::playShogunScream() {
 	if (!bigdooropening){
 		PlaySound(TEXT("sound/other_sounds/shogun-eeeeyyaaaagh.wav"), NULL, SND_ASYNC | SND_FILENAME);
+	}
+}
+
+void SoundManager2::playPortalSound() {
+	if (!bigdooropening){
+		PlaySound(TEXT("sound/other_sounds/portal_sound.wav"), NULL, SND_ASYNC | SND_FILENAME);
 	}
 }

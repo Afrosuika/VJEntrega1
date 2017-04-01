@@ -22,6 +22,7 @@ public:
 	void playSpikesUp();
 	void playWilhelm();
 	void playShogunScream();
+	void playPortalSound();
 
 private:
 	bool bigdooropening;

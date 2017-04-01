@@ -260,6 +260,8 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.4, 0.7f));
 	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.6, 0.7f));
 	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.8, 0.7f));
+	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.f, 0.8f));
+	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.f, 0.8f));
 
 	sprite->setAnimationSpeed(GONE, 8);
 	sprite->addKeyframe(GONE, glm::vec2(0.f, 0.8f));
@@ -1050,10 +1052,12 @@ void Player::update(int deltaTime)
 		}
 		else if (sprite->animation() == ENTER_BIGDOOR){
 			sprite->changeAnimation(GONE);
-			manager->playEndLevel();
-			//cout << "aqui es faria trigger de \"nextlevel\" o algo aixi \n";
 			busy = true;
 			stamp = clock();
+			manager->playEndLevel();
+			//cout << "aqui es faria trigger de \"nextlevel\" o algo aixi \n";
+			isLevelFinished = true;
+			
 		}
 		else if (sprite->animation() == RIGHT_FALL){
 			if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
@@ -1428,8 +1432,7 @@ void Player::update(int deltaTime)
 
 		else if (sprite->animation() == ENTER_BIGDOOR){
 			manager->playPrinceSteps();
-			if (time >= 9.9 / 8.0){
-				isLevelFinished = true;
+			if (time >= 10.9 / 8.0){				
 				busy = false;
 			}
 		}

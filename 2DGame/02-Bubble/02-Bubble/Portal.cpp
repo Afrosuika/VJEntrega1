@@ -62,6 +62,7 @@ void Portal::update(int deltaTime)
 					if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)){
 						glm::fvec2 pospair = pair->getPosRender();
 						player->setPosition(glm::vec2((pospair.x +36)-64,pospair.y - 8));
+						manager->playPortalSound();
 						pair->pairIsUsed();
 						sprite->changeAnimation(CHARGING);
 						busy = true;
