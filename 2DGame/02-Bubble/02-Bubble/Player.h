@@ -30,6 +30,7 @@ public:
 	void setSoldiers(vector<Soldier*> &vec);
 	void setPortagran(Portagran* port);
 	void setSoundManager(SoundManager2* manager);
+
 	glm::fvec2 getPosPlayer();
 	void getSliced();
 	int getHp();

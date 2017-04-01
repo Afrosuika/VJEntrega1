@@ -17,6 +17,7 @@
     <ClInclude Include="Life.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Portagran.h" />
+    <ClInclude Include="Portal.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoundManager.h" />
@@ -38,6 +39,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Portagran.cpp" />
+    <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
