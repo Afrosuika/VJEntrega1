@@ -88,7 +88,7 @@ void Scene::init()
 	spikes.push_back(spiketrap);
 	
 	spikes[0]->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	spikes[0]->setPosition(glm::vec2((8) * map->getTileSize(), 6 * map->getTileSize()));
+	spikes[0]->setPosition(glm::vec2(16 * map->getBlockSize().x, 6 * map->getBlockSize().y));
 	spikes[0]->setTileMap(map);
 	spikes[0]->setSoundManager(manager);
 
@@ -146,16 +146,17 @@ void Scene::init()
 	portal2->setSoundManager(manager);
 	portal2->setPair(portal1);
 
-
 	portals.push_back(portal1);
 	portals.push_back(portal2);
 	
-	projection = glm::ortho(16.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 16.f);
+	int width = 32.f*32.f;
+	int heigth = 64.f*11.5f;
+	projection = glm::ortho(16.f, float(width - 1), float(heigth - 1), 16.f);
 	marginLeft = 16.f + 32.f;
 	marginTop = 16.f + 64.f - 2.f;
 	
 	glm::vec4 projMargins = projectionMargins();
-	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
+	//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
 	currentTime = 0.0f;
 	isLevelFinished = false;
 	dontRender = false;
@@ -215,7 +216,7 @@ void Scene::update(int deltaTime)
 		life->update(deltaTime);
 
 		glm::vec4 projMargins = projectionMargins();
-		projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
+		//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
 		life->setPosition(glm::vec2(projMargins[0], projMargins[3]));
 	}
 }
