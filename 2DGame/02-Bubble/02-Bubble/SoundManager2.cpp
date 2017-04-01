@@ -81,3 +81,7 @@ void SoundManager2::playPortalSound() {
 		PlaySound(TEXT("sound/other_sounds/portal_sound.wav"), NULL, SND_ASYNC | SND_FILENAME);
 	}
 }
+
+void SoundManager2::playMenuMusic() {
+		PlaySound(TEXT("sound/other_sounds/arabian_night.wav"), NULL, SND_LOOP| SND_ASYNC | SND_FILENAME);
+}

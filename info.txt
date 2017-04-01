@@ -9,8 +9,9 @@ Funcionalitats:
 -Dues de les trampes del joc: trampa de punxes i trampa de guillotina
 -Dos enemics d'aspecte diferent, i amb característiques de lluita diferents.
 -Sistema de combat funcional. Els atacs del príncep atordeixen als enemics i els fan retrocedir. No està implementat bloquejar els atacs, però es pot esquivar fent una passa enrere.
--Sons, agafats del joc original, a més de sons de mort dels enemics i sons dels portals màgics, procedents d'altres fonts.
+-Sons, agafats del joc original, a més de sons procedents d'altres fonts.
 -Es pot matar als enemics fent-los caure a les trampes.
+-Estructura de 4 pantalles: menú principal, jugar, instruccions, crèdits.
 -Com a element diferent al joc original, hem afegit portals màgics, que estàn pels nivells, i et permeten moure't d'un a l'altre.
 
 
