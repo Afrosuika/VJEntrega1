@@ -20,6 +20,7 @@
     <ClInclude Include="Portal.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene2.h" />
+    <ClInclude Include="Scene3.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SoundManager2.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene2.cpp" />
+    <ClCompile Include="Scene3.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Soldier.cpp" />
