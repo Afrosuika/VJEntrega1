@@ -130,11 +130,11 @@ void Scene2::restart(){
 
 
 	vector<glm::vec2> posicions2;
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 3, 8 * map->getBlockSize().y));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 29, 8 * map->getBlockSize().y));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 36, 10 * map->getBlockSize().y));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 57, 8 * map->getBlockSize().y));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 86, 4 * map->getBlockSize().y));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 3, 8 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 29, 8 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 36, 10 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 57, 8 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 86, 4 * map->getBlockSize().y + 2));
 	guillotines = vector<Guillotina*>();
 	for (int i = 0; i < posicions2.size(); ++i){
 		Guillotina* guillotinatrap = new Guillotina();
