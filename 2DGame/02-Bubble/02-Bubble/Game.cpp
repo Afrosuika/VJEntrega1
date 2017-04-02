@@ -5,28 +5,37 @@
 
 void Game::init()
 {
-	level = 1;
+	level = 0;
+	zero = true;
 	fst = true;
 	scnd = true;
 	bPlay = true;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
-	scene.init();
+	menuscene.init();
 }
 
 bool Game::update(int deltaTime)
 {
-	if (scene.levelFinished() && fst) changeLevel();
+	if (level == 0 && menuscene.levelFinished() && zero) changeLevel();
+	else if (level == 1 && scene.levelFinished() && fst) changeLevel();
 	else if (level == 2 && scene2.levelFinished() && scnd) changeLevel();
 
 	if (level==1) scene.update(deltaTime);
 	else if (level == 2) scene2.update(deltaTime);
 	else if (level == 3) scene3.update(deltaTime);
+	else if (level == 0) menuscene.update(deltaTime);
 	
 	return bPlay;
 }
 
 void Game::changeLevel(){
-	if (level == 1){
+	if (level == 0){
+		menuscene.stop();
+		menuscene.~MainMenuScene();
+		zero = false;
+		scene.init();
+	}
+	else if (level == 1){
 		scene.stop();
 		scene.~Scene();
 		fst = false;
@@ -47,7 +56,9 @@ void Game::render()
 	if (level == 1) scene.render();
 	else if (level == 2) scene2.render();
 	else if (level == 3) scene3.render();
+	else if (level == 0) menuscene.render();
 }
+
 
 void Game::keyPressed(int key)
 {
@@ -82,6 +93,7 @@ void Game::mousePress(int button)
 void Game::mouseRelease(int button)
 {
 }
+
 
 bool Game::getKey(int key) const
 {

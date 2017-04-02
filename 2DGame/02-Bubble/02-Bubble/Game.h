@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Scene2.h"
 #include "Scene3.h"
+#include "MainMenuScene.h"
 
 
 #define SCREEN_WIDTH 2912
@@ -50,8 +51,10 @@ private:
 	Scene scene;                      // Scene to render
 	Scene2 scene2;                      // Scene to render
 	Scene3 scene3;
+	MainMenuScene menuscene;
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
+	bool zero;
 	bool fst;
 	bool scnd;
 	int level;
