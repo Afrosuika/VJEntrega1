@@ -75,7 +75,6 @@ void Scene2::restart(){
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * (map->getBlockSize()).x, INIT_PLAYER_Y_TILES * (map->getBlockSize()).y - 8));
-	player->setPosition(glm::vec2(map->getBlockSize().x * 84, 2 * map->getBlockSize().y - 8));
 
 	player->setTileMap(map);
 	player->setSoundManager(manager);
@@ -187,6 +186,12 @@ void Scene2::restart(){
 	portagran->setTileMap(map);
 	portagran->setSoundManager(manager);
 
+	portagran2 = new Portagran();
+	portagran2->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);//85,1
+	portagran2->setPosition(glm::vec2(map->getBlockSize().x * 43 + 20, 10 * map->getBlockSize().y - 62));
+	portagran2->setTileMap(map);
+	portagran2->setSoundManager(manager);
+
 	player->setPortagran(portagran);
 	currentTime = 0.0f;
 }
@@ -244,10 +249,11 @@ void Scene2::update(int deltaTime)
 			}
 
 			portagran->update(deltaTime);
+			portagran2->update(deltaTime);
 			life->update(deltaTime);
 
 			glm::vec4 projMargins = projectionMargins();
-			projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
+			//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
 			life->setPosition(glm::vec2(projMargins[0], projMargins[3]));
 		}
 	}
@@ -272,6 +278,7 @@ void Scene2::render()
 			portal->render();
 		}
 		portagran->render();
+		portagran2->render();
 		for (Soldier* soldier : soldiers){
 			soldier->render();
 		}
