@@ -24,11 +24,9 @@ MainMenuScene::~MainMenuScene()
 {
 	//cout << "voi a morir" << endl;
 	if (manager != NULL)
-		delete manager;
-	for (int i = 0; i < 2; ++i) {
-		if (texQuad[i] != NULL)
-			delete texQuad[i];
-	}
+		delete manager;	
+	if (texQuad!= NULL)
+		delete texQuad;
 }
 
 
@@ -42,10 +40,9 @@ void MainMenuScene::init()
 
 	state = true;
 
-	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(1000.f, 600.f) };
-	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1000.f, -600.f) };
-	texQuad[0] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
-	texQuad[1] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	glm::vec2 geom[2] = { glm::vec2(1.f, 1.f), glm::vec2(-2000.f, -1200.f) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(-1000.f, 600.f) };
+	texQuad = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 
 	texs[0].loadFromFile("images/PoP_mainmenu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].loadFromFile("images/PoP_instructions.png", TEXTURE_PIXEL_FORMAT_RGB);
@@ -102,11 +99,11 @@ void MainMenuScene::render()
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
 		if (state){
-			texQuad[0]->render(texs[0]);
+			texQuad->render(texs[0]);
 			//cout << "dibuixa amb state" << state << "\n";
 		}
 		else if (!state){
-			texQuad[1]->render(texs[1]);
+			texQuad->render(texs[1]);
 			//cout << "dibuixa amb state" << state << "\n";
 		}
 		

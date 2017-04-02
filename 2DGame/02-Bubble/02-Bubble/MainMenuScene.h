@@ -31,7 +31,7 @@ public:
 private:
 	void initShaders();
 	Texture texs[2];
-	TexturedQuad *texQuad[2];
+	TexturedQuad *texQuad;
 	ShaderProgram texProgram;
 	SoundManager2 *manager;
 	float currentTime;

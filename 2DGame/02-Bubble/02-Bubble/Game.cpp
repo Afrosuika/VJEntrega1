@@ -32,7 +32,7 @@ bool Game::update(int deltaTime)
 void Game::changeLevel(){
 	if (level == 0){
 		menuscene.stop();
-		menuscene.~MainMenuScene();
+		//menuscene.~MainMenuScene();
 		zero = false;
 		scene.init();
 	}

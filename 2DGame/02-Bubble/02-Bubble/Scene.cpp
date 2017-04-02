@@ -81,7 +81,7 @@ void Scene::init()
 	marginTop = 16.f + 64.f - 2.f;
 	
 	glm::vec4 projMargins = projectionMargins();
-	//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
+	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
 	
 	isLevelFinished = false;
 	dontRender = false;
@@ -143,7 +143,7 @@ void Scene::update(int deltaTime)
 			life->update(deltaTime);
 
 			glm::vec4 projMargins = projectionMargins();
-			//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
+			projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
 			life->setPosition(glm::vec2(projMargins[0], projMargins[3]));
 		}
 	}
@@ -163,18 +163,37 @@ void Scene::restart(){
 	Spikes* spiketrap = new Spikes();
 	spikes.push_back(spiketrap);
 	spikes[0]->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	spikes[0]->setPosition(glm::vec2(14 * map->getBlockSize().x + 20.f, 6 * map->getBlockSize().y));
+	spikes[0]->setPosition(glm::vec2(15 * map->getBlockSize().x + 20.f, 6 * map->getBlockSize().y));
 	spikes[0]->setTileMap(map);
 	spikes[0]->setSoundManager(manager);
 
 	player->setSpikes(spikes);
+
+	soldiers = vector<Soldier*>();
+	Soldier* asoldier = new Soldier();
+	soldiers.push_back(asoldier);
+	soldiers[0]->init(player, 0, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	soldiers[0]->setPosition(glm::vec2((25) * map->getBlockSize().x, 6 * map->getTileSize() + 8));
+	soldiers[0]->setTileMap(map);
+	soldiers[0]->setSpikes(spikes);
+	soldiers[0]->setSoundManager(manager);
+
+	Soldier* asoldier2 = new Soldier();
+	soldiers.push_back(asoldier2);
+	soldiers[1]->init(player, 1, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	soldiers[1]->setPosition(glm::vec2((12.5) * map->getTileSize(), (1) * map->getTileSize() + 8));
+	soldiers[1]->setTileMap(map);
+	soldiers[1]->setSpikes(spikes);
+	soldiers[1]->setSoundManager(manager);
+
+	player->setSoldiers(soldiers);
 
 	guillotines = vector<Guillotina*>();
 	Guillotina* guillotinatrap = new Guillotina();
 	guillotines.push_back(guillotinatrap);
 
 	guillotines[0]->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	guillotines[0]->setPosition(glm::vec2((10) * map->getTileSize(), (6) * map->getTileSize()));
+	guillotines[0]->setPosition(glm::vec2((19) * map->getBlockSize().x, (6) * map->getTileSize()));
 	guillotines[0]->setTileMap(map);
 	guillotines[0]->setSoldiers(soldiers);
 	guillotines[0]->setSoundManager(manager);
@@ -206,24 +225,7 @@ void Scene::restart(){
 	portals.push_back(portal1);
 	portals.push_back(portal2);
 
-	soldiers = vector<Soldier*>();
-	Soldier* asoldier = new Soldier();
-	soldiers.push_back(asoldier);
-	soldiers[0]->init(player, 0, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	soldiers[0]->setPosition(glm::vec2((11) * map->getTileSize(), 6 * map->getTileSize() + 8));
-	soldiers[0]->setTileMap(map);
-	soldiers[0]->setSpikes(spikes);
-	soldiers[0]->setSoundManager(manager);
-
-	Soldier* asoldier2 = new Soldier();
-	soldiers.push_back(asoldier2);
-	soldiers[1]->init(player, 1, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	soldiers[1]->setPosition(glm::vec2((12.5) * map->getTileSize(), (1) * map->getTileSize() + 8));
-	soldiers[1]->setTileMap(map);
-	soldiers[1]->setSpikes(spikes);
-	soldiers[1]->setSoundManager(manager);
-
-	player->setSoldiers(soldiers);
+	
 	currentTime = 0.0f;
 }
 
