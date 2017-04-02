@@ -62,14 +62,8 @@ void Scene::init()
 {
 	initShaders();
 
-	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/level02b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	/*map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/level03b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram); */
-	/*map = TileMap::createTileMap("levels/Nivell1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/Nivell1b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/
-	/*map = TileMap::createTileMap("levels/Nivell2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/Nivell2b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);*/
+	map = TileMap::createTileMap("levels/Nivell0.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/Nivell0b.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 	manager = new SoundManager2();
 	
@@ -81,7 +75,7 @@ void Scene::init()
 	marginTop = 16.f + 64.f - 2.f;
 	
 	glm::vec4 projMargins = projectionMargins();
-	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
+	//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
 	
 	isLevelFinished = false;
 	dontRender = false;
@@ -211,13 +205,13 @@ void Scene::restart(){
 	Portal* portal2 = new Portal();
 
 	portal1->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	portal1->setPosition(glm::vec2((6) * map->getBlockSize().x, (2) * map->getTileSize()));
+	portal1->setPosition(glm::vec2(6 * map->getBlockSize().x, 2 * map->getTileSize()));
 	portal1->setTileMap(map);
 	portal1->setSoundManager(manager);
 	portal1->setPair(portal2);
 
 	portal2->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	portal2->setPosition(glm::vec2((8) * map->getBlockSize().x, (2) * map->getTileSize()));
+	portal2->setPosition(glm::vec2(15 * map->getBlockSize().x, 4 * map->getTileSize()));
 	portal2->setTileMap(map);
 	portal2->setSoundManager(manager);
 	portal2->setPair(portal1);

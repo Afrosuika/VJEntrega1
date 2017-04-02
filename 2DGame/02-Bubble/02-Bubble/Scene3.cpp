@@ -8,8 +8,8 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16 
 
-#define INIT_PLAYER_X_TILES 66
-#define INIT_PLAYER_Y_TILES 3
+#define INIT_PLAYER_X_TILES 44
+#define INIT_PLAYER_Y_TILES 2
 
 
 Scene3::Scene3()
@@ -63,7 +63,7 @@ void Scene3::init()
 	marginTop = 16.f + 64.f - 2.f;
 
 	glm::vec4 projMargins = projectionMargins();
-	//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
+	projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2], projMargins[3]);
 	currentTime = 0.0f;
 	isLevelFinished = false;
 	dontRender = false;
@@ -120,7 +120,7 @@ void Scene3::restart(){
 	Soldier* asoldier2 = new Soldier();
 	soldiers.push_back(asoldier2);
 	soldiers[1]->init(player, 0, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	soldiers[1]->setPosition(glm::vec2(map->getBlockSize().x * 57, 2 * map->getBlockSize().y + 8));
+	soldiers[1]->setPosition(glm::vec2(map->getBlockSize().x * 54, 2 * map->getBlockSize().y + 8));
 	soldiers[1]->setTileMap(map);
 	soldiers[1]->setSpikes(spikes);
 	soldiers[1]->setSoundManager(manager);
@@ -128,7 +128,7 @@ void Scene3::restart(){
 	Soldier* asoldier3 = new Soldier();
 	soldiers.push_back(asoldier3);
 	soldiers[2]->init(player, 1, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	soldiers[2]->setPosition(glm::vec2(map->getBlockSize().x * 61, 4 * map->getBlockSize().y + 8));
+	soldiers[2]->setPosition(glm::vec2(map->getBlockSize().x * 55, 4 * map->getBlockSize().y + 8));
 	soldiers[2]->setTileMap(map);
 	soldiers[2]->setSpikes(spikes);
 	soldiers[2]->setSoundManager(manager);
@@ -312,7 +312,7 @@ void Scene3::update(int deltaTime)
 			life->update(deltaTime);
 
 			glm::vec4 projMargins = projectionMargins();
-			//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
+			projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
 			life->setPosition(glm::vec2(projMargins[0], projMargins[3]));
 		}
 	}
