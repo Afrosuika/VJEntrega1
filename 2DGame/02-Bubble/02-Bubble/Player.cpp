@@ -261,11 +261,11 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.4, 0.7f));
 	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.6, 0.7f));
 	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.8, 0.7f));
-	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.f, 0.8f));
-	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.f, 0.8f));
+	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.8f, 0.95f));
+	sprite->addKeyframe(ENTER_BIGDOOR, glm::vec2(0.8f, 0.95f));
 
 	sprite->setAnimationSpeed(GONE, 8);
-	sprite->addKeyframe(GONE, glm::vec2(0.f, 0.8f));
+	sprite->addKeyframe(GONE, glm::vec2(0.8f, 0.95f));
 
 	sprite->setAnimationSpeed(RIGHT_DEATH, 8);
 	sprite->addKeyframe(RIGHT_DEATH, glm::vec2(0.6f, 0.6f));
@@ -318,7 +318,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(LEFT_STRAIGHTFALL, glm::vec2(-0.4f, 0.4f));
 
 	//sprite->RIGHT_VOLTERETA
-	sprite->setAnimationSpeed(RIGHT_VOLTERETA, 10);		
+	sprite->setAnimationSpeed(RIGHT_VOLTERETA, 8);		
 	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8, 0.45f));
 	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0, 0.5f));
 	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.75f));
@@ -331,21 +331,9 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.4f, 0.8f));
 	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.6f, 0.8f));
 	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8f, 0.8f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.85f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.2f, 0.85f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.4f, 0.85f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.6f, 0.85f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8f, 0.85f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.9f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.2f, 0.9f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.4f, 0.9f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.6f, 0.9f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8f, 0.9f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.95f));
-	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.2f, 0.95f));
 
 	//LEFT_VOLTERETA
-	sprite->setAnimationSpeed(LEFT_VOLTERETA, 10);
+	sprite->setAnimationSpeed(LEFT_VOLTERETA, 8);
 	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0, 0.45f));
 	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2, 0.5f));
 	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.75f));
@@ -358,18 +346,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.6f, 0.8f));
 	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.8f, 0.8f));
 	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0f, 0.8f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.85f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.4f, 0.85f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.6f, 0.85f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.7f, 0.85f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0f, 0.85f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.9f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.4f, 0.9f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.6f, 0.9f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.8f, 0.9f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0f, 0.9f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.95f));
-	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.4f, 0.95f));
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
@@ -409,6 +385,11 @@ void Player::update(int deltaTime)
 		}
 		else{
 			potacabarnivell = false;
+		}
+
+		if (Game::instance().getKey('w')){
+			//apretant W, es pot matar al príncep
+			hp = 0;
 		}
 
 
@@ -1720,15 +1701,15 @@ void Player::update(int deltaTime)
 				busy = false;
 			}
 			else{
-				if (time >= 2.0 / 8.0 && time <= 5.0 / 8.0){
-					posPlayer.x += 2.0*(6.0 / 8.0);
+				if (time >= 2.0 / 8.0 && time <= 6.0 / 8.0){
+					posPlayer.x += 2.0*(6.4 / 8.0);
 					posPlayer.y -= 2.0*(3.0 / 8.0);
 				}
-				if (time >= 5.0 / 8.0){
-					posPlayer.x += 2.0*(6.0 / 8.0);
+				if (time > 6.0 / 8.0 && time < 11.0 / 8.0){
+					posPlayer.x += 2.0*(6.4 / 8.0);
 					posPlayer.y += 2.0*(3.0 / 8.0);
 				}
-				if (time >= 8.5 / 8.0){
+				if (time >= 11.9 / 8.0){
 					posPlayer.y = startY;
 					busy = false;
 				}
@@ -1742,15 +1723,15 @@ void Player::update(int deltaTime)
 				busy = false;
 			}
 			else{
-				if (time >= 2.0 / 8.0 && time <= 5.0 / 8.0){
-					posPlayer.x -= 2.0*(6.0 / 8.0);
+				if (time >= 2.0 / 8.0 && time <= 6.0 / 8.0){
+					posPlayer.x -= 2.0*(6.4 / 8.0);
 					posPlayer.y -= 2.0*(3.0 / 8.0);
 				}
-				if (time >= 5.0 / 8.0){
-					posPlayer.x -= 2.0*(6.0 / 8.0);
+				if (time > 6.0 / 8.0 && time < 11.0 / 8.0){
+					posPlayer.x -= 2.0*(6.4 / 8.0);
 					posPlayer.y += 2.0*(3.0 / 8.0);
 				}
-				if (time >= 8.5 / 8.0){
+				if (time >= 11.9 / 8.0){
 					posPlayer.y = startY;
 					busy = false;
 				}
