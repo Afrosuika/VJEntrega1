@@ -243,7 +243,7 @@ bool TileMap::collisionClimbLeft(const glm::ivec2 &pos) const
 	bool upleft2 = tileUpLeft != 9 && tileUpLeft != 10 && tileUpLeft != 11 && tileUpLeft != 12 && tileUpLeft != 14;
 	if (up && upleft1 && upleft2) return true;
 
-	for (float pix = 0; pix <= 10; pix += 0.5){
+	for (float pix = 0; pix <= 15; pix += 0.5){
 		x1 = ((pos.x + 64 + pix) / blockSizeX);
 		tileUp = map[y12*mapSize.x + x1];
 		tileUpLeft = map[y12*mapSize.x + x0];

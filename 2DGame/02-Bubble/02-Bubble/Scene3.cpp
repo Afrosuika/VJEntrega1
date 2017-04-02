@@ -8,10 +8,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16 
 
-//#define INIT_PLAYER_X_TILES 4
-//#define INIT_PLAYER_Y_TILES 6
-
-#define INIT_PLAYER_X_TILES 19
+#define INIT_PLAYER_X_TILES 110
 #define INIT_PLAYER_Y_TILES 4
 
 
@@ -93,11 +90,10 @@ void Scene3::restart(){
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 76 + 18.f, 2 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 82 + 18.f, 5 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 83 + 18.f, 5 * map->getBlockSize().y));
-	posicions.push_back(glm::vec2(map->getBlockSize().x * 112 + 18.f, 9 * map->getBlockSize().y));
-	posicions.push_back(glm::vec2(map->getBlockSize().x * 113 + 18.f, 9 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 114 + 18.f, 9 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 115 + 18.f, 9 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 116 + 18.f, 9 * map->getBlockSize().y));
+	posicions.push_back(glm::vec2(map->getBlockSize().x * 117 + 18.f, 9 * map->getBlockSize().y));
 	spikes = vector<Spikes*>();
 	for (int i = 0; i < posicions.size(); ++i){
 		Spikes* spiketrap = new Spikes();
@@ -154,11 +150,11 @@ void Scene3::restart(){
 
 
 	vector<glm::vec2> posicions2;
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 6, 1 * map->getBlockSize().y));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 54, 4 * map->getBlockSize().y));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 102, 4 * map->getBlockSize().y));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 110, 2 * map->getBlockSize().y));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 111, 2 * map->getBlockSize().y));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 6, 1 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 54, 4 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 102, 4 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 110, 2 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 111, 2 * map->getBlockSize().y + 2));
 	guillotines = vector<Guillotina*>();
 	for (int i = 0; i < posicions2.size(); ++i){
 		Guillotina* guillotinatrap = new Guillotina();
@@ -174,7 +170,7 @@ void Scene3::restart(){
 	Portal* portal2 = new Portal();
 
 	portal1->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	portal1->setPosition(glm::vec2(map->getBlockSize().x * 82, 3 * map->getBlockSize().y));
+	portal1->setPosition(glm::vec2(map->getBlockSize().x * 81, 3 * map->getBlockSize().y));
 	portal1->setTileMap(map);
 	portal1->setSoundManager(manager);
 	portal1->setPair(portal2);
@@ -189,29 +185,53 @@ void Scene3::restart(){
 	Portal* portal4 = new Portal();
 
 	portal3->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	portal3->setPosition(glm::vec2(map->getBlockSize().x * 6, 1 * map->getBlockSize().y));
+	portal3->setPosition(glm::vec2(map->getBlockSize().x * 7, 1 * map->getBlockSize().y));
 	portal3->setTileMap(map);
 	portal3->setSoundManager(manager);
 	portal3->setPair(portal4);
 
 	portal4->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	portal4->setPosition(glm::vec2(map->getBlockSize().x * 96, 3 * map->getBlockSize().y));
+	portal4->setPosition(glm::vec2(map->getBlockSize().x * 11, 4 * map->getBlockSize().y));
 	portal4->setTileMap(map);
 	portal4->setSoundManager(manager);
 	portal4->setPair(portal3);
+
+	Portal* portal5 = new Portal();
+	Portal* portal6 = new Portal();
+
+	portal5->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	portal5->setPosition(glm::vec2(map->getBlockSize().x * 113, 6 * map->getBlockSize().y));
+	portal5->setTileMap(map);
+	portal5->setSoundManager(manager);
+	portal5->setPair(portal6);
+
+	portal6->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	portal6->setPosition(glm::vec2(map->getBlockSize().x * 104, 2 * map->getBlockSize().y));
+	portal6->setTileMap(map);
+	portal6->setSoundManager(manager);
+	portal6->setPair(portal5);
+
 	portals = vector<Portal*>();
 	portals.push_back(portal1);
 	portals.push_back(portal2);
 	portals.push_back(portal3);
 	portals.push_back(portal4);
+	portals.push_back(portal5);
+	portals.push_back(portal6);
 
 	portagran = new Portagran();
 	portagran->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);//85,1
 	portagran->setPosition(glm::vec2(map->getBlockSize().x * 83 + 20, 2 * map->getBlockSize().y - 62));
 	portagran->setTileMap(map);
 	portagran->setSoundManager(manager);
-
 	player->setPortagran(portagran);
+
+	portagran2 = new Portagran();
+	portagran2->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);//85,1
+	portagran2->setPosition(glm::vec2(map->getBlockSize().x * 45 + 20, 2 * map->getBlockSize().y - 62));
+	portagran2->setTileMap(map);
+	portagran2->setSoundManager(manager);	
+	//portagran->setMustopen(false);
 }
 
 void Scene3::stop(){
@@ -267,10 +287,11 @@ void Scene3::update(int deltaTime)
 			}
 
 			portagran->update(deltaTime);
+			portagran2->update(deltaTime);
 			life->update(deltaTime);
 
 			glm::vec4 projMargins = projectionMargins();
-			projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
+			//projection = glm::ortho(projMargins[0], projMargins[1], projMargins[2] + 10.f, projMargins[3] - 2.f);
 			life->setPosition(glm::vec2(projMargins[0], projMargins[3]));
 		}
 	}
@@ -292,6 +313,7 @@ void Scene3::render()
 			spike->render();
 		}
 		portagran->render();
+		portagran2->render();
 		for (Soldier* soldier : soldiers){
 			soldier->render();
 		}
