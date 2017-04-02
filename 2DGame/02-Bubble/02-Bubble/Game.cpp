@@ -7,24 +7,25 @@
 void Game::init()
 {
 	level = 0;
-	zero = true;
-	fst = true;
-	scnd = true;
 	bPlay = true;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	menuscene.init();
 }
 
+
 bool Game::update(int deltaTime)
 {
-	if (level == 0 && menuscene.levelFinished() && zero) changeLevel();
-	else if (level == 1 && scene.levelFinished() && fst) changeLevel();
-	else if (level == 2 && scene2.levelFinished() && scnd) changeLevel();
+	if (level == 0 && menuscene.levelFinished()) changeLevel();
+	else if (level == 1 && scene.levelFinished()) changeLevel();
+	else if (level == 2 && scene2.levelFinished()) changeLevel();
+	else if (level == 3 && scene3.levelFinished()) changeLevel();
+	else if (level == 4 && creditsscene.levelFinished()) changeLevel();
 
-	if (level==1) scene.update(deltaTime);
+	if (level == 0) menuscene.update(deltaTime); 
+	else if (level == 1) scene.update(deltaTime);
 	else if (level == 2) scene2.update(deltaTime);
 	else if (level == 3) scene3.update(deltaTime);
-	else if (level == 0) menuscene.update(deltaTime);
+	else if (level == 4) creditsscene.update(deltaTime);
 	
 	return bPlay;
 }
@@ -33,22 +34,38 @@ void Game::changeLevel(){
 	if (level == 0){
 		menuscene.stop();
 		//menuscene.~MainMenuScene();
-		zero = false;
+		//zero = false;
 		scene.init();
+		level++;
 	}
 	else if (level == 1){
 		scene.stop();
 		scene.~Scene();
-		fst = false;
+		//fst = false;
 		scene2.init();
+		level++;
 	}
 	else if (level == 2){
 		scene2.stop();
 		scene2.~Scene2();
-		scnd = false;
+		//scnd = false;
 		scene3.init();
+		level++;
 	}
-	level++;
+	else if (level == 3){
+		scene3.stop();
+		scene3.~Scene3();
+		//thrd = false;
+		creditsscene.init();
+		level++;
+	}
+	else if (level == 4){
+		creditsscene.stop();
+		//creditsscene.~CreditsScene();
+		//frth = false;
+		level = 0;
+		menuscene.init();
+	}
 }
 
 void Game::render()

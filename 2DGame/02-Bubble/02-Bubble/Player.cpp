@@ -1080,6 +1080,11 @@ void Player::update(int deltaTime)
 				busy = true;
 				stamp = clock();
 			}
+			else if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
 			else {
 				sprite->changeAnimation(RIGHT_ARISE);
 				busy = true;
@@ -1090,6 +1095,11 @@ void Player::update(int deltaTime)
 			if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 				sprite->changeAnimation(LEFT_STRAIGHTFALL);
 				startY = posPlayer.y;
+				busy = true;
+				stamp = clock();
+			}
+			else if (spikedanger){
+				sprite->changeAnimation(LEFT_SPIKEDEATH);
 				busy = true;
 				stamp = clock();
 			}
@@ -1106,6 +1116,11 @@ void Player::update(int deltaTime)
 				busy = true;
 				stamp = clock();
 			}
+			else if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
+				busy = true;
+				stamp = clock();
+			}
 			else {
 				sprite->changeAnimation(RIGHT_ARISE);
 				busy = true;
@@ -1116,6 +1131,11 @@ void Player::update(int deltaTime)
 			if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
 				sprite->changeAnimation(LEFT_STRAIGHTFALL);
 				startY = posPlayer.y;
+				busy = true;
+				stamp = clock();
+			}
+			else if (spikedanger){
+				sprite->changeAnimation(RIGHT_SPIKEDEATH);
 				busy = true;
 				stamp = clock();
 			}

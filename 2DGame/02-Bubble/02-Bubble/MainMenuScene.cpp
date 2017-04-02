@@ -34,6 +34,7 @@ void MainMenuScene::init()
 {
 	initShaders();
 	stamp = clock();
+	isLevelFinished = false;
 
 	manager = new SoundManager2();
 	manager->playMenuMusic();
