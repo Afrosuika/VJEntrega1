@@ -22,7 +22,7 @@ enum PlayerAnims
 	RIGHT_SMALLSTEP, LEFT_SMALLSTEP, RIGHT_JUMPUP, LEFT_JUMPUP, RIGHT_LAND, LEFT_LAND, RIGHT_GRAB, LEFT_GRAB,
 	RIGHT_CLIMB, LEFT_CLIMB, RIGHT_JUMPFWRD, LEFT_JUMPFWRD, ENTER_BIGDOOR, GONE, RIGHT_FWRDLAND, LEFT_FWRDLAND,
 	RIGHT_DEATH, LEFT_DEATH, RIGHT_SPIKEDEATH, LEFT_SPIKEDEATH, RIGHT_FALL, LEFT_FALL, RIGHT_STRAIGHTFALL,
-	LEFT_STRAIGHTFALL, RIGHT_ARISE, LEFT_ARISE
+	LEFT_STRAIGHTFALL, RIGHT_ARISE, LEFT_ARISE, RIGHT_VOLTERETA, LEFT_VOLTERETA
 };
 
 
@@ -41,7 +41,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/prince-sprite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(128, 64), glm::vec2(0.2, 0.05), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(46);
+	sprite->setNumberAnimations(48);
 
 
 	sprite->setAnimationSpeed(STAND_RIGHT, 8);
@@ -317,6 +317,60 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setAnimationSpeed(LEFT_STRAIGHTFALL, 8);
 	sprite->addKeyframe(LEFT_STRAIGHTFALL, glm::vec2(-0.4f, 0.4f));
 
+	//sprite->RIGHT_VOLTERETA
+	sprite->setAnimationSpeed(RIGHT_VOLTERETA, 10);		
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8, 0.45f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0, 0.5f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.75f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.2f, 0.75f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.4f, 0.75f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.6f, 0.75f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8f, 0.75f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.8f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.2f, 0.8f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.4f, 0.8f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.6f, 0.8f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8f, 0.8f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.85f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.2f, 0.85f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.4f, 0.85f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.6f, 0.85f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8f, 0.85f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.9f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.2f, 0.9f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.4f, 0.9f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.6f, 0.9f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.8f, 0.9f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.0f, 0.95f));
+	sprite->addKeyframe(RIGHT_VOLTERETA, glm::vec2(0.2f, 0.95f));
+
+	//LEFT_VOLTERETA
+	sprite->setAnimationSpeed(LEFT_VOLTERETA, 10);
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0, 0.45f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2, 0.5f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.75f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.4f, 0.75f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.6f, 0.75f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.8f, 0.75f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0f, 0.75f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.8f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.4f, 0.8f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.6f, 0.8f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.8f, 0.8f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0f, 0.8f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.85f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.4f, 0.85f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.6f, 0.85f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.7f, 0.85f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0f, 0.85f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.9f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.4f, 0.9f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.6f, 0.9f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.8f, 0.9f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-1.0f, 0.9f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.2f, 0.95f));
+	sprite->addKeyframe(LEFT_VOLTERETA, glm::vec2(-0.4f, 0.95f));
+
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
@@ -362,6 +416,46 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(RIGHT_DEATH);
 			busy = true;
 			stamp = clock();
+		}
+
+		else if (sprite->animation() == RIGHT_VOLTERETA){
+			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+			{
+				sprite->changeAnimation(STAND_RIGHT);
+				busy = true;
+				stamp = clock();
+			}
+			else if (map->collisionMoveDownRight(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+				sprite->changeAnimation(RIGHT_FALL);
+				startY = posPlayer.y;
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(RIGHT_FWRDLAND);
+				stamp = clock();
+				busy = true;
+			}
+		}
+
+		else if (sprite->animation() == LEFT_VOLTERETA){
+			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+			{
+				sprite->changeAnimation(STAND_LEFT);
+				busy = true;
+				stamp = clock();
+			}
+			else if (map->collisionMoveDownLeft(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+				sprite->changeAnimation(LEFT_FALL);
+				startY = posPlayer.y;
+				busy = true;
+				stamp = clock();
+			}
+			else {
+				sprite->changeAnimation(LEFT_FWRDLAND);
+				stamp = clock();
+				busy = true;
+			}
 		}
 
 		else if (sprite->animation() == STAND_RIGHT){
@@ -604,6 +698,20 @@ void Player::update(int deltaTime)
 				busy = true;
 				stamp = clock();
 			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)){
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_RIGHT);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(RIGHT_VOLTERETA);
+					startY = posPlayer.y;
+					busy = true;
+					stamp = clock();
+				}
+			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)){
 				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
 				{
@@ -651,6 +759,20 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(LEFT_SPIKEDEATH);
 				busy = true;
 				stamp = clock();
+			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)){
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					sprite->changeAnimation(STAND_LEFT);
+					busy = true;
+					stamp = clock();
+				}
+				else {
+					sprite->changeAnimation(LEFT_VOLTERETA);
+					startY = posPlayer.y;
+					busy = true;
+					stamp = clock();
+				}
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)){
 				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
@@ -1356,6 +1478,7 @@ void Player::update(int deltaTime)
 			}
 		}
 
+
 		else if (sprite->animation() == RIGHT_JUMPUP){
 			if (time >= 5.0 / 8.0  && time < 6.9 / 8.0){
 				posPlayer.y -= 1.0*(11.5 / 8.0);
@@ -1586,6 +1709,51 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == LEFT_ARISE){
 			if (time >= 2.9 / 8.0){
 				busy = false;
+			}
+		}
+		else if (sprite->animation() == RIGHT_VOLTERETA){
+
+			bool colision = map->collisionMoveRight(posPlayer, glm::vec2(32, 32));
+			if (colision){
+				sprite->changeAnimation(STAND_RIGHT);
+				posPlayer.y = startY;
+				busy = false;
+			}
+			else{
+				if (time >= 2.0 / 8.0 && time <= 5.0 / 8.0){
+					posPlayer.x += 2.0*(6.0 / 8.0);
+					posPlayer.y -= 2.0*(3.0 / 8.0);
+				}
+				if (time >= 5.0 / 8.0){
+					posPlayer.x += 2.0*(6.0 / 8.0);
+					posPlayer.y += 2.0*(3.0 / 8.0);
+				}
+				if (time >= 8.5 / 8.0){
+					posPlayer.y = startY;
+					busy = false;
+				}
+			}
+		}
+		else if (sprite->animation() == LEFT_VOLTERETA){
+			bool colision = map->collisionMoveLeft(posPlayer, glm::vec2(32, 32));
+			if (colision){
+				sprite->changeAnimation(STAND_LEFT);
+				posPlayer.y = startY;
+				busy = false;
+			}
+			else{
+				if (time >= 2.0 / 8.0 && time <= 5.0 / 8.0){
+					posPlayer.x -= 2.0*(6.0 / 8.0);
+					posPlayer.y -= 2.0*(3.0 / 8.0);
+				}
+				if (time >= 5.0 / 8.0){
+					posPlayer.x -= 2.0*(6.0 / 8.0);
+					posPlayer.y += 2.0*(3.0 / 8.0);
+				}
+				if (time >= 8.5 / 8.0){
+					posPlayer.y = startY;
+					busy = false;
+				}
 			}
 		}
 	}
