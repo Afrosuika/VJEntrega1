@@ -22,7 +22,7 @@ MainMenuScene::MainMenuScene()
 
 MainMenuScene::~MainMenuScene()
 {
-	cout << "voi a morir" << endl;
+	//cout << "voi a morir" << endl;
 	if (manager != NULL)
 		delete manager;
 	for (int i = 0; i < 2; ++i) {
@@ -43,7 +43,7 @@ void MainMenuScene::init()
 	state = true;
 
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(1000.f, 600.f) };
-	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1000.f, 600.f) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1000.f, -600.f) };
 	texQuad[0] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	texQuad[1] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 
@@ -103,11 +103,11 @@ void MainMenuScene::render()
 
 		if (state){
 			texQuad[0]->render(texs[0]);
-			cout << "dibuixa amb state" << state << "\n";
+			//cout << "dibuixa amb state" << state << "\n";
 		}
 		else if (!state){
 			texQuad[1]->render(texs[1]);
-			cout << "dibuixa amb state" << state << "\n";
+			//cout << "dibuixa amb state" << state << "\n";
 		}
 		
 	}

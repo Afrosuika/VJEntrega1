@@ -24,7 +24,7 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	cout << "voi a morir" << endl;
+	//cout << "voi a morir" << endl;
 	if(map != NULL)
 		delete map;
 	if (map2 != NULL)
