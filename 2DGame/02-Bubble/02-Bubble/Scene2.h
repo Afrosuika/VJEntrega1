@@ -45,6 +45,7 @@ private:
 	vector<Guillotina*> guillotines;
 	vector<Portal*> portals;
 	Portagran* portagran;
+	Portagran* portagran2;
 	ShaderProgram texProgram;
 	SoundManager2 *manager;
 	float currentTime;

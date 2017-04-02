@@ -8,8 +8,8 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16 
 
-#define INIT_PLAYER_X_TILES 110
-#define INIT_PLAYER_Y_TILES 4
+#define INIT_PLAYER_X_TILES 66
+#define INIT_PLAYER_Y_TILES 3
 
 
 Scene3::Scene3()
@@ -87,13 +87,16 @@ void Scene3::restart(){
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 15 + 18.f, 9 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 21 + 18.f, 6 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 22 + 18.f, 6 * map->getBlockSize().y));
-	posicions.push_back(glm::vec2(map->getBlockSize().x * 76 + 18.f, 2 * map->getBlockSize().y));
+	posicions.push_back(glm::vec2(map->getBlockSize().x * 75 + 18.f, 2 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 82 + 18.f, 5 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 83 + 18.f, 5 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 114 + 18.f, 9 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 115 + 18.f, 9 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 116 + 18.f, 9 * map->getBlockSize().y));
 	posicions.push_back(glm::vec2(map->getBlockSize().x * 117 + 18.f, 9 * map->getBlockSize().y));
+	posicions.push_back(glm::vec2(map->getBlockSize().x * 73, 4 * map->getBlockSize().y + 2));
+	posicions.push_back(glm::vec2(map->getBlockSize().x * 72, 4 * map->getBlockSize().y + 2));
+	posicions.push_back(glm::vec2(map->getBlockSize().x * 72, 5 * map->getBlockSize().y + 2));
 	spikes = vector<Spikes*>();
 	for (int i = 0; i < posicions.size(); ++i){
 		Spikes* spiketrap = new Spikes();
@@ -109,7 +112,7 @@ void Scene3::restart(){
 	Soldier* asoldier = new Soldier();
 	soldiers.push_back(asoldier);
 	soldiers[0]->init(player, 0, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	soldiers[0]->setPosition(glm::vec2(map->getBlockSize().x * 28, 4 * map->getBlockSize().y + 8));
+	soldiers[0]->setPosition(glm::vec2(map->getBlockSize().x * 24, 2 * map->getBlockSize().y + 8));
 	soldiers[0]->setTileMap(map);
 	soldiers[0]->setSpikes(spikes);
 	soldiers[0]->setSoundManager(manager);
@@ -155,6 +158,8 @@ void Scene3::restart(){
 	posicions2.push_back(glm::vec2(map->getBlockSize().x * 102, 4 * map->getBlockSize().y + 2));
 	posicions2.push_back(glm::vec2(map->getBlockSize().x * 110, 2 * map->getBlockSize().y + 2));
 	posicions2.push_back(glm::vec2(map->getBlockSize().x * 111, 2 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 75, 3 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 73, 3 * map->getBlockSize().y + 2));
 	guillotines = vector<Guillotina*>();
 	for (int i = 0; i < posicions2.size(); ++i){
 		Guillotina* guillotinatrap = new Guillotina();
@@ -211,6 +216,21 @@ void Scene3::restart(){
 	portal6->setSoundManager(manager);
 	portal6->setPair(portal5);
 
+	Portal* portal7 = new Portal();
+	Portal* portal8 = new Portal();
+
+	portal7->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	portal7->setPosition(glm::vec2(map->getBlockSize().x * 10, 2 * map->getBlockSize().y));
+	portal7->setTileMap(map);
+	portal7->setSoundManager(manager);
+	portal7->setPair(portal8);
+
+	portal8->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	portal8->setPosition(glm::vec2(map->getBlockSize().x * 68, 8 * map->getBlockSize().y));
+	portal8->setTileMap(map);
+	portal8->setSoundManager(manager);
+	portal8->setPair(portal7);
+
 	portals = vector<Portal*>();
 	portals.push_back(portal1);
 	portals.push_back(portal2);
@@ -218,6 +238,8 @@ void Scene3::restart(){
 	portals.push_back(portal4);
 	portals.push_back(portal5);
 	portals.push_back(portal6);
+	portals.push_back(portal7);
+	portals.push_back(portal8);
 
 	portagran = new Portagran();
 	portagran->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);//85,1
@@ -228,10 +250,9 @@ void Scene3::restart(){
 
 	portagran2 = new Portagran();
 	portagran2->init(player, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);//85,1
-	portagran2->setPosition(glm::vec2(map->getBlockSize().x * 45 + 20, 2 * map->getBlockSize().y - 62));
+	portagran2->setPosition(glm::vec2(map->getBlockSize().x * 44 + 20, 2 * map->getBlockSize().y - 62));
 	portagran2->setTileMap(map);
 	portagran2->setSoundManager(manager);	
-	//portagran->setMustopen(false);
 }
 
 void Scene3::stop(){
