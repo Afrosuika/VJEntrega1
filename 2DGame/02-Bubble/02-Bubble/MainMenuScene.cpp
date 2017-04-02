@@ -11,8 +11,6 @@
 #define INIT_PLAYER_X_TILES 2
 #define INIT_PLAYER_Y_TILES 6
 
-/*#define INIT_PLAYER_X_TILES 43
-#define INIT_PLAYER_Y_TILES 9*/
 
 
 MainMenuScene::MainMenuScene()

@@ -127,7 +127,7 @@ void Scene2::restart(){
 
 	vector<glm::vec2> posicions2;
 	posicions2.push_back(glm::vec2(map->getBlockSize().x * 3, 10 * map->getBlockSize().y + 2));
-	posicions2.push_back(glm::vec2(map->getBlockSize().x * 29, 10 * map->getBlockSize().y + 2));
+	posicions2.push_back(glm::vec2(map->getBlockSize().x * 27, 10 * map->getBlockSize().y + 2));
 	posicions2.push_back(glm::vec2(map->getBlockSize().x * 36, 12 * map->getBlockSize().y + 2));
 	posicions2.push_back(glm::vec2(map->getBlockSize().x * 57, 10 * map->getBlockSize().y + 2));
 	posicions2.push_back(glm::vec2(map->getBlockSize().x * 86, 6 * map->getBlockSize().y + 2));
