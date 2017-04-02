@@ -37,7 +37,7 @@ void CreditsScene::init()
 	isLevelFinished = false;
 
 	manager = new SoundManager2();
-	manager->playMenuMusic();
+	manager->playCreditsMusic();
 
 	glm::vec2 geom[2] = { glm::vec2(1.f, 1.f), glm::vec2(-2000.f, -1200.f) };
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(-1000.f, 600.f) };
@@ -56,7 +56,7 @@ void CreditsScene::stop(){
 
 
 void CreditsScene::update(int deltaTime)
-{
+{	
 	float time = float(clock() - stamp) / CLOCKS_PER_SEC;
 	if (!dontRender){
 		currentTime += deltaTime;
@@ -71,7 +71,7 @@ void CreditsScene::update(int deltaTime)
 
 void CreditsScene::render()
 {
-	if (!dontRender){
+	if (!dontRender){	
 		glm::mat4 modelview;
 		texProgram.use();
 		texProgram.setUniformMatrix4f("projection", projection);

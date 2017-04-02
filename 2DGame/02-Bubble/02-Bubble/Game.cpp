@@ -71,10 +71,11 @@ void Game::changeLevel(){
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	if (level == 1) scene.render();
+	if (level == 0) menuscene.render(); 
+	else if (level == 1) scene.render();
 	else if (level == 2) scene2.render();
 	else if (level == 3) scene3.render();
-	else if (level == 0) menuscene.render();
+	else if (level == 4) creditsscene.render();
 }
 
 

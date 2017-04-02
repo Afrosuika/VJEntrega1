@@ -24,6 +24,7 @@ public:
 	void playShogunScream();
 	void playPortalSound();
 	void playMenuMusic();
+	void playCreditsMusic();
 
 private:
 	bool bigdooropening;
