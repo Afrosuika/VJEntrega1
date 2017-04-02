@@ -30,6 +30,7 @@ public:
 	void render();
 	bool levelFinished(){ return isLevelFinished; };
 	void stop();
+	void restart();
 
 private:
 	void initShaders();

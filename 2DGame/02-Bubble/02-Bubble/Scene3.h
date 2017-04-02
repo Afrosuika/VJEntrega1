@@ -12,6 +12,7 @@
 #include "Portagran.h"
 #include "SoundManager2.h"
 #include "Life.h"
+#include "Portal.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -29,6 +30,7 @@ public:
 	void render();
 	bool levelFinished(){ return isLevelFinished; };
 	void stop();
+	void restart();
 
 private:
 	void initShaders();
@@ -41,6 +43,7 @@ private:
 	vector<Spikes*> spikes;
 	vector<Soldier*> soldiers;
 	vector<Guillotina*> guillotines;
+	vector<Portal*> portals;
 	Portagran* portagran;
 	ShaderProgram texProgram;
 	SoundManager2 *manager;

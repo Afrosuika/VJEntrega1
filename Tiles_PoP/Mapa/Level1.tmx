@@ -9,6 +9,9 @@
  <tileset firstgid="34" name="Spritesheet trampa2" tilewidth="64" tileheight="64" tilecount="4" columns="4">
   <image source="../Sprites/Trampa 2/Spritesheet trampa2.png" trans="00aa00" width="256" height="64"/>
  </tileset>
+ <tileset firstgid="38" name="Porta gran - spritesheet" tilewidth="96" tileheight="128" tilecount="18" columns="6">
+  <image source="../Sprites/Porta gran/Porta gran - spritesheet.png" trans="00aa00" width="576" height="384"/>
+ </tileset>
  <layer name="Capa de Patrones 1" width="91" height="16">
   <data encoding="csv">
 9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
