@@ -19,7 +19,7 @@ void SoundManager2::playBigdoorOpen() {
 }
 
 void SoundManager2::playEndLevel(){
-		PlaySound(TEXT("sound/PoP_sounds/PoP_endlevel_fanfare.wav"), NULL, SND_FILENAME);
+	PlaySound(TEXT("sound/PoP_sounds/PoP_endlevel_fanfare.wav"), NULL, SND_ASYNC | SND_FILENAME);
 }
 
 void SoundManager2::playEnemyHit() {

@@ -1169,11 +1169,10 @@ void Player::update(int deltaTime)
 		}
 		else if (sprite->animation() == ENTER_BIGDOOR){
 			sprite->changeAnimation(GONE);
-			busy = true;
-			stamp = clock();
 			manager->playEndLevel();
-			//cout << "aqui es faria trigger de \"nextlevel\" o algo aixi \n";
-			isLevelFinished = true;
+			busy = true;
+			stamp = clock();			
+			//cout << "aqui es faria trigger de \"nextlevel\" o algo aixi \n";			
 			
 		}
 		else if (sprite->animation() == RIGHT_FALL){
@@ -1257,6 +1256,12 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 			busy = true;
 			stamp = clock();
+		}
+		else if (sprite->animation() == GONE){
+			float time = float(clock() - stamp) / CLOCKS_PER_SEC;
+			if (time >= 12.5){
+				isLevelFinished = true;
+			}
 		}
 
 
